@@ -11,7 +11,7 @@ public class Fridge{
     //Create and set up the content pane.
     fridge.window_content.Menu menu = new fridge.window_content.Menu();
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
-    frame.setJMenuBar(menu.createMenuBar(0));
+    frame.setJMenuBar(menu.createMenuBar("full"));
     frame.setContentPane(cont.createContentPane(0));
     
     //Display the window.
