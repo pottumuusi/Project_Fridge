@@ -64,53 +64,117 @@ public class Menu implements ActionListener, ItemListener{
     return menuBar;
   }
   
-  private JMenu createFileMenu(){
-    JMenu menu, submenu;
+  
+  private JMenu createMenu(String name, int keyEvent, String description){
+    JMenu menu;
+    
+    menu = new JMenu(name);
+    menu.setMnemonic(keyEvent);
+    menu.getAccessibleContext().setAccessibleDescription(
+        description);
+    
+    return menu;
+  }
+  
+  
+  private JMenu createSubmenu(String name, int keyEvent){
+    JMenu submenu;
+    
+    submenu = new JMenu(name);
+    submenu.setMnemonic(keyEvent);
+    
+    return submenu;
+  }
+  
+  
+  private JMenuItem createMenuItem(String name, int keyEvent, int actionEvent){
     JMenuItem menuItem;
     
-    menu = new JMenu("File");
-    menu.setMnemonic(KeyEvent.VK_A);
-    menu.getAccessibleContext().setAccessibleDescription(
-        "File menu");
-    
-    submenu = new JMenu("New");
-    submenu.setMnemonic(KeyEvent.VK_S);
-    
-    menuItem = new JMenuItem("Folder");
-    menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_2, ActionEvent.CTRL_MASK));
-    menuItem.addActionListener(this);
-    submenu.add(menuItem);
-    
-    menuItem = new JMenuItem("Group");
-    menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_3, ActionEvent.CTRL_MASK));
-    menuItem.addActionListener(this);
-    submenu.add(menuItem);
-    menu.add(submenu);
-    
-    menuItem = new JMenuItem("Refresh", KeyEvent.VK_T);
+    menuItem = new JMenuItem(name);
     /* constructorin avulla asetetaan KeyEvent.VK_T
      * Olisi voitu saada aikaan myös sanomalla:
      *  menuItem.setMnemonic(KeyEvent.VK_T);
      */
     menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_F5, 0));
-    menuItem.getAccessibleContext().setAccessibleDescription(
-        "Reload window");
+        keyEvent, actionEvent));
     menuItem.addActionListener(this);
+    
+    return menuItem;
+  }
+  
+  
+  private JMenuItem createMenuItem(String name, int mnemonic, int keyEvent, int actionEvent){
+    JMenuItem menuItem;
+    
+    menuItem = new JMenuItem(name, mnemonic);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        keyEvent, actionEvent));
+    menuItem.addActionListener(this);
+    
+    return menuItem;
+  }
+  
+  
+  private JMenuItem createMenuItem(String name, int mnemonic, int keyEvent, int actionEvent, String description){
+    JMenuItem menuItem;
+    
+    menuItem = new JMenuItem(name, mnemonic);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        keyEvent, actionEvent));
+    menuItem.getAccessibleContext().setAccessibleDescription(
+        description);
+    menuItem.addActionListener(this);
+    
+    return menuItem;
+  }
+  
+  
+  private JMenu createFileMenu(){
+    JMenu menu, submenu;
+    JMenuItem menuItem;
+    
+    menu = createMenu("File", KeyEvent.VK_F, "File menu");
+    submenu = createSubmenu("New", KeyEvent.VK_N);
+    
+    /* Add content of submenu */
+    menuItem = createMenuItem("Folder", KeyEvent.VK_L, ActionEvent.CTRL_MASK);
+    submenu.add(menuItem);
+    
+    menuItem = createMenuItem("Group", KeyEvent.VK_G, ActionEvent.CTRL_MASK);
+    submenu.add(menuItem);
+    menu.add(submenu); // Add submenu New to File menu
+    
+    /* Add rest menu content */
+    menuItem = createMenuItem("Refresh", KeyEvent.VK_T, KeyEvent.VK_F5, 0, "Reloads window");
     menu.add(menuItem);
     
-    menuItem = new JMenuItem("Exit", KeyEvent.VK_T);
-    menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_1, ActionEvent.CTRL_MASK));
-    menuItem.getAccessibleContext().setAccessibleDescription(
-        "Exit the program");
-    menuItem.addActionListener(this);
+    menuItem = createMenuItem("Exit", KeyEvent.VK_E, KeyEvent.VK_Q,
+                              ActionEvent.CTRL_MASK, "Exit the program");
     menu.add(menuItem);
     
     return menu;
   }
+  
+  
+  private JMenu createEditMenu(){
+    return null;
+  }
+  
+  
+  private JMenu createActionsMenu(){
+    return null;
+  }
+  
+  
+  private JMenu createOptionsMenu(){
+    return null;
+  }
+  
+  
+  private JMenu createHelpMenu(){
+    return null;
+  }
+  
   
   public void actionPerformed(ActionEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
