@@ -36,21 +36,21 @@ public class Menu implements ActionListener, ItemListener{
   }*/
   
   public JMenuBar createMenuBar(int menuBarType){
-    JMenuBar menuBar;
+    JMenuBar menuBar = null;
     
     if (menuBarType > menuBarTypeCount - 1 || menuBarType < 0){
       System.out.println("[DEBUG] invalid menuBarType. menuBar not created");
       return null;
     }
     
-    /*switch (menuBarType){
+    switch (menuBarType){
     case 0:
       menuBar = fullMenuBar();
       System.out.println("[DEBUG] created menu with type: " + menuBarType);
-    }*/
+    }
     
-    menuBar = fullMenuBar();
-    System.out.println("[DEBUG] created menu with type: " + menuBarType);
+    //menuBar = fullMenuBar();
+    //System.out.println("[DEBUG] created menu with type: " + menuBarType);
     
     return menuBar;
   }
@@ -65,23 +65,47 @@ public class Menu implements ActionListener, ItemListener{
   }
   
   private JMenu createFileMenu(){
-    JMenu menu;
+    JMenu menu, submenu;
     JMenuItem menuItem;
     
-    menu = new JMenu("A Menu");
+    menu = new JMenu("File");
     menu.setMnemonic(KeyEvent.VK_A);
     menu.getAccessibleContext().setAccessibleDescription(
         "File menu");
     
-    menuItem = new JMenuItem("Item wants submenus", KeyEvent.VK_T);
+    submenu = new JMenu("New");
+    submenu.setMnemonic(KeyEvent.VK_S);
+    
+    menuItem = new JMenuItem("Folder");
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_2, ActionEvent.CTRL_MASK));
+    menuItem.addActionListener(this);
+    submenu.add(menuItem);
+    
+    menuItem = new JMenuItem("Group");
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_3, ActionEvent.CTRL_MASK));
+    menuItem.addActionListener(this);
+    submenu.add(menuItem);
+    menu.add(submenu);
+    
+    menuItem = new JMenuItem("Refresh", KeyEvent.VK_T);
     /* constructorin avulla asetetaan KeyEvent.VK_T
      * Olisi voitu saada aikaan myös sanomalla:
      *  menuItem.setMnemonic(KeyEvent.VK_T);
      */
     menuItem.setAccelerator(KeyStroke.getKeyStroke(
-        KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        KeyEvent.VK_F5, 0));
     menuItem.getAccessibleContext().setAccessibleDescription(
-        "Exit");
+        "Reload window");
+    menuItem.addActionListener(this);
+    menu.add(menuItem);
+    
+    menuItem = new JMenuItem("Exit", KeyEvent.VK_T);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_1, ActionEvent.CTRL_MASK));
+    menuItem.getAccessibleContext().setAccessibleDescription(
+        "Exit the program");
     menuItem.addActionListener(this);
     menu.add(menuItem);
     
