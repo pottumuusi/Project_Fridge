@@ -41,9 +41,9 @@ public class Fridge{
     return MAE_handler;
   }
   
-  /*public void MAE_brokerCall(String eventSource, String className){
+  public void MAE_brokerCall(String eventSource, String className){
     MAE_broker.solveAction(eventSource, className, MAE_handler);
-  }*/
+  }
   
   /*public void MAE_handlerCall(){
     
