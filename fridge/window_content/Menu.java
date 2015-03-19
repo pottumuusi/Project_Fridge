@@ -234,7 +234,7 @@ public class Menu implements ActionListener, ItemListener{
     menuItem = createMenuItem("Refresh", KeyEvent.VK_T, KeyEvent.VK_F5, 0, "Reloads window");
     menu.add(menuItem);
     
-    menuItem = createMenuItem("Exit", KeyEvent.VK_E, KeyEvent.VK_Q,
+    menuItem = createMenuItem("Quit", KeyEvent.VK_E, KeyEvent.VK_Q,
                               ActionEvent.CTRL_MASK, "Exit the program");
     menu.add(menuItem);
     
@@ -323,7 +323,7 @@ public class Menu implements ActionListener, ItemListener{
     
     /*MAE_broker.solveAction(source.getText(), getClassName(source), 
                            fridgeInstance.getMAE_handler(), fridgeInstance);*/
-    fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
+    fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source), fridgeInstance);
     //fridge.Fridge.MAE_brokerCall(source.getText(), getClassName(source));
     //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
   }
