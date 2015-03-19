@@ -12,6 +12,29 @@ import javax.swing.JFrame;
 
 public class Menu implements ActionListener, ItemListener{
   private static final int MENU_BAR_TYPE_AMOUNT = 3;
+  private fridge.Fridge fridgeInstance;
+  /*private fridge.action_handling.MenuActionEventBroker MAE_broker;
+  private fridge.action_handling.MenuActionEventHandler MAE_handler;*/
+  
+  /*public Menu(){
+    System.out.println("[DEBUG] Menu can't be created without providing MAE_broker and MAE_handler");
+    System.exit(1);
+  }*/
+  
+  public Menu(){
+    System.out.println("[DEBUG] Menu can't be created without providing fridgeInstance");
+    System.exit(1);
+  }
+  
+  /*public Menu(fridge.action_handling.MenuActionEventBroker pointer_to_broker,
+              fridge.action_handling.MenuActionEventHandler pointer_to_handler){
+    MAE_broker = pointer_to_broker;
+    MAE_handler = pointer_to_handler;
+  }*/
+  
+  public Menu(fridge.Fridge pointer_to_fridgeInstance){
+    fridgeInstance = pointer_to_fridgeInstance;
+  }
   
   //private int menuBarTypeCount = 3;
   /*public Menu(){
@@ -290,7 +313,6 @@ public class Menu implements ActionListener, ItemListener{
   
   public void actionPerformed(ActionEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
-    fridge.action_handling.MenuActionEventBroker MAE_broker = new fridge.action_handling.MenuActionEventBroker();
     
     /*System.out.println("*Action event*\n"
                    + "Event source: " + source.getText()
@@ -299,7 +321,11 @@ public class Menu implements ActionListener, ItemListener{
                     + "Event source: " + source.getText()
                     + " (an instance of " + getClassName(source) + ")";*/
     
-    MAE_broker.invokeAction(source.getText(), getClassName(source));
+    /*MAE_broker.solveAction(source.getText(), getClassName(source), 
+                           fridgeInstance.getMAE_handler(), fridgeInstance);*/
+    fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
+    //fridge.Fridge.MAE_brokerCall(source.getText(), getClassName(source));
+    //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
   }
   
   public void itemStateChanged(ItemEvent e){
