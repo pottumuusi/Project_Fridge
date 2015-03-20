@@ -83,7 +83,14 @@ public class Menu implements ActionListener, ItemListener{
       System.out.println("[DEBUG] in case: \"full\"");
       menuBar = fullMenuBar();
       System.out.println("[DEBUG] created menu with type: " + menuBarType);
+      break;
+    case "trimmed":
+      menuBar = trimmedMenuBar();
+      break;
+    case "minimal":
+      menuBar = minimalMenuBar();
     }
+      
     
     //menuBar = fullMenuBar();
     //System.out.println("[DEBUG] created menu with type: " + menuBarType);
@@ -116,9 +123,32 @@ public class Menu implements ActionListener, ItemListener{
     menuBar = new JMenuBar();
     menuBar.add(createFileMenu());
     menuBar.add(createEditMenu());
-    //menuBar.add(createActionsMenu());
-    //menuBar.add(createOptionsMenu);
-    //menuBar.add(createHelpMenu);
+    menuBar.add(createActionsMenu());
+    menuBar.add(createOptionsMenu());
+    menuBar.add(createHelpMenu());
+    
+    return menuBar;
+  }
+  
+  
+  private JMenuBar trimmedMenuBar(){
+    JMenuBar menuBar;
+    
+    menuBar = new JMenuBar();
+    menuBar.add(createFileMenu());
+    menuBar.add(createEditMenu());
+    menuBar.add(createActionsMenu());
+    
+    return menuBar;
+  }
+  
+  
+  private JMenuBar minimalMenuBar(){
+    JMenuBar menuBar;
+    
+    menuBar = new JMenuBar();
+    menuBar.add(createFileMenu());
+    menuBar.add(createEditMenu());
     
     return menuBar;
   }
@@ -184,7 +214,7 @@ public class Menu implements ActionListener, ItemListener{
     
     menuItem = new JMenuItem(name);
     /* constructorin avulla asetetaan KeyEvent.VK_T
-     * Olisi voitu saada aikaan myös sanomalla:
+     * Olisi voitu saada aikaan myos sanomalla:
      *  menuItem.setMnemonic(KeyEvent.VK_T);
      */
     menuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -302,7 +332,7 @@ public class Menu implements ActionListener, ItemListener{
   }
   
   
-  JMenu createActionsMenu(){
+  private JMenu createActionsMenu(){
     JMenu menu, submenu;
     JMenuItem menuItem;
     
@@ -318,31 +348,49 @@ public class Menu implements ActionListener, ItemListener{
     
     menuItem = createMenuItem("Handle with move/add manager", KeyEvent.VK_H, KeyEvent.VK_H,
                               ActionEvent.CTRL_MASK, "Add ");
+    menu.add(menuItem);
     
     submenu = createSubmenu("Search", KeyEvent.VK_S);
     
+    menuItem = createMenuItem("From folder", KeyEvent.VK_F, 
+                              KeyEvent.VK_F3, 0, "Search from folder");
+    submenu.add(menuItem);
     
-    /*Add to group
-Move to group
-Handle with move/add manager
-Search
-  from folder
-  from groups*/
-  }
-  
-  
-  private JMenu createActionsMenu(){
-    return null;
+    menuItem = createMenuItem("From groups", KeyEvent.VK_G,
+                              KeyEvent.VK_F4, 0, "Search from groups");
+    submenu.add(menuItem);
+    menu.add(submenu);
+    
+    return menu;
+    /*Add to group, Move to group, Handle with move/add manager, 
+     * Search (from folder, from groups*/
   }
   
   
   private JMenu createOptionsMenu(){
-    return null;
+    JMenu menu;
+    JMenuItem menuItem;
+    
+    menu = createMenu("Options", KeyEvent.VK_O, "Options menu");
+    
+    menuItem = createMenuItem("Settings", KeyEvent.VK_S, "Open settings window");
+    menu.add(menuItem);
+    
+    return menu;
   }
   
   
   private JMenu createHelpMenu(){
-    return null;
+    JMenu menu;
+    JMenuItem menuItem;
+    
+    menu = createMenu("Help", KeyEvent.VK_H, "Help menu");
+    
+    menuItem = createMenuItem("View help", KeyEvent.VK_V,
+                              KeyEvent.VK_F1, 0, "Open help window");
+    menu.add(menuItem);
+    
+    return menu;
   }
   
   
