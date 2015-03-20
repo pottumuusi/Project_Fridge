@@ -302,6 +302,35 @@ public class Menu implements ActionListener, ItemListener{
   }
   
   
+  JMenu createActionsMenu(){
+    JMenu menu, submenu;
+    JMenuItem menuItem;
+    
+    menu = createMenu("Actions", KeyEvent.VK_A, "Actions menu");
+    
+    submenu = createSubmenu("Add to group", KeyEvent.VK_A);
+    //groupsToSubmenu(submenu);
+    menu.add(submenu);
+    
+    submenu = createSubmenu("Move to group", KeyEvent.VK_M);
+    //groupsToSubmenu(submenu);
+    menu.add(submenu);
+    
+    menuItem = createMenuItem("Handle with move/add manager", KeyEvent.VK_H, KeyEvent.VK_H,
+                              ActionEvent.CTRL_MASK, "Add ");
+    
+    submenu = createSubmenu("Search", KeyEvent.VK_S);
+    
+    
+    /*Add to group
+Move to group
+Handle with move/add manager
+Search
+  from folder
+  from groups*/
+  }
+  
+  
   private JMenu createActionsMenu(){
     return null;
   }
