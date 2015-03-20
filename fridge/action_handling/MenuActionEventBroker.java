@@ -13,6 +13,9 @@ public class MenuActionEventBroker{
     if (eventSource.equals("Quit")){
       invokeQuit(MAE_handler, fridgeInstance);
     }
+    else if (eventSource.equals("View help")){
+      invokeViewHelp(MAE_handler);
+    }
   }
   
   private void invokeQuit(fridge.action_handling.MenuActionEventHandler MAE_handler,
@@ -25,5 +28,9 @@ public class MenuActionEventBroker{
      * Or maybe MAE_handler for window hiding and if there is
      * file handler use it to save data. 
      */
+  }
+  
+  private void invokeViewHelp(fridge.action_handling.MenuActionEventHandler MAE_handler){
+    MAE_handler.viewHelp();
   }
 }

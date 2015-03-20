@@ -16,4 +16,8 @@ public class MenuActionEventHandler{
     }
     return "Program has unsaved data";
   }
+  
+  public void viewHelp(){
+    System.out.println("[DEBUG] create help window here");
+  }
 }

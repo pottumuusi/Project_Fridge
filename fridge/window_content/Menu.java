@@ -258,6 +258,8 @@ public class Menu implements ActionListener, ItemListener{
     menu = createMenu("File", KeyEvent.VK_F, "File menu");
     submenu = createSubmenu("New", KeyEvent.VK_N);
     
+    menuItem = createMenuItem("Close", KeyEvent.VK_C, "Close current window");
+    
     /* Add content of submenu */
     menuItem = createMenuItem("Folder", KeyEvent.VK_L, ActionEvent.CTRL_MASK);
     submenu.add(menuItem);
