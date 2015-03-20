@@ -41,9 +41,9 @@ public class Fridge{
     return MAE_handler;
   }
   
-  public void MAE_brokerCall(String eventSource, String className, fridge.Fridge fridgeInstance){
+  /*public void MAE_brokerCall(String eventSource, String className, fridge.Fridge fridgeInstance){
     MAE_broker.solveAction(eventSource, className, MAE_handler, fridgeInstance);
-  }
+  }*/
   
   /*public void MAE_handlerCall(){
     
@@ -62,14 +62,18 @@ public class Fridge{
     //Create and set up the window
     fridge.Fridge fridgeInstance = new fridge.Fridge();
     //fridgeInstance = new fridge.Fridge();
+    fridge.action_handling.ActionHandlingContainer AH_Container = new fridge.action_handling.ActionHandlingContainer(fridgeInstance);
     JFrame frame = new JFrame("Fridge");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
     
     //Create and set up the content pane.
     /*fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.MAE_broker,
                                                                      fridgeInstance.MAE_handler);*/
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance);
+    //fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance);
+    fridge.window_content.Menu menu = new fridge.window_content.Menu(AH_Container);
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
     frame.setJMenuBar(menu.createMenuBar("full"));
     frame.setContentPane(cont.createContentPane(0));
     

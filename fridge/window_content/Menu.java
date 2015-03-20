@@ -12,7 +12,9 @@ import javax.swing.JFrame;
 
 public class Menu implements ActionListener, ItemListener{
   private static final int MENU_BAR_TYPE_AMOUNT = 3;
-  private fridge.Fridge fridgeInstance;
+  //private fridge.Fridge fridgeInstance;
+  private fridge.action_handling.ActionHandlingContainer AH_Container;
+  
   /*private fridge.action_handling.MenuActionEventBroker MAE_broker;
   private fridge.action_handling.MenuActionEventHandler MAE_handler;*/
   
@@ -32,8 +34,12 @@ public class Menu implements ActionListener, ItemListener{
     MAE_handler = pointer_to_handler;
   }*/
   
-  public Menu(fridge.Fridge pointer_to_fridgeInstance){
+  /*public Menu(fridge.Fridge pointer_to_fridgeInstance){
     fridgeInstance = pointer_to_fridgeInstance;
+  }*/
+  
+  public Menu(fridge.action_handling.ActionHandlingContainer AH_Container_ptr){
+    AH_Container = AH_Container_ptr;
   }
   
   //private int menuBarTypeCount = 3;
@@ -323,7 +329,8 @@ public class Menu implements ActionListener, ItemListener{
     
     /*MAE_broker.solveAction(source.getText(), getClassName(source), 
                            fridgeInstance.getMAE_handler(), fridgeInstance);*/
-    fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source), fridgeInstance);
+    //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source), fridgeInstance);
+    AH_Container.MAE_brokerCall(source.getText(), getClassName(source));
     //fridge.Fridge.MAE_brokerCall(source.getText(), getClassName(source));
     //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
   }

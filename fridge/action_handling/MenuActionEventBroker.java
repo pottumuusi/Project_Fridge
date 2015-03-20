@@ -2,8 +2,8 @@ package fridge.action_handling;
 
 public class MenuActionEventBroker{
   
-  
-  public void solveAction(String eventSource, String className,
+  //earlier name of this method was: solveAction
+  public void brokerCall(String eventSource, String className,
                           fridge.action_handling.MenuActionEventHandler MAE_handler,
                           fridge.Fridge fridgeInstance){
     System.out.println("*MAE_broker invokingAction for*\n"
