@@ -4,16 +4,20 @@ import javax.swing.JFrame;
 
 public class Fridge{
   private String[] programStatus;
-  private fridge.action_handling.MenuActionEventBroker MAE_broker;
-  private fridge.action_handling.MenuActionEventHandler MAE_handler;
+  //private fridge.action_handling.MenuActionEventBroker MAE_broker;
+  //private fridge.action_handling.MenuActionEventHandler MAE_handler;
   //private fridge.Fridge fridgeInstance;
   
   public Fridge(){
+    initProgramStatus();
+    
+    /*MAE_broker = new fridge.action_handling.MenuActionEventBroker();
+    MAE_handler = new fridge.action_handling.MenuActionEventHandler();*/
+  }
+  
+  private void initProgramStatus(){
     programStatus = new String[1];
     programStatus[0] = "no_unsaved_data";
-    
-    MAE_broker = new fridge.action_handling.MenuActionEventBroker();
-    MAE_handler = new fridge.action_handling.MenuActionEventHandler();
   }
   
   public String[] getProgramStatus(){
@@ -37,9 +41,9 @@ public class Fridge{
     }
   }
   
-  public fridge.action_handling.MenuActionEventHandler getMAE_handler(){
+  /*public fridge.action_handling.MenuActionEventHandler getMAE_handler(){
     return MAE_handler;
-  }
+  }*/
   
   /*public void MAE_brokerCall(String eventSource, String className, fridge.Fridge fridgeInstance){
     MAE_broker.solveAction(eventSource, className, MAE_handler, fridgeInstance);

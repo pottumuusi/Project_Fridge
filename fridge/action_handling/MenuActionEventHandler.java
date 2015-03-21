@@ -1,9 +1,15 @@
 package fridge.action_handling;
 
 public class MenuActionEventHandler{
+  private fridge.Fridge fridgeInstance;
+  
+  MenuActionEventHandler(fridge.Fridge fridgeInstance_ptr){
+    fridgeInstance = fridgeInstance_ptr;
+  }
+  
   //public void ()
   
-  public String quit(fridge.Fridge fridgeInstance){
+  public String quit(){
     String[] programStatus;
     int i;
     
