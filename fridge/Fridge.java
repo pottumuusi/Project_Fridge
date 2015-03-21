@@ -4,15 +4,10 @@ import javax.swing.JFrame;
 
 public class Fridge{
   private String[] programStatus;
-  //private fridge.action_handling.MenuActionEventBroker MAE_broker;
-  //private fridge.action_handling.MenuActionEventHandler MAE_handler;
-  //private fridge.Fridge fridgeInstance;
   
   public Fridge(){
     initProgramStatus();
     
-    /*MAE_broker = new fridge.action_handling.MenuActionEventBroker();
-    MAE_handler = new fridge.action_handling.MenuActionEventHandler();*/
   }
   
   private void initProgramStatus(){
@@ -41,26 +36,6 @@ public class Fridge{
     }
   }
   
-  /*public fridge.action_handling.MenuActionEventHandler getMAE_handler(){
-    return MAE_handler;
-  }*/
-  
-  /*public void MAE_brokerCall(String eventSource, String className, fridge.Fridge fridgeInstance){
-    MAE_broker.solveAction(eventSource, className, MAE_handler, fridgeInstance);
-  }*/
-  
-  /*public void MAE_handlerCall(){
-    
-  }*/
-  
-  /*private static void createActionEventObjects(){
-    MAE_broker = new fridge.action_handling.MenuActionEventBroker();
-    MAE_handler = new fridge.action_handling.MenuActionEventHandler();
-  }*/
-  
-  /*private static void createFridgeInstance(){
-    fridge.Fridge fridgeInstance = new fridge.Fridge();
-  }*/
   
   private static void createAndShowGUI(){
     //Create and set up the window
@@ -89,8 +64,6 @@ public class Fridge{
   public static void main(String[] args){
     //fridge.window_content.Menu menu = new fridge.window_content.Menu();
     
-    //System.out.println("Hello World!");
-    //menu.testFunction();
     javax.swing.SwingUtilities.invokeLater(new Runnable(){
       public void run(){
         
