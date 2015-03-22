@@ -66,9 +66,11 @@ public class WindowMaker{
   
   public JFrame newHelpWin(fridge.window_content.WindowCollection controller){
     JFrame frame = new ListenedFrame(controller, "Help");
+    fridge.action_handling.ContainerListeners contListeners = fridgeInstance.getContListeners();
+    //fridge.action_handling.MyListListener listListener = contListeners.getListListener();
     
     fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
-    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    fridge.window_content.Containers cont = new fridge.window_content.Containers(contListeners);
     
     frame.setJMenuBar(menu.createMenuBar("help"));
     frame.setContentPane(cont.createContentPane("help"));

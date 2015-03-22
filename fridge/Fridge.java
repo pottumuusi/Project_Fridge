@@ -6,16 +6,22 @@ public class Fridge{
   private String[] programStatus;
   private fridge.action_handling.ActionHandlingContainer AH_container;
   private fridge.window_content.WindowCollection windowCollection;
+  private fridge.action_handling.ContainerListeners contListeners;
   
   public Fridge(){
     initProgramStatus();
     AH_container = new fridge.action_handling.ActionHandlingContainer(this);
     windowCollection = new fridge.window_content.WindowCollection(this);
+    contListeners = new fridge.action_handling.ContainerListeners(this);
     //windowCollection = new fridge.window_content.WindowCollection(AH_container);
   }
   
   public fridge.action_handling.ActionHandlingContainer getAH_container(){
     return AH_container;
+  }
+  
+  public fridge.action_handling.ContainerListeners getContListeners(){
+    return contListeners;
   }
   
   public fridge.window_content.WindowCollection getWinCollection(){
