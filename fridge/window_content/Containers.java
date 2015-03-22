@@ -61,6 +61,7 @@ public class Containers{
     //JComponent contentPane = new MyList();
     listModel = new DefaultListModel();
     listModel.addElement("first element");
+    listModel.addElement("second element");
     list = new JList(listModel);
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.setSelectedIndex(0);
