@@ -18,14 +18,16 @@ public class MenuActionEventBroker{
   }
   
   private void invokeQuit(fridge.action_handling.MenuActionEventHandler MAE_handler){
-    String quitInterruptReason;
+    //String quitInterruptReason;
     
-    quitInterruptReason = MAE_handler.quit();
-    System.out.println("[DEBUG] Program could not exit.\nReason: " + quitInterruptReason);
+    //quitInterruptReason = MAE_handler.quit();
+    MAE_handler.quit();
+    //System.out.println("[DEBUG] Program could not exit.\nReason: " + quitInterruptReason);
     /* Hide menus and write data. Use MAE_handler for this? 
      * Or maybe MAE_handler for window hiding and if there is
      * file handler use it to save data. 
      */
+    
   }
   
   private void invokeViewHelp(fridge.action_handling.MenuActionEventHandler MAE_handler){

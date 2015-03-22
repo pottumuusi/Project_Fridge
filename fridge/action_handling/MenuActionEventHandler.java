@@ -9,9 +9,11 @@ public class MenuActionEventHandler{
   
   //public void ()
   
-  public String quit(){
+  /*public String quit(){
     String[] programStatus;
     int i;
+    
+    fridgeInstance.controlledExit();
     
     programStatus = fridgeInstance.getProgramStatus();
     
@@ -22,6 +24,10 @@ public class MenuActionEventHandler{
       }
     }
     return "Program has unsaved data";
+  }*/
+  
+  public void quit(){
+    fridgeInstance.controlledExit();
   }
   
   public void viewHelp(){

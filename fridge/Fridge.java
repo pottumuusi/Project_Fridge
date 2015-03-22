@@ -4,12 +4,22 @@ package fridge;
 
 public class Fridge{
   private String[] programStatus;
-  //public fridge.action_handling.ActionHandling Container AH_container;
-  //public fridge.window_content.WindowCollection windowCollection;
+  private fridge.action_handling.ActionHandlingContainer AH_container;
+  private fridge.window_content.WindowCollection windowCollection;
   
   public Fridge(){
     initProgramStatus();
-    
+    AH_container = new fridge.action_handling.ActionHandlingContainer(this);
+    windowCollection = new fridge.window_content.WindowCollection(this);
+    //windowCollection = new fridge.window_content.WindowCollection(AH_container);
+  }
+  
+  public fridge.action_handling.ActionHandlingContainer getAH_container(){
+    return AH_container;
+  }
+  
+  public fridge.window_content.WindowCollection getWinCollection(){
+    return windowCollection;
   }
   
   private void initProgramStatus(){
@@ -38,6 +48,22 @@ public class Fridge{
     }
   }
   
+  public void controlledExit(){
+    int i;
+    
+    for (i = 0; i < programStatus.length; i++){
+      if (programStatus[i].equals("no_unsaved_data")){
+        System.out.println("No unsaved data. Exiting");
+        System.exit(0);
+      }
+    }
+    saveData();
+    System.exit(0);
+  }
+  
+  private void saveData(){
+    
+  }
   
   private static void createAndShowGUI(){
     fridge.action_handling.ActionHandlingContainer AH_container;
@@ -47,8 +73,7 @@ public class Fridge{
     fridge.Fridge fridgeInstance = new fridge.Fridge();
     
     
-    AH_container = new fridge.action_handling.ActionHandlingContainer(fridgeInstance);
-    windowCollection = new fridge.window_content.WindowCollection(AH_container);
+    
     
     //fridgeInstance = new fridge.Fridge();
   }

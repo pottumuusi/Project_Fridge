@@ -7,10 +7,14 @@ import java.awt.event.WindowEvent;
 
 public class WindowMaker{
   private fridge.action_handling.ActionHandlingContainer AH_Container;
-  
+  private fridge.Fridge fridgeInstance;
   
   public WindowMaker(fridge.action_handling.ActionHandlingContainer AHC_ptr){
     AH_Container = AHC_ptr;
+  }
+  
+  public WindowMaker(fridge.Fridge FI_ptr){
+    fridgeInstance = FI_ptr;
   }
   
   public JFrame newMainWin1(fridge.window_content.WindowCollection controller){
@@ -24,7 +28,7 @@ public class WindowMaker{
     //fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance);
     
     
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(AH_Container);
+    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("full"));
@@ -35,10 +39,6 @@ public class WindowMaker{
     frame.setVisible(true);
     
     return frame;
-  }
-  
-  public void controlledExit(){
-    AH_Container.performExit();
   }
   
   /*public void closed(WindowEvent e){

@@ -14,6 +14,7 @@ public class WindowCollection extends WindowAdapter{
   private int maxY;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
+  private fridge.Fridge fridgeInstance;
   private fridge.window_content.Containers cont; // want this to be here?
   private fridge.window_content.WindowMaker winMaker;
   
@@ -41,7 +42,20 @@ public class WindowCollection extends WindowAdapter{
     
   }*/
   
-  public WindowCollection(fridge.action_handling.ActionHandlingContainer AHC_ptr){
+  public WindowCollection(fridge.Fridge FI_ptr){
+    fridgeInstance = FI_ptr;
+    winMaker = new WindowMaker(FI_ptr);
+    windowCount = 0;
+    lastLocation = null;
+    
+    windowList = new JFrame[4];
+    
+    addNew("MainWin1");
+  }
+  
+  public WindowCollection(fridge.action_handling.ActionHandlingContainer AHC_ptr,
+                          fridge.Fridge FI_ptr){
+    fridgeInstance = FI_ptr;
     winMaker = new WindowMaker(AHC_ptr);
     windowCount = 0;
     lastLocation = null;
@@ -95,7 +109,7 @@ public class WindowCollection extends WindowAdapter{
     System.out.println("window closed");
     if (0 <= windowCount){
       System.out.println("All windows gone. Exiting");
-      winMaker.controlledExit();
+      fridgeInstance.controlledExit();
     }
   }
 }
