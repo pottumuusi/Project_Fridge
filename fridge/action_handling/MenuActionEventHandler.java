@@ -31,6 +31,10 @@ public class MenuActionEventHandler{
   }
   
   public void viewHelp(){
+    fridge.window_content.WindowCollection winColl;
     System.out.println("[DEBUG] create help window here");
+    winColl = fridgeInstance.getWinCollection();
+    
+    winColl.addNew("HelpWin");
   }
 }

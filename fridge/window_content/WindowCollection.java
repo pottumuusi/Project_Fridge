@@ -9,9 +9,6 @@ import java.awt.event.WindowEvent;
 
 public class WindowCollection extends WindowAdapter{
   private int windowCount;
-  private Point lastLocation;
-  private int maxX;
-  private int maxY;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
   private fridge.Fridge fridgeInstance;
@@ -46,19 +43,19 @@ public class WindowCollection extends WindowAdapter{
     fridgeInstance = FI_ptr;
     winMaker = new WindowMaker(FI_ptr);
     windowCount = 0;
-    lastLocation = null;
+    //lastLocation = null;
     
     windowList = new JFrame[4];
     
     addNew("MainWin1");
   }
   
-  public WindowCollection(fridge.action_handling.ActionHandlingContainer AHC_ptr,
+  /*public WindowCollection(fridge.action_handling.ActionHandlingContainer AHC_ptr,
                           fridge.Fridge FI_ptr){
     fridgeInstance = FI_ptr;
     winMaker = new WindowMaker(AHC_ptr);
     windowCount = 0;
-    lastLocation = null;
+    //lastLocation = null;
     
     windowList = new JFrame[4];
     System.out.println("[DEBUG] size of windowList == " 
@@ -67,7 +64,7 @@ public class WindowCollection extends WindowAdapter{
     
     //make the main window in initialization so that the user can interact with program
     addNew("MainWin1");
-  }
+  }*/
   
   public void addNew(String winType){
     if (windowCount + 1 == windowList.length){
@@ -78,11 +75,13 @@ public class WindowCollection extends WindowAdapter{
     case "MainWin1":
       windowList[windowCount] = winMaker.newMainWin1(this);
       //winMaker.newMainWin1(this);
+      
       break;
     case "HelpWin":
-      //windowList[windowCount] = winMaker.
+      windowList[windowCount] = winMaker.newHelpWin(this);
     }
     windowCount++;
+    System.out.println("[DEBUG] window count after creation == " + windowCount);
   }
   
   
@@ -106,10 +105,11 @@ public class WindowCollection extends WindowAdapter{
   
   public void windowClosed(WindowEvent e){
     windowCount--;
-    System.out.println("window closed");
-    if (0 <= windowCount){
+    System.out.println("[DEBUG] window closed. windowCount == " + windowCount);
+    if (windowCount <= 0){
       System.out.println("All windows gone. Exiting");
       fridgeInstance.controlledExit();
     }
+    //winMaker.updateLocation();
   }
 }

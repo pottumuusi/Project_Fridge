@@ -11,7 +11,7 @@ import javax.swing.KeyStroke;
 import javax.swing.JFrame;
 
 public class Menu implements ActionListener, ItemListener{
-  private static final int MENU_BAR_TYPE_AMOUNT = 3;
+  private static final int MENU_BAR_TYPE_AMOUNT = 4;
   //private fridge.Fridge fridgeInstance;
   private fridge.action_handling.ActionHandlingContainer AH_Container;
   
@@ -89,6 +89,9 @@ public class Menu implements ActionListener, ItemListener{
       break;
     case "minimal":
       menuBar = minimalMenuBar();
+      break;
+    case "help":
+      menuBar = helpMenuBar();
     }
       
     
@@ -103,11 +106,12 @@ public class Menu implements ActionListener, ItemListener{
     String[] allowedTypes;
     allowedTypes = new String[MENU_BAR_TYPE_AMOUNT];
     allowedTypes[0] = "full";
-    allowedTypes[1] = "trimmed";
+    allowedTypes[1] = "search";
     allowedTypes[2] = "minimal";
+    allowedTypes[3] = "help";
     int i;
     
-    for (i = 0; i < MENU_BAR_TYPE_AMOUNT - 1; i++){
+    for (i = 0; i < MENU_BAR_TYPE_AMOUNT; i++){
       if (allowedTypes[i].equals(menuBarType)){
         return true;
       }
@@ -153,6 +157,15 @@ public class Menu implements ActionListener, ItemListener{
     return menuBar;
   }
   
+  
+  private JMenuBar helpMenuBar(){
+    JMenuBar menuBar;
+    
+    menuBar = new JMenuBar();
+    menuBar.add(createFileMenu());
+    
+    return menuBar;
+  }
   
   private JMenu createMenu(String name, int keyEvent){
     JMenu menu;
