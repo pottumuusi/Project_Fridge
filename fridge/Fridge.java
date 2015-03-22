@@ -1,9 +1,11 @@
 package fridge;
 
-import javax.swing.JFrame;
+
 
 public class Fridge{
   private String[] programStatus;
+  //public fridge.action_handling.ActionHandling Container AH_container;
+  //public fridge.window_content.WindowCollection windowCollection;
   
   public Fridge(){
     initProgramStatus();
@@ -38,27 +40,17 @@ public class Fridge{
   
   
   private static void createAndShowGUI(){
+    fridge.action_handling.ActionHandlingContainer AH_container;
+    fridge.window_content.WindowCollection windowCollection;
+    
     //Create and set up the window
     fridge.Fridge fridgeInstance = new fridge.Fridge();
+    
+    
+    AH_container = new fridge.action_handling.ActionHandlingContainer(fridgeInstance);
+    windowCollection = new fridge.window_content.WindowCollection(AH_container);
+    
     //fridgeInstance = new fridge.Fridge();
-    fridge.action_handling.ActionHandlingContainer AH_Container = new fridge.action_handling.ActionHandlingContainer(fridgeInstance);
-    JFrame frame = new JFrame("Fridge");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-    
-    //Create and set up the content pane.
-    /*fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.MAE_broker,
-                                                                     fridgeInstance.MAE_handler);*/
-    //fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance);
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(AH_Container);
-    fridge.window_content.Containers cont = new fridge.window_content.Containers();
-    
-    frame.setJMenuBar(menu.createMenuBar("full"));
-    frame.setContentPane(cont.createContentPane(0));
-    
-    //Display the window.
-    frame.setSize(450, 260);
-    frame.setVisible(true);
   }
   
   public static void main(String[] args){

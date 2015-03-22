@@ -5,6 +5,7 @@ public class ActionHandlingContainer{
   private fridge.action_handling.MenuActionEventBroker MAE_broker;
   private fridge.action_handling.MenuActionEventHandler MAE_handler;
   
+  
   public ActionHandlingContainer(){
     System.out.println("[DEBUG] ActionHandlingContainer can't be created without providing fridgeInstance");
     System.exit(1);
