@@ -53,7 +53,7 @@ public class WindowMaker{
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("full"));
-    frame.setContentPane(cont.createContentPane(0));
+    frame.setContentPane(cont.createContentPane("mainWin1"));
     
     decideLocation(frame);
     
@@ -71,7 +71,7 @@ public class WindowMaker{
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("help"));
-    frame.setContentPane(cont.createContentPane(0));
+    frame.setContentPane(cont.createContentPane("help"));
     
     frame.setSize(450, 260);
     frame.setVisible(true);
