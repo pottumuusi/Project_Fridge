@@ -17,6 +17,7 @@ public class MenuActionEventHandler{
     
     for (i = 0; i < programStatus.length; i++){
       if (programStatus[i].equals("no_unsaved_data")){
+        System.out.println("No unsaved data. Exiting");
         System.exit(0);
       }
     }

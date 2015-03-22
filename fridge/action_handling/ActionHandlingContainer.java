@@ -27,4 +27,8 @@ public class ActionHandlingContainer{
   public void MAE_brokerCall(String eventSource, String instance){
     MAE_broker.brokerCall(eventSource, instance, MAE_handler);
   }
+  
+  public void performExit(){
+    MAE_handler.quit();
+  }
 }

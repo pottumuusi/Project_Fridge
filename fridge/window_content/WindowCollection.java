@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.event.WindowEvent;
+
 
 public class WindowCollection extends WindowAdapter{
   private int windowCount;
@@ -49,27 +51,51 @@ public class WindowCollection extends WindowAdapter{
                        + windowList.length
                        + " (should be 4)");
     
+    //make the main window in initialization so that the user can interact with program
     addNew("MainWin1");
-    
-    //create the first frame here
-    /*windowList[windowCount] = winMaker.newMainWin1();
-    windowCount++;*/
   }
   
   public void addNew(String winType){
-    /*if (windowCount + 1 == windowList.length){
+    if (windowCount + 1 == windowList.length){
       windowList = makeLonger(windowList);
-    }*/
+    }
     
     switch (winType){
     case "MainWin1":
-      windowList[windowCount] = winMaker.newMainWin1();
-      windowCount++;
+      windowList[windowCount] = winMaker.newMainWin1(this);
+      //winMaker.newMainWin1(this);
       break;
+    case "HelpWin":
+      //windowList[windowCount] = winMaker.
     }
+    windowCount++;
   }
   
-  /*private JFrame[] makeLonger(JFrame[]){
+  
+  
+  private JFrame[] makeShorter(JFrame[] oldList){
+    return null;
+  }
+  
+  private JFrame[] makeLonger(JFrame[] oldList){
+    int i;
+    JFrame[] newList = new JFrame[oldList.length + 4];
+    //garbage collection should deal with the oldList now?
+    System.out.println("[DEBUG] making windowList longer. this might cause problems!!");
     
-  }*/
+    for (i = 0; i < oldList.length; i++){
+      newList[i] = oldList[i];
+    }
+    
+    return newList;
+  }
+  
+  public void windowClosed(WindowEvent e){
+    windowCount--;
+    System.out.println("window closed");
+    if (0 <= windowCount){
+      System.out.println("All windows gone. Exiting");
+      winMaker.controlledExit();
+    }
+  }
 }
