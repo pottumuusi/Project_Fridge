@@ -57,16 +57,28 @@ public class Containers{
     JTextArea output;
     JScrollPane scrollPane, listScrollPane;
     DefaultListModel listModel;
+    ListSelectionModel listSelectionModel;
     JList list;
     //JComponent contentPane = new MyList();
+    
+    /*one way to init
     listModel = new DefaultListModel();
     listModel.addElement("first element");
     listModel.addElement("second element");
-    list = new JList(listModel);
+    list = new JList(listModel);*/
+    
+    //another way ot init
+    String[] listData = {"first", "second", "third"};
+    list = new JList(listData); 
+    
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.setSelectedIndex(0);
-    list.addListSelectionListener(contListeners.getListListener());
+    //list.addListSelectionListener(contListeners.getListListener());
     list.setVisibleRowCount(5);
+    
+    listSelectionModel = list.getSelectionModel();
+    listSelectionModel.addListSelectionListener(contListeners.getLSListener());
+    
     listScrollPane = new JScrollPane(list);
     contentPane.add(listScrollPane, BorderLayout.WEST);
     //Create a scrolled text area.
