@@ -44,13 +44,11 @@ public class ClassListSelectionListener extends fridge.action_handling.MyListene
     if (!(lsm.isSelectionEmpty()) && false == isAdjusting){
       int minIndex = lsm.getMinSelectionIndex();
       int maxIndex = lsm.getMaxSelectionIndex();
-      System.out.println("[DEBUG] assigning " + (maxIndex - minIndex) + " slots to tempSelected");
       tempSelected = new int[(maxIndex - minIndex) + 1]; // + 1 so that new int[0] does not happen... 
       
       //first find out how many are selected
       for (i = minIndex; i <= maxIndex; i++){
         if (lsm.isSelectedIndex(i)){
-          System.out.println("[DEBUG] assigning " + i + "to tempSelected[" + fillIndex + "]");
           tempSelected[fillIndex] = i;
           fillIndex++;
         }
@@ -63,7 +61,9 @@ public class ClassListSelectionListener extends fridge.action_handling.MyListene
       tempSelected = null;
     }
     
-    listened.listenerEvent((fridge.action_handling.MyListener)this);
+    if (false == isAdjusting){
+      listened.listenerEvent((fridge.action_handling.MyListener)this);
+    }
     /*if (false == isAdjusting){
       listened.listenerEvent(this);
     }*/

@@ -27,8 +27,12 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }
   
+  /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
+    handleEvent(ML_ptr.getType(), ML_ptr);
+  }*/
+  
   public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
-    handleEvent(ML_ptr.getType());
+    handleEvent(ML_ptr);
   }
   
   //protected abstract void addListeners();
@@ -51,7 +55,9 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     }
   }
   
-  protected abstract void handleEvent(String listenerType);
+  //protected abstract void handleEvent(String listenerType);
+  //protected abstract void handleEvent(String listenerType, fridge.action_handling.MyListener);
+  protected abstract void handleEvent(fridge.action_handling.MyListener ML_ptr);
   
   //protected abstract void givePtrToListeners();
   protected void givePtrToListeners(){
