@@ -15,6 +15,11 @@ public class WindowCollection extends WindowAdapter{
   private fridge.window_content.Containers cont; // want this to be here?
   private fridge.window_content.WindowMaker winMaker;
   
+  private fridge.windows.MyWindow[] myWindows;
+  
+  //private HelpWindow
+  
+  
   /*WindowCollection(){
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     windowCount = 0;
@@ -46,6 +51,7 @@ public class WindowCollection extends WindowAdapter{
     //lastLocation = null;
     
     windowList = new JFrame[4];
+    myWindows = new fridge.windows.MyWindow[4];
     
     addNew("MainWin1");
   }
@@ -78,7 +84,11 @@ public class WindowCollection extends WindowAdapter{
       
       break;
     case "HelpWin":
-      windowList[windowCount] = winMaker.newHelpWin(this);
+      //windowList[windowCount] = winMaker.newHelpWin(this);
+      //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
+      fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener();
+      myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
+      
     }
     windowCount++;
     System.out.println("[DEBUG] window count after creation == " + windowCount);

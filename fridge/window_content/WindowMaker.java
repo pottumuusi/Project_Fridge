@@ -64,7 +64,7 @@ public class WindowMaker{
     return frame;
   }
   
-  public JFrame newHelpWin(fridge.window_content.WindowCollection controller){
+  /*public JFrame newHelpWin(fridge.window_content.WindowCollection controller){
     JFrame frame = new ListenedFrame(controller, "Help");
     fridge.action_handling.ContainerListeners contListeners = fridgeInstance.getContListeners();
     //fridge.action_handling.MyListListener listListener = contListeners.getListListener();
@@ -83,7 +83,43 @@ public class WindowMaker{
     // deal with window spawn location!!!!!!
     
     return frame;
+  }*/
+  
+  public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
+                           fridge.action_handling.ClassListSelectionListener CLSListener){
+    JFrame frame = new ListenedFrame(controller, "Help");
+    
+    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
+    frame.setJMenuBar(menu.createMenuBar("help"));
+    frame.setContentPane(cont.createContentPane("help", CLSListener));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
   }
+  
+  /*public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
+                           fridge.action_handling.MyListSelectionListener LSListener){
+    JFrame frame = new ListenedFrame(controller, "Help");
+    
+    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
+    frame.setJMenuBar(menu.createMenuBar("help"));
+    frame.setContentPane(cont.createContentPane("help", LSListener));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }*/
   
   /*public void closed(WindowEvent e){
     System.out.println("window closed");

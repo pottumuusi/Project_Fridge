@@ -26,18 +26,37 @@ public class Containers{
   public Container createContentPane(String cpType){
     JPanel contentPane = new JPanel(new BorderLayout());
     
-    System.out.println("[DEBUG] Creating content pane with type: " + cpType);
+    createMethodSelection(cpType, contentPane);
     
+    return contentPane;
+  }
+  
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassListSelectionListener CLSListener){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    //System.out.println("[DEBUG] Creating content pane with type: " + cpType);
+    
+    createMethodSelection(cpType, contentPane, CLSListener);
+    
+    return contentPane;
+  }
+  
+  private void createMethodSelection(String cpType, JPanel contentPane){
     switch (cpType){
     case "mainWin1":
       createMainWin1Content(contentPane);
       break;
+    }
+  }
+  
+  private void createMethodSelection(String cpType, JPanel contentPane,
+                               fridge.action_handling.ClassListSelectionListener CLSListener){
+    switch (cpType){
     case "help":
-      createHelpContent(contentPane);
+      createHelpContent(contentPane, CLSListener);
       break;
     }
-    
-    return contentPane;
   }
   
   private void createMainWin1Content(JPanel contentPane){
@@ -52,6 +71,62 @@ public class Containers{
     //Add the text area to the content pane.
     contentPane.add(scrollPane, BorderLayout.CENTER);
   }
+  
+  /*private void createHelpContent(JPanel contentPane,
+                                 fridge.action_handling.MyListSelectionListener LSListener){
+    JTextArea output;
+    JScrollPane scrollPane, listScrollPane;
+    DefaultListModel listModel;
+    ListSelectionModel listSelectionModel;
+    JList list;
+    
+    String[] listData = {"first", "second", "third"};
+    list = new JList(listData);
+    
+    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    list.setSelectedIndex(0);
+    list.setVisibleRowCount(5);
+    
+    listSelectionModel = list.getSelectionModel();
+    listSelectionModel.addListSelectionListener(LSListener);
+    
+    listScrollPane = new JScrollPane(list);
+    contentPane.add(listScrollPane, BorderLayout.WEST);
+    contentPane.setOpaque(true);
+    output = new JTextArea(5, 30);
+    output.setEditable(false);
+    scrollPane = new JScrollPane(output);
+    
+    contentPane.add(scrollPane, BorderLayout.EAST);
+  }*/
+  
+  private void createHelpContent(JPanel contentPane,
+                                 fridge.action_handling.ClassListSelectionListener CLSListener){
+    JTextArea output;
+    JScrollPane scrollPane, listScrollPane;
+    DefaultListModel listModel;
+    ListSelectionModel listSelectionModel;
+    JList list;
+    
+    String[] listData = {"first", "second", "third"};
+    list = new JList(listData);
+    
+    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    list.setSelectedIndex(0);
+    list.setVisibleRowCount(5);
+    
+    listSelectionModel = list.getSelectionModel();
+    listSelectionModel.addListSelectionListener(CLSListener);
+    
+    listScrollPane = new JScrollPane(list);
+    contentPane.add(listScrollPane, BorderLayout.WEST);
+    contentPane.setOpaque(true);
+    output = new JTextArea(5, 30);
+    output.setEditable(false);
+    scrollPane = new JScrollPane(output);
+    
+    contentPane.add(scrollPane, BorderLayout.EAST);
+}
   
   private void createHelpContent(JPanel contentPane){
     JTextArea output;
@@ -77,7 +152,8 @@ public class Containers{
     list.setVisibleRowCount(5);
     
     listSelectionModel = list.getSelectionModel();
-    listSelectionModel.addListSelectionListener(contListeners.getLSListener());
+    //listSelectionModel.addListSelectionListener(contListeners.getLSListener());
+    listSelectionModel.addListSelectionListener(new fridge.action_handling.MyListSelectionListener());
     
     listScrollPane = new JScrollPane(list);
     contentPane.add(listScrollPane, BorderLayout.WEST);
