@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class HelpWindow extends fridge.windows.CallableByListener{
   private int selectedListIndex;
   //private fridge.action_handling.MyListSelectionListener LSListener;
-  private fridge.action_handling.ClassListSelectionListener CLSListener;
+  //private fridge.action_handling.ClassListSelectionListener CLSListener;
   
   /*public HelpWindow(JFrame frame){
     super(frame);
@@ -37,8 +37,16 @@ public class HelpWindow extends fridge.windows.CallableByListener{
   }
   
   protected void handleEvent(String listenerType){
-    int[] selectedIndexes = new int[CLSListener.getSelectedIndexesLen()];
-    selectedIndexes = CLSListener.getSelectedIndexes();
+    //System.out.println("[DEBUG] CLSListener.getSelectedIndexesLen() ==");
+    
+    switch (listenerType){
+    case "ased":
+      break;
+    }
+    
+    System.out.println("[DEBUG] HelpWindow.handleEvent:\n\ttype of calling listener is: " + listenerType);
+    //int[] selectedIndexes = new int[CLSListener.getSelectedIndexesLen()];
+    //selectedIndexes = CLSListener.getSelectedIndexes();
   }
   
   //private printSelected

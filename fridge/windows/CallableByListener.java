@@ -35,9 +35,9 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected void addListener(fridge.action_handling.MyListener ML_ptr){
     int i;
     //fridge.action_handling.MyListener[] temp;
-    if (null != listeners){
+    if (null == listeners){
       listeners = new fridge.action_handling.MyListener[1];
-      listeners[1] = ML_ptr;
+      listeners[0] = ML_ptr;
     }
     else{
       fridge.action_handling.MyListener[] temp = new fridge.action_handling.MyListener[listeners.length + 1];
