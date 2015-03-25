@@ -123,6 +123,7 @@ public class Containers{
     contentPane.setOpaque(true);
     output = new JTextArea(5, 30);
     output.setEditable(false);
+    output.setName("theText");
     scrollPane = new JScrollPane(output);
     
     contentPane.add(scrollPane, BorderLayout.EAST);

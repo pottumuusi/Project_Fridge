@@ -88,7 +88,7 @@ public class WindowCollection extends WindowAdapter{
       //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
       fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener();
       myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
-      
+      break;
     }
     windowCount++;
     System.out.println("[DEBUG] window count after creation == " + windowCount);
