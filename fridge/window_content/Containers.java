@@ -1,14 +1,19 @@
 package fridge.window_content;
 
 import java.awt.*;
-//import java.swing.*;
 
 import javax.swing.JList;
+import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.GroupLayout;
 import javax.swing.JScrollPane;
+import javax.swing.GroupLayout.*;
+import javax.swing.LayoutStyle;
 
 public class Containers{
   //JTextArea output;
@@ -82,13 +87,27 @@ public class Containers{
     }
   }
   
+  /*private void createMainWin1Content(JPanel contentPane,
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
+                                     fridge.action_handling.ClassActionListener[] CAListenerList){*/
   private void createMainWin1Content(JPanel contentPane,
-                                     fridge.action_handling.ClassListSelectionListener[] listenerList){
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
     //JTextArea output;
     JScrollPane view0ScrollPane, view1ScrollPane;
     DefaultListModel listModel;
     ListSelectionModel listSelectionModel;
     JList view0, view1;
+    JButton folderShowGroup, quickSave, quickLoad, qa_showGroup, qa_operations;
+    JLabel folderLabel = new JLabel();
+    JLabel quickAccessLabel = new JLabel();
+    //JLabel folderExplanation = new JLabel();
+    //JLabel quickAccessExplanation = new JLabel();
+    
+    folderLabel.setText("Folder");
+    quickAccessLabel.setText("Quick Access");
+    
+    
+    //pack();
     
     //create upper view
     String[] view0Data = {"folder1    group1", "folder2"}; // still testing. will be initialized empty
@@ -98,11 +117,33 @@ public class Containers{
     view0.setSelectedIndex(0);
     view0.setVisibleRowCount(5);
     listSelectionModel = view0.getSelectionModel();
-    listSelectionModel.addListSelectionListener(listenerList[0]);
+    listSelectionModel.addListSelectionListener(CLSListenerList[0]);
     
     view0ScrollPane = new JScrollPane(view0);
-    contentPane.add(view0ScrollPane, BorderLayout.PAGE_START);
+    //contentPane.add(view0ScrollPane, BorderLayout.PAGE_START);
     //contentPane.add(view0ScrollPane);
+    
+    // create buttons
+    folderShowGroup = new JButton("Show group");
+    folderShowGroup.setVerticalTextPosition(AbstractButton.CENTER);
+    folderShowGroup.setHorizontalTextPosition(AbstractButton.LEADING);
+    //contentPane.add(folderShowGroup, BorderLayout.NORTH);
+    
+    quickSave = new JButton("Quick save");
+    quickSave.setVerticalTextPosition(AbstractButton.CENTER);
+    quickSave.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    quickLoad = new JButton("Quick load");
+    quickLoad.setVerticalTextPosition(AbstractButton.CENTER);
+    quickLoad.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    qa_showGroup = new JButton("Show group");
+    qa_showGroup.setVerticalTextPosition(AbstractButton.CENTER);
+    qa_showGroup.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    qa_operations = new JButton("Quick access operations");
+    qa_operations.setVerticalTextPosition(AbstractButton.CENTER);
+    qa_operations.setHorizontalTextPosition(AbstractButton.LEADING);
     
     
     String[] view1Data = {"folder1_qa", "folder2_qa"}; // still testing
@@ -112,15 +153,113 @@ public class Containers{
     view1.setSelectedIndex(0);
     view1.setVisibleRowCount(5);
     listSelectionModel = view1.getSelectionModel();
-    listSelectionModel.addListSelectionListener(listenerList[1]);
+    listSelectionModel.addListSelectionListener(CLSListenerList[1]);
     //output = new JTextArea(5, 30);
     //output.setEditable(false);
     view1ScrollPane = new JScrollPane(view1);
-    contentPane.add(view1ScrollPane, BorderLayout.PAGE_END);
+    //contentPane.add(view1ScrollPane, BorderLayout.PAGE_END);
     //contentPane.add(view1ScrollPane);
     
     //Create a scrolled text area.
     contentPane.setOpaque(true);
+    System.out.println("[DEBUG] here");
+    GroupLayout layout = new GroupLayout(contentPane);
+    contentPane.setLayout(layout);
+    
+    //create group for horizontal axis
+    
+    ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup h1 = layout.createSequentialGroup();
+    //SequentialGroup h2 = layout.createSequentialGroup();
+    ParallelGroup h2 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+    ParallelGroup h3 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+    SequentialGroup h4 = layout.createSequentialGroup();
+    SequentialGroup h5 = layout.createSequentialGroup();
+    
+    
+    h2.addComponent(folderLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    h2.addComponent(view0ScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    //h2.addComponent(folderShowGroup, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    //h2.addComponent(quickSave, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+
+    //h2.addComponent(view0ScrollPane);
+    //h2.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    //h2.addComponent(folderShowGroup, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    
+    
+    h3.addComponent(view1ScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    h3.addComponent(quickAccessLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    
+    //h4.addContainerGap();
+    h4.addComponent(folderShowGroup);
+    h4.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h4.addComponent(quickSave);
+    h4.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h4.addComponent(quickLoad);
+    //h4.addContainerGap();
+    
+    h5.addComponent(qa_showGroup);
+    h5.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h5.addComponent(qa_operations);
+    h5.addContainerGap();
+    
+    h1.addContainerGap();
+    h4.addGroup(h5);
+    h3.addGroup(h4);
+    h2.addGroup(h3);
+    h1.addGroup(h2);
+    h1.addContainerGap();
+    
+    hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
+    
+    layout.setHorizontalGroup(hGroup);
+    System.out.println("[DEBUG] here");
+    
+    ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    SequentialGroup v1 = layout.createSequentialGroup();
+    ParallelGroup v3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    ParallelGroup v4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    v3.addComponent(folderShowGroup);
+    v3.addComponent(quickSave);
+    v3.addComponent(quickLoad);
+    
+    v4.addComponent(qa_showGroup);
+    v4.addComponent(qa_operations);
+    
+    
+    v1.addContainerGap();
+    
+    /*ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+    v2.addComponent(view1ScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE);*/
+    
+    SequentialGroup v2 = layout.createSequentialGroup();
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
+    v2.addComponent(quickAccessLabel);
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v2.addComponent(view1ScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE);
+    //v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v2.addContainerGap();
+    
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addComponent(folderLabel);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addComponent(view0ScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    //v1.addComponent(folderShowGroup);
+    //v1.addComponent(quickSave);
+    //v1.addComponent(quickLoad);
+    v1.addGroup(v3);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
+    v1.addGroup(v2);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addGroup(v4);
+    v1.addContainerGap();
+    
+    vGroup.addGroup(v1);
+    
+    layout.setVerticalGroup(vGroup);
   }
   
   
