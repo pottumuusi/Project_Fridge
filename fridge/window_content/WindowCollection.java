@@ -85,7 +85,7 @@ public class WindowCollection extends WindowAdapter{
       
       break;
     case "HelpWin":
-      JTextArea helpTexts = null;
+      JTextArea helpTexts = new JTextArea(5, 30);
       //windowList[windowCount] = winMaker.newHelpWin(this);
       //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
       fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener();

@@ -142,7 +142,7 @@ public class Containers{
     listScrollPane = new JScrollPane(list);
     contentPane.add(listScrollPane, BorderLayout.WEST);
     contentPane.setOpaque(true);
-    helpTextArea = new JTextArea(5, 30);
+    //helpTextArea = new JTextArea(5, 30);
     helpTextArea.setEditable(false);
     helpTextArea.setName("theText");
     scrollPane = new JScrollPane(helpTextArea);
