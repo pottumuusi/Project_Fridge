@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.JScrollPane;
 import javax.swing.GroupLayout.*;
@@ -97,7 +98,8 @@ public class Containers{
     DefaultListModel listModel;
     ListSelectionModel listSelectionModel;
     JList view0, view1;
-    JButton folderShowGroup, quickSave, quickLoad, qa_showGroup, qa_operations;
+    JTextField folderName = new JTextField();
+    JButton folderShowGroup, quickSave, quickLoad, qa_showGroup, qa_operations, previous;
     JLabel folderLabel = new JLabel();
     JLabel quickAccessLabel = new JLabel();
     //JLabel folderExplanation = new JLabel();
@@ -145,6 +147,10 @@ public class Containers{
     qa_operations.setVerticalTextPosition(AbstractButton.CENTER);
     qa_operations.setHorizontalTextPosition(AbstractButton.LEADING);
     
+    previous = new JButton("Previous");
+    previous.setVerticalTextPosition(AbstractButton.CENTER);
+    previous.setHorizontalTextPosition(AbstractButton.LEADING);
+    
     
     String[] view1Data = {"folder1_qa", "folder2_qa"}; // still testing
     view1 = new JList(view1Data);
@@ -167,7 +173,6 @@ public class Containers{
     contentPane.setLayout(layout);
     
     //create group for horizontal axis
-    
     ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
     
     SequentialGroup h1 = layout.createSequentialGroup();
@@ -176,17 +181,19 @@ public class Containers{
     ParallelGroup h3 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
     SequentialGroup h4 = layout.createSequentialGroup();
     SequentialGroup h5 = layout.createSequentialGroup();
+    SequentialGroup h6 = layout.createSequentialGroup();
     
     
     h2.addComponent(folderLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    h2.addComponent(folderName);
     h2.addComponent(view0ScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+    
     //h2.addComponent(folderShowGroup, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
     //h2.addComponent(quickSave, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
 
     //h2.addComponent(view0ScrollPane);
     //h2.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     //h2.addComponent(folderShowGroup, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
-    
     
     h3.addComponent(view1ScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
     h3.addComponent(quickAccessLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
@@ -204,7 +211,13 @@ public class Containers{
     h5.addComponent(qa_operations);
     h5.addContainerGap();
     
+    /*h6.addComponent(previous);
+    h6.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h6.addComponent(folderName);
+    h6.addContainerGap();*/
+    
     h1.addContainerGap();
+    //h5.addGroup(h6);
     h4.addGroup(h5);
     h3.addGroup(h4);
     h2.addGroup(h3);
@@ -218,8 +231,11 @@ public class Containers{
     
     ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
     SequentialGroup v1 = layout.createSequentialGroup();
+    SequentialGroup v2 = layout.createSequentialGroup();
     ParallelGroup v3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
     ParallelGroup v4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    //ParallelGroup v5 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
     
     v3.addComponent(folderShowGroup);
     v3.addComponent(quickSave);
@@ -228,13 +244,12 @@ public class Containers{
     v4.addComponent(qa_showGroup);
     v4.addComponent(qa_operations);
     
+    /*v5.addComponent(previous);
+    v5.addComponent(folderName);*/
     
     v1.addContainerGap();
-    
     /*ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
     v2.addComponent(view1ScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE);*/
-    
-    SequentialGroup v2 = layout.createSequentialGroup();
     v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
     v2.addComponent(quickAccessLabel);
     v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
@@ -245,6 +260,9 @@ public class Containers{
     v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
     v1.addComponent(folderLabel);
     v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addComponent(folderName);
+    //v1.addGroup(v5);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
     v1.addComponent(view0ScrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE);
     v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
     //v1.addComponent(folderShowGroup);
