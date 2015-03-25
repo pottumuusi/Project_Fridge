@@ -42,6 +42,16 @@ public class Containers{
     return contentPane;
   }
   
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassListSelectionListener CLSListener,
+                                     JTextArea helpText){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    createMethodSelection(cpType, contentPane, CLSListener, helpText);
+    
+    return contentPane;
+  }
+  
   private void createMethodSelection(String cpType, JPanel contentPane){
     switch (cpType){
     case "mainWin1":
@@ -55,6 +65,17 @@ public class Containers{
     switch (cpType){
     case "help":
       createHelpContent(contentPane, CLSListener);
+      break;
+    }
+  }
+  
+  private void createMethodSelection(String cpType,
+                                     JPanel contentPane,
+                                     fridge.action_handling.ClassListSelectionListener CLSListener,
+                                     JTextArea helpText){
+    switch (cpType){
+    case "help":
+      createHelpContent(contentPane, CLSListener, helpText);
       break;
     }
   }
@@ -99,6 +120,35 @@ public class Containers{
     
     contentPane.add(scrollPane, BorderLayout.EAST);
   }*/
+  
+  private void createHelpContent(JPanel contentPane,
+                                 fridge.action_handling.ClassListSelectionListener CLSListener,
+                                 JTextArea helpTextArea){
+    JScrollPane scrollPane, listScrollPane;
+    DefaultListModel listModel;
+    ListSelectionModel listSelectionModel;
+    JList list;
+    
+    String[] listData = {"first", "second", "third"};
+    list = new JList(listData);
+    
+    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    list.setSelectedIndex(0);
+    list.setVisibleRowCount(5);
+    
+    listSelectionModel = list.getSelectionModel();
+    listSelectionModel.addListSelectionListener(CLSListener);
+    
+    listScrollPane = new JScrollPane(list);
+    contentPane.add(listScrollPane, BorderLayout.WEST);
+    contentPane.setOpaque(true);
+    helpTextArea = new JTextArea(5, 30);
+    helpTextArea.setEditable(false);
+    helpTextArea.setName("theText");
+    scrollPane = new JScrollPane(helpTextArea);
+    
+    contentPane.add(scrollPane, BorderLayout.EAST);
+  }
   
   private void createHelpContent(JPanel contentPane,
                                  fridge.action_handling.ClassListSelectionListener CLSListener){

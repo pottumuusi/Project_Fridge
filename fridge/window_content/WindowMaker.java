@@ -1,5 +1,6 @@
 package fridge.window_content;
 
+import javax.swing.JTextArea;
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
@@ -89,11 +90,32 @@ public class WindowMaker{
                            fridge.action_handling.ClassListSelectionListener CLSListener){
     JFrame frame = new ListenedFrame(controller, "Help");
     
+    
     fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("help"));
     frame.setContentPane(cont.createContentPane("help", CLSListener));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }
+  
+  public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
+                           fridge.action_handling.ClassListSelectionListener CLSListener,
+                           JTextArea helpText){
+    JFrame frame = new ListenedFrame(controller, "Help");
+    
+    
+    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
+    frame.setJMenuBar(menu.createMenuBar("help"));
+    frame.setContentPane(cont.createContentPane("help", CLSListener, helpText));
     
     frame.setSize(450, 260);
     frame.setVisible(true);

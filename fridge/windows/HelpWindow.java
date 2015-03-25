@@ -1,16 +1,20 @@
 package fridge.windows;
 
 import javax.swing.JFrame;
+
 import java.awt.Container;
 import java.awt.Component;
+
 import javax.accessibility.AccessibleEditableText;
 import javax.accessibility.AccessibleComponent;
 import javax.accessibility.AccessibleContext;
 import javax.accessibility.AccessibleText;
+import javax.swing.JTextArea;
 
 public class HelpWindow extends fridge.windows.CallableByListener{
   private int selectedListIndex;
   private int myWindowIndex;
+  private JTextArea helpTexts;
   //private fridge.action_handling.MyListSelectionListener LSListener;
   //private fridge.action_handling.ClassListSelectionListener CLSListener;
   
@@ -21,6 +25,14 @@ public class HelpWindow extends fridge.windows.CallableByListener{
   
   public HelpWindow(JFrame frame, fridge.action_handling.ClassListSelectionListener CLSL_ptr){
     super(frame, CLSL_ptr);
+  }
+  
+  public HelpWindow(fridge.window_content.WindowCollection winColl,
+                    fridge.window_content.WindowMaker winMaker,
+                    fridge.action_handling.ClassListSelectionListener CLSL_ptr,
+                    JTextArea textArea_ptr){
+    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr), CLSL_ptr);
+    helpTexts = textArea_ptr;
   }
   
   /*public HelpWindow(JFrame frame, fridge.action_handling.MyListSelectionListener LSL_ptr){

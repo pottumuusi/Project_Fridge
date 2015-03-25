@@ -1,6 +1,7 @@
 package fridge.window_content;
 
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -84,10 +85,12 @@ public class WindowCollection extends WindowAdapter{
       
       break;
     case "HelpWin":
+      JTextArea helpTexts = null;
       //windowList[windowCount] = winMaker.newHelpWin(this);
       //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
       fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener();
-      myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
+      //myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
+      myWindows[0] = new fridge.windows.HelpWindow(this, winMaker, CLSListener, helpTexts); //replace 0 with windowCount when ready
       break;
     }
     windowCount++;
