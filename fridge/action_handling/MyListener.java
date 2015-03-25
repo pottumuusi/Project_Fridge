@@ -3,13 +3,19 @@ package fridge.action_handling;
 public abstract class MyListener{
   //private fridge.windows.CallableByListener listened;
   private String listenerType;
+  private String listenerName;
   
-  public MyListener(String initLType){
+  public MyListener(String initLType, String initLName){
     listenerType = initLType;
+    listenerName = initLName;
   }
   
   public String getType(){
     return listenerType;
+  }
+  
+  public String getName(){
+    return listenerName;
   }
   
   public void setListenedCall(fridge.windows.CallableByListener CBL_ptr){

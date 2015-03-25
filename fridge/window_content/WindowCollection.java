@@ -80,17 +80,24 @@ public class WindowCollection extends WindowAdapter{
     
     switch (winType){
     case "MainWin1":
-      windowList[windowCount] = winMaker.newMainWin1(this);
-      //winMaker.newMainWin1(this);
+      //JTextArea fileView0 = new JTextArea(5,30);
       
+      fridge.action_handling.ClassListSelectionListener[] listenerList;
+      listenerList = new fridge.action_handling.ClassListSelectionListener[2];
+      listenerList[0] = new fridge.action_handling.ClassListSelectionListener("folder");
+      listenerList[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
+      myWindows[windowCount] = new fridge.windows.MainWindow1(this, winMaker, listenerList);
+      //windowList[windowCount] = winMaker.newMainWin1(this, winMaker, listenerList);
+      //windowList[windowCount] = winMaker.newMainWin1(this);
+      //winMaker.newMainWin1(this);
       break;
     case "HelpWin":
       JTextArea helpTexts = new JTextArea(5, 30);
+      fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener("helpText");
       //windowList[windowCount] = winMaker.newHelpWin(this);
       //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
-      fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener();
       //myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
-      myWindows[0] = new fridge.windows.HelpWindow(this, winMaker, CLSListener, helpTexts); //replace 0 with windowCount when ready
+      myWindows[windowCount] = new fridge.windows.HelpWindow(this, winMaker, CLSListener, helpTexts); //replace 0 with windowCount when ready
       break;
     }
     windowCount++;

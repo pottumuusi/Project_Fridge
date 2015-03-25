@@ -23,10 +23,11 @@ public class Containers{
     contListeners = CL_ptr;
   }
   
-  public Container createContentPane(String cpType){
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
     JPanel contentPane = new JPanel(new BorderLayout());
     
-    createMethodSelection(cpType, contentPane);
+    createMethodSelection(cpType, contentPane, CLSListenerList);
     
     return contentPane;
   }
@@ -52,10 +53,11 @@ public class Containers{
     return contentPane;
   }
   
-  private void createMethodSelection(String cpType, JPanel contentPane){
+  private void createMethodSelection(String cpType, JPanel contentPane,
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
     switch (cpType){
     case "mainWin1":
-      createMainWin1Content(contentPane);
+      createMainWin1Content(contentPane, CLSListenerList);
       break;
     }
   }
@@ -80,46 +82,47 @@ public class Containers{
     }
   }
   
-  private void createMainWin1Content(JPanel contentPane){
-    JTextArea output;
-    JScrollPane scrollPane;
-    //Create a scrolled text area.
-    contentPane.setOpaque(true);
-    output = new JTextArea(5, 30);
-    output.setEditable(false);
-    scrollPane = new JScrollPane(output);
-    
-    //Add the text area to the content pane.
-    contentPane.add(scrollPane, BorderLayout.CENTER);
-  }
-  
-  /*private void createHelpContent(JPanel contentPane,
-                                 fridge.action_handling.MyListSelectionListener LSListener){
-    JTextArea output;
-    JScrollPane scrollPane, listScrollPane;
+  private void createMainWin1Content(JPanel contentPane,
+                                     fridge.action_handling.ClassListSelectionListener[] listenerList){
+    //JTextArea output;
+    JScrollPane view0ScrollPane, view1ScrollPane;
     DefaultListModel listModel;
     ListSelectionModel listSelectionModel;
-    JList list;
+    JList view0, view1;
     
-    String[] listData = {"first", "second", "third"};
-    list = new JList(listData);
+    //create upper view
+    String[] view0Data = {"folder1    group1", "folder2"}; // still testing. will be initialized empty
+    view0 = new JList(view0Data);
     
-    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    list.setSelectedIndex(0);
-    list.setVisibleRowCount(5);
+    view0.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    view0.setSelectedIndex(0);
+    view0.setVisibleRowCount(5);
+    listSelectionModel = view0.getSelectionModel();
+    listSelectionModel.addListSelectionListener(listenerList[0]);
     
-    listSelectionModel = list.getSelectionModel();
-    listSelectionModel.addListSelectionListener(LSListener);
+    view0ScrollPane = new JScrollPane(view0);
+    contentPane.add(view0ScrollPane, BorderLayout.PAGE_START);
+    //contentPane.add(view0ScrollPane);
     
-    listScrollPane = new JScrollPane(list);
-    contentPane.add(listScrollPane, BorderLayout.WEST);
+    
+    String[] view1Data = {"folder1_qa", "folder2_qa"}; // still testing
+    view1 = new JList(view1Data);
+    
+    view1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    view1.setSelectedIndex(0);
+    view1.setVisibleRowCount(5);
+    listSelectionModel = view1.getSelectionModel();
+    listSelectionModel.addListSelectionListener(listenerList[1]);
+    //output = new JTextArea(5, 30);
+    //output.setEditable(false);
+    view1ScrollPane = new JScrollPane(view1);
+    contentPane.add(view1ScrollPane, BorderLayout.PAGE_END);
+    //contentPane.add(view1ScrollPane);
+    
+    //Create a scrolled text area.
     contentPane.setOpaque(true);
-    output = new JTextArea(5, 30);
-    output.setEditable(false);
-    scrollPane = new JScrollPane(output);
-    
-    contentPane.add(scrollPane, BorderLayout.EAST);
-  }*/
+  }
+  
   
   private void createHelpContent(JPanel contentPane,
                                  fridge.action_handling.ClassListSelectionListener CLSListener,
@@ -145,6 +148,7 @@ public class Containers{
     //helpTextArea = new JTextArea(5, 30);
     helpTextArea.setEditable(false);
     helpTextArea.setName("theText");
+    helpTextArea.setLineWrap(true);
     scrollPane = new JScrollPane(helpTextArea);
     
     contentPane.add(scrollPane, BorderLayout.EAST);
@@ -177,7 +181,7 @@ public class Containers{
     scrollPane = new JScrollPane(output);
     
     contentPane.add(scrollPane, BorderLayout.EAST);
-}
+  }
   
   private void createHelpContent(JPanel contentPane){
     JTextArea output;
@@ -227,8 +231,6 @@ public class Containers{
   
   /*private class MyList extends JPanel
                        implements ListSelectionListener{
-    
-    
     public MyList(){
       super(new BorderLayout());
       
@@ -250,6 +252,4 @@ public class Containers{
       
     }
   }*/
-  
-  
 }

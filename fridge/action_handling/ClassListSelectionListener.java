@@ -10,13 +10,13 @@ public class ClassListSelectionListener extends fridge.action_handling.MyListene
   fridge.windows.CallableByListener listened;
   private int[] selectedIndexes;
   
-  public ClassListSelectionListener(){
-    super("ClassListSelectionListener");
+  public ClassListSelectionListener(String name){
+    super("ClassListSelectionListener", name);
     selectedIndexes = null;
   }
   
-  public ClassListSelectionListener(fridge.windows.CallableByListener winToListen){
-    super("ClassListSelectionListener");
+  public ClassListSelectionListener(fridge.windows.CallableByListener winToListen, String name){
+    super("ClassListSelectionListener", name);
     listened = winToListen;
     selectedIndexes = null;
   }
