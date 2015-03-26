@@ -1,18 +1,33 @@
 package fridge.windows;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 
-public class MainWindow1 extends fridge.windows.CallableByListener{
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+
+public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener{
+  private JTextField folderName;
   private int[] selectedFolders;
   private int[] selectedGroups;
   private int myWindowIndex;
   
   public MainWindow1(fridge.window_content.WindowCollection winColl,
                      fridge.window_content.WindowMaker winMaker,
-                     fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs){
-    super(winMaker.newMainWin1(winColl, CLSL_ptrs), CLSL_ptrs);
+                     fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs,
+                     JTextField fn_par){
+    super(winMaker.newMainWin1(winColl, CLSL_ptrs, fn_par), CLSL_ptrs);
     selectedFolders = null;
     selectedGroups = null;
+    
+    folderName = fn_par;
+    folderName.getDocument().addDocumentListener(this);
+    /*InputMap im = folderName.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    ActionMap am = folderName.getActionMap();
+    im.put(KeyStroke.getKeyStroke("ENTER"),*/
+    
     System.out.println("[DEBUG] before pack()");
     frame.pack();
     System.out.println("[DEBUG] after pack()");
@@ -31,7 +46,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       if ("folder" == ML_ptr.getName()){
         selectedFolders = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
         selectedFolders = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
-        
+        printSelectedFolders();
+        textFieldString();
+        folderName.setText("set text");
       }
       else if ("quickAccess" == ML_ptr.getName()){
         selectedGroups = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
@@ -39,5 +56,29 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       }
       break;
     }
+  }
+  
+  private void textFieldString(){
+    System.out.println("fieldStr == " + folderName.getText());
+  }
+  
+  private void printSelectedFolders(){
+    int i;
+    
+    System.out.print("Selected folders:\n\t");
+    for (i = 0; i < selectedFolders.length; i++){
+      System.out.print(selectedFolders[i] + ", ");
+    }
+  }
+  
+  public void insertUpdate(DocumentEvent ev) {
+    textFieldString();
+  }
+
+  public void removeUpdate(DocumentEvent ev) {
+    textFieldString();
+  }
+
+  public void changedUpdate(DocumentEvent ev) {
   }
 }

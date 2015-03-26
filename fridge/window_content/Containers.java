@@ -29,14 +29,14 @@ public class Containers{
     contListeners = CL_ptr;
   }
   
-  public Container createContentPane(String cpType,
+  /*public Container createContentPane(String cpType,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
     JPanel contentPane = new JPanel(new BorderLayout());
     
     createMethodSelection(cpType, contentPane, CLSListenerList);
     
     return contentPane;
-  }
+  }*/
   
   public Container createContentPane(String cpType,
                                      fridge.action_handling.ClassListSelectionListener CLSListener){
@@ -45,6 +45,16 @@ public class Containers{
     //System.out.println("[DEBUG] Creating content pane with type: " + cpType);
     
     createMethodSelection(cpType, contentPane, CLSListener);
+    
+    return contentPane;
+  }
+  
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
+                                     JTextField folderName){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    createMethodSelection(cpType, contentPane, CLSListenerList, folderName);
     
     return contentPane;
   }
@@ -59,11 +69,13 @@ public class Containers{
     return contentPane;
   }
   
-  private void createMethodSelection(String cpType, JPanel contentPane,
-                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
+  private void createMethodSelection(String cpType,
+                                     JPanel contentPane,
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
+                                     JTextField folderName){
     switch (cpType){
     case "mainWin1":
-      createMainWin1Content(contentPane, CLSListenerList);
+      createMainWin1Content(contentPane, CLSListenerList, folderName);
       break;
     }
   }
@@ -91,14 +103,20 @@ public class Containers{
   /*private void createMainWin1Content(JPanel contentPane,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                                      fridge.action_handling.ClassActionListener[] CAListenerList){*/
+  /*private void createMainWin1Content(JPanel contentPane,
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
+                                     JScrollPane[] scrollPaneList,
+                                     JButton[] buttonList,
+                                     JLabel[] labelList){*/
   private void createMainWin1Content(JPanel contentPane,
-                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
+                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
+                                     JTextField folderName){
     //JTextArea output;
     JScrollPane view0ScrollPane, view1ScrollPane;
     DefaultListModel listModel;
     ListSelectionModel listSelectionModel;
     JList view0, view1;
-    JTextField folderName = new JTextField();
+    //JTextField folderName = new JTextField();
     JButton folderShowGroup, quickSave, quickLoad, qa_showGroup, qa_operations, previous;
     JLabel folderLabel = new JLabel();
     JLabel quickAccessLabel = new JLabel();

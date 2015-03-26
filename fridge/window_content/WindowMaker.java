@@ -1,5 +1,6 @@
 package fridge.window_content;
 
+import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JFrame;
 import java.awt.*;
@@ -66,7 +67,8 @@ public class WindowMaker{
   }*/
   
   public JFrame newMainWin1(fridge.window_content.WindowCollection controller,
-                            fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
+                            fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
+                            JTextField folderName){
     //JFrame frame = new JFrame(controller, "Fridge"); // create this frame in constructor of windowCollection and store it in windowCollection
     JFrame frame = new ListenedFrame(controller, "Fridge");
     
@@ -81,7 +83,7 @@ public class WindowMaker{
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("full"));
-    frame.setContentPane(cont.createContentPane("mainWin1", CLSListenerList));
+    frame.setContentPane(cont.createContentPane("mainWin1", CLSListenerList, folderName));
     
     decideLocation(frame);
     

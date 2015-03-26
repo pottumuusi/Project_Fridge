@@ -26,9 +26,9 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     System.out.println("Help window created!");
   }*/
   
-  public HelpWindow(JFrame frame, fridge.action_handling.ClassListSelectionListener CLSL_ptr){
+  /*public HelpWindow(JFrame frame, fridge.action_handling.ClassListSelectionListener CLSL_ptr){
     super(frame, CLSL_ptr);
-  }
+  }*/
   
   public HelpWindow(fridge.window_content.WindowCollection winColl,
                     fridge.window_content.WindowMaker winMaker,
