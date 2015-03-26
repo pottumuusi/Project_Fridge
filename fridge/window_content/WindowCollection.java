@@ -89,8 +89,9 @@ public class WindowCollection extends WindowAdapter{
       CLSL_list[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
       
       fridge.action_handling.ClassActionListener[] CAL_list;
-      CAL_list = new fridge.action_handling.ClassActionListener[1];
+      CAL_list = new fridge.action_handling.ClassActionListener[2];
       CAL_list[0] = new fridge.action_handling.ClassActionListener("folderName");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("folderShowGroup");
       
       JTextField folderName = new JTextField("new field");
       myWindows[windowCount] = new fridge.windows.MainWindow1(this, winMaker, CLSL_list, CAL_list, folderName);

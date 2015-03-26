@@ -102,9 +102,6 @@ public class Containers{
     //JLabel folderExplanation = new JLabel();
     //JLabel quickAccessExplanation = new JLabel();
     
-    //add action listeners
-    folderName.addActionListener(CAL_list[0]);
-    
     folderLabel.setText("Folder");
     quickAccessLabel.setText("Quick Access");
     
@@ -148,6 +145,9 @@ public class Containers{
     previous.setVerticalTextPosition(AbstractButton.CENTER);
     previous.setHorizontalTextPosition(AbstractButton.LEADING);
     
+    //add action listeners
+    folderName.addActionListener(CAL_list[0]);
+    folderShowGroup.addActionListener(CAL_list[1]);
     
     String[] view1Data = {"folder1_qa", "folder2_qa"}; // still testing
     view1 = new JList(view1Data);

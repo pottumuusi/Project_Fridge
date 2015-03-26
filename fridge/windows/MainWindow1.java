@@ -61,7 +61,13 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
       }
       break;
     case "ClassActionListener":
-      System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
+	  if ("folderShowGroup" == ML_ptr.getName()){
+		  System.out.println("folderShowGroup press");
+	  }
+	  else if ("folderName" == ML_ptr.getName()){
+		  System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
+	  }
+      
       break;
     }
   }
