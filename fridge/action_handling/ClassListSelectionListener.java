@@ -7,7 +7,7 @@ import javax.swing.event.ListSelectionListener;
 
 //public class ClassListSelectionListener extends fridge.action_handling.MyListSelectionListener{
 public class ClassListSelectionListener extends fridge.action_handling.MyListener implements ListSelectionListener{
-  fridge.windows.CallableByListener listened;
+  private fridge.windows.CallableByListener listened;
   private int[] selectedIndexes;
   
   public ClassListSelectionListener(String name){

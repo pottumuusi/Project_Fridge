@@ -66,7 +66,7 @@ public class WindowMaker{
     return frame;
   }*/
   
-  public JFrame newMainWin1(fridge.window_content.WindowCollection controller,
+  /*public JFrame newMainWin1(fridge.window_content.WindowCollection controller,
                             fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                             JTextField folderName){
     //JFrame frame = new JFrame(controller, "Fridge"); // create this frame in constructor of windowCollection and store it in windowCollection
@@ -77,13 +77,34 @@ public class WindowMaker{
     /*fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.MAE_broker,
                                                                      fridgeInstance.MAE_handler);*/
     //fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance);
-    
+    /*
     
     fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("full"));
     frame.setContentPane(cont.createContentPane("mainWin1", CLSListenerList, folderName));
+    
+    decideLocation(frame);
+    
+    //Display the window.
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    return frame;
+  }*/
+  
+  public JFrame newMainWin1(fridge.window_content.WindowCollection controller,
+                            fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                            fridge.action_handling.ClassActionListener[] CAL_list,
+                            JTextField folderName){
+    JFrame frame = new ListenedFrame(controller, "Fridge");
+    
+    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
+    frame.setJMenuBar(menu.createMenuBar("full"));
+    frame.setContentPane(cont.createContentPane("mainWin1", CLSL_list, CAL_list, folderName));
     
     decideLocation(frame);
     
@@ -114,25 +135,6 @@ public class WindowMaker{
     
     return frame;
   }*/
-  
-  public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
-                           fridge.action_handling.ClassListSelectionListener CLSListener){
-    JFrame frame = new ListenedFrame(controller, "Help");
-    
-    
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
-    fridge.window_content.Containers cont = new fridge.window_content.Containers();
-    
-    frame.setJMenuBar(menu.createMenuBar("help"));
-    frame.setContentPane(cont.createContentPane("help", CLSListener));
-    
-    frame.setSize(450, 260);
-    frame.setVisible(true);
-    
-    decideLocation(frame);
-    
-    return frame;
-  }
   
   public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
                            fridge.action_handling.ClassListSelectionListener CLSListener,

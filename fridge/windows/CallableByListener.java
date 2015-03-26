@@ -27,6 +27,21 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }
   
+  CallableByListener(JFrame frame,
+                     fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                     fridge.action_handling.ClassActionListener[] CAL_list){
+    super(frame);
+    int i;
+    
+    for (i = 0; i < CLSL_list.length; i++){
+      addListener(CLSL_list[i]);
+    }
+    for (i = 0; i < CAL_list.length; i++){
+      addListener(CAL_list[i]);
+    }
+    givePtrToListeners();
+  }
+  
   /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
     handleEvent(ML_ptr.getType(), ML_ptr);
   }*/

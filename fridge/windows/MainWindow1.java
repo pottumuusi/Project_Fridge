@@ -1,5 +1,8 @@
 package fridge.windows;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
@@ -8,7 +11,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 
-public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener{
+public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener, ActionListener{
   private JTextField folderName;
   private int[] selectedFolders;
   private int[] selectedGroups;
@@ -17,13 +20,15 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
   public MainWindow1(fridge.window_content.WindowCollection winColl,
                      fridge.window_content.WindowMaker winMaker,
                      fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs,
+                     fridge.action_handling.ClassActionListener[] CAL_ptrs,
                      JTextField fn_par){
-    super(winMaker.newMainWin1(winColl, CLSL_ptrs, fn_par), CLSL_ptrs);
+    super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par), CLSL_ptrs, CAL_ptrs);
     selectedFolders = null;
     selectedGroups = null;
     
     folderName = fn_par;
     folderName.getDocument().addDocumentListener(this);
+    //folderName.addActionListener(this);
     /*InputMap im = folderName.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     ActionMap am = folderName.getActionMap();
     im.put(KeyStroke.getKeyStroke("ENTER"),*/
@@ -55,11 +60,16 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
         selectedGroups = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
       }
       break;
+    case "ClassActionListener":
+      System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
+      break;
     }
   }
   
+  
+  
   private void textFieldString(){
-    System.out.println("fieldStr == " + folderName.getText());
+    //System.out.println("fieldStr == " + folderName.getText());
   }
   
   private void printSelectedFolders(){
@@ -80,5 +90,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
   }
 
   public void changedUpdate(DocumentEvent ev) {
+  }
+  
+  public void actionPerformed(ActionEvent e){
+    System.out.println("old");
   }
 }

@@ -83,12 +83,17 @@ public class WindowCollection extends WindowAdapter{
     case "MainWin1":
       //JTextArea fileView0 = new JTextArea(5,30);
       
-      fridge.action_handling.ClassListSelectionListener[] listenerList;
-      listenerList = new fridge.action_handling.ClassListSelectionListener[2];
-      listenerList[0] = new fridge.action_handling.ClassListSelectionListener("folder");
-      listenerList[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
+      fridge.action_handling.ClassListSelectionListener[] CLSL_list;
+      CLSL_list = new fridge.action_handling.ClassListSelectionListener[2];
+      CLSL_list[0] = new fridge.action_handling.ClassListSelectionListener("folder");
+      CLSL_list[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[1];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("folderName");
+      
       JTextField folderName = new JTextField("new field");
-      myWindows[windowCount] = new fridge.windows.MainWindow1(this, winMaker, listenerList, folderName);
+      myWindows[windowCount] = new fridge.windows.MainWindow1(this, winMaker, CLSL_list, CAL_list, folderName);
       //windowList[windowCount] = winMaker.newMainWin1(this, winMaker, listenerList);
       //windowList[windowCount] = winMaker.newMainWin1(this);
       //winMaker.newMainWin1(this);
