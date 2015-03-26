@@ -29,25 +29,6 @@ public class Containers{
     contListeners = CL_ptr;
   }
   
-  /*public Container createContentPane(String cpType,
-                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList){
-    JPanel contentPane = new JPanel(new BorderLayout());
-    
-    createMethodSelection(cpType, contentPane, CLSListenerList);
-    
-    return contentPane;
-  }*/
-  
-  /*public Container createContentPane(String cpType,
-                                     fridge.action_handling.ClassListSelectionListener CLSListener){
-    JPanel contentPane = new JPanel(new BorderLayout());
-    
-    //System.out.println("[DEBUG] Creating content pane with type: " + cpType);
-    
-    createMethodSelection(cpType, contentPane, CLSListener);
-    
-    return contentPane;
-  }*/
   
   public Container createContentPane(String cpType,
                                      fridge.action_handling.ClassListSelectionListener[] CLSL_list,
@@ -80,14 +61,6 @@ public class Containers{
     return contentPane;
   }
   
-  /*private void createMainWin1Content(JPanel contentPane,
-                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
-                                     fridge.action_handling.ClassActionListener[] CAListenerList){*/
-  /*private void createMainWin1Content(JPanel contentPane,
-                                     fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
-                                     JScrollPane[] scrollPaneList,
-                                     JButton[] buttonList,
-                                     JLabel[] labelList){*/
   private void createMainWin1Content(JPanel contentPane,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
@@ -150,6 +123,10 @@ public class Containers{
     //add action listeners
     folderName.addActionListener(CAL_list[0]);
     folderShowGroup.addActionListener(CAL_list[1]);
+    quickSave.addActionListener(CAL_list[2]);
+    quickLoad.addActionListener(CAL_list[3]);
+    qa_showGroup.addActionListener(CAL_list[4]);
+    qa_operations.addActionListener(CAL_list[5]);
     
     String[] view1Data = {"folder1_qa", "folder2_qa"}; // still testing
     view1 = new JList(view1Data);

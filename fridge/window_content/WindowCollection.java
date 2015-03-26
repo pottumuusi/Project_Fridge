@@ -91,9 +91,13 @@ public class WindowCollection extends WindowAdapter{
       CLSL_list[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
       
       fridge.action_handling.ClassActionListener[] CAL_list;
-      CAL_list = new fridge.action_handling.ClassActionListener[2];
+      CAL_list = new fridge.action_handling.ClassActionListener[6];
       CAL_list[0] = new fridge.action_handling.ClassActionListener("folderName");
       CAL_list[1] = new fridge.action_handling.ClassActionListener("folderShowGroup");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("quickSave");
+      CAL_list[3] = new fridge.action_handling.ClassActionListener("quickLoad");
+      CAL_list[4] = new fridge.action_handling.ClassActionListener("qa_showGroup");
+      CAL_list[5] = new fridge.action_handling.ClassActionListener("qa_operations");
       
       JTextField folderName = new JTextField("new field");
   

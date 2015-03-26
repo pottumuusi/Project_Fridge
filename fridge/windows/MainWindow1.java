@@ -67,6 +67,18 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
       if ("folderShowGroup" == ML_ptr.getName()){
         System.out.println("folderShowGroup press");
       }
+      else if ("quickSave" == ML_ptr.getName()){
+        System.out.println("quickSave press");
+      }
+      else if ("quickLoad" == ML_ptr.getName()){
+        System.out.println("quickLoad press");
+      }
+      else if ("qa_showGroup" == ML_ptr.getName()){
+        System.out.println("qa_showGroup press");
+      }
+      else if ("qa_operations" == ML_ptr.getName()){
+        System.out.println("qa_operations press");
+      }
       else if ("folderName" == ML_ptr.getName()){
         System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
       }
