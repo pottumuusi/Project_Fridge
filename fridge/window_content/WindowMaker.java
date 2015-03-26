@@ -3,6 +3,7 @@ package fridge.window_content;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -97,14 +98,16 @@ public class WindowMaker{
   public JFrame newMainWin1(fridge.window_content.WindowCollection controller,
                             fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                             fridge.action_handling.ClassActionListener[] CAL_list,
-                            JTextField folderName){
+                            JTextField folderName,
+                            JList view0,
+                            JList view1){
     JFrame frame = new ListenedFrame(controller, "Fridge");
     
     fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("full"));
-    frame.setContentPane(cont.createContentPane("mainWin1", CLSL_list, CAL_list, folderName));
+    frame.setContentPane(cont.createContentPane("mainWin1", CLSL_list, CAL_list, folderName, view0, view1));
     
     decideLocation(frame);
     

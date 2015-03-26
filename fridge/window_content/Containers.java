@@ -52,12 +52,14 @@ public class Containers{
   public Container createContentPane(String cpType,
                                      fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
-                                     JTextField textField){
+                                     JTextField textField,
+                                     JList view0,
+                                     JList view1){
     JPanel contentPane = new JPanel(new BorderLayout());
     
     switch (cpType){
     case "mainWin1":
-      createMainWin1Content(contentPane, CLSL_list, CAL_list, textField);
+      createMainWin1Content(contentPane, CLSL_list, CAL_list, textField, view0, view1);
       break;
     }
     
@@ -89,12 +91,14 @@ public class Containers{
   private void createMainWin1Content(JPanel contentPane,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
-                                     JTextField folderName){
+                                     JTextField folderName,
+                                     JList view0,
+                                     JList view1){
     //JTextArea output;
     JScrollPane view0ScrollPane, view1ScrollPane;
     DefaultListModel listModel;
     ListSelectionModel listSelectionModel;
-    JList view0, view1;
+    //JList view0, view1;
     //JTextField folderName = new JTextField();
     JButton folderShowGroup, quickSave, quickLoad, qa_showGroup, qa_operations, previous;
     JLabel folderLabel = new JLabel();
@@ -106,8 +110,6 @@ public class Containers{
     quickAccessLabel.setText("Quick Access");
     
     //create upper view
-    String[] view0Data = {"folder1    group1", "folder2"}; // still testing. will be initialized empty
-    view0 = new JList(view0Data);
     
     view0.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     view0.setSelectedIndex(0);

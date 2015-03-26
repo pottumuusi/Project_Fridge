@@ -3,6 +3,7 @@ package fridge.windows;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
@@ -13,6 +14,8 @@ import javax.swing.InputMap;
 
 public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener, ActionListener{
   private JTextField folderName;
+  private JList view0;
+  private JList view1;
   private int[] selectedFolders;
   private int[] selectedGroups;
   private int myWindowIndex;
@@ -21,8 +24,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
                      fridge.window_content.WindowMaker winMaker,
                      fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs,
                      fridge.action_handling.ClassActionListener[] CAL_ptrs,
-                     JTextField fn_par){
-    super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par), CLSL_ptrs, CAL_ptrs);
+                     JTextField fn_par,
+                     JList view0_par,
+                     JList view1_par){
+    super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par), CLSL_ptrs, CAL_ptrs);
     selectedFolders = null;
     selectedGroups = null;
     
@@ -52,8 +57,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
         selectedFolders = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
         selectedFolders = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
         printSelectedFolders();
-        textFieldString();
-        folderName.setText("set text");
       }
       else if ("quickAccess" == ML_ptr.getName()){
         selectedGroups = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
@@ -61,13 +64,12 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
       }
       break;
     case "ClassActionListener":
-	  if ("folderShowGroup" == ML_ptr.getName()){
-		  System.out.println("folderShowGroup press");
-	  }
-	  else if ("folderName" == ML_ptr.getName()){
-		  System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
-	  }
-      
+      if ("folderShowGroup" == ML_ptr.getName()){
+        System.out.println("folderShowGroup press");
+      }
+      else if ("folderName" == ML_ptr.getName()){
+        System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
+      }
       break;
     }
   }

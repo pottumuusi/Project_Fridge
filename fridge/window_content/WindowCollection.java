@@ -1,5 +1,6 @@
 package fridge.window_content;
 
+import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -82,6 +83,7 @@ public class WindowCollection extends WindowAdapter{
     switch (winType){
     case "MainWin1":
       //JTextArea fileView0 = new JTextArea(5,30);
+      JList view0, view1;
       
       fridge.action_handling.ClassListSelectionListener[] CLSL_list;
       CLSL_list = new fridge.action_handling.ClassListSelectionListener[2];
@@ -94,7 +96,19 @@ public class WindowCollection extends WindowAdapter{
       CAL_list[1] = new fridge.action_handling.ClassActionListener("folderShowGroup");
       
       JTextField folderName = new JTextField("new field");
-      myWindows[windowCount] = new fridge.windows.MainWindow1(this, winMaker, CLSL_list, CAL_list, folderName);
+  
+      String[] view0Data = {"folder1    group1", "folder2"}; // still testing. will be initialized empty
+      view0 = new JList(view0Data);
+      String[] view1Data = {"folder1", "folder2"};
+      view1 = new JList(view1Data);
+	  
+      myWindows[windowCount] = new fridge.windows.MainWindow1(this,
+                                                              winMaker,
+                                                              CLSL_list,
+                                                              CAL_list,
+                                                              folderName,
+                                                              view0,
+                                                              view1);
       //windowList[windowCount] = winMaker.newMainWin1(this, winMaker, listenerList);
       //windowList[windowCount] = winMaker.newMainWin1(this);
       //winMaker.newMainWin1(this);
