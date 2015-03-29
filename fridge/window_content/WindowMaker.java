@@ -41,7 +41,6 @@ public class WindowMaker{
     }
   }
   
-  
   public JFrame newMainWin1(fridge.window_content.WindowCollection controller,
                             fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                             fridge.action_handling.ClassActionListener[] CAL_list,
@@ -65,7 +64,6 @@ public class WindowMaker{
     return frame;
   }
   
-  
   public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
                            fridge.action_handling.ClassListSelectionListener CLSListener,
                            JTextArea helpText){
@@ -85,24 +83,6 @@ public class WindowMaker{
     
     return frame;
   }
-  
-  /*public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
-                           fridge.action_handling.MyListSelectionListener LSListener){
-    JFrame frame = new ListenedFrame(controller, "Help");
-    
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
-    fridge.window_content.Containers cont = new fridge.window_content.Containers();
-    
-    frame.setJMenuBar(menu.createMenuBar("help"));
-    frame.setContentPane(cont.createContentPane("help", LSListener));
-    
-    frame.setSize(450, 260);
-    frame.setVisible(true);
-    
-    decideLocation(frame);
-    
-    return frame;
-  }*/
   
   /*public void closed(WindowEvent e){
     System.out.println("window closed");

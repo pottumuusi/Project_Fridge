@@ -15,6 +15,9 @@ public class MenuActionEventBroker{
     else if (eventSource.equals("View help")){
       invokeViewHelp(MAE_handler);
     }
+    else if (eventSource.equals("Open file")){
+      System.out.println("Open file pressed");
+    }
   }
   
   private void invokeQuit(fridge.action_handling.MenuActionEventHandler MAE_handler){
