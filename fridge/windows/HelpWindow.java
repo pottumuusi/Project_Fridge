@@ -16,7 +16,6 @@ import javax.swing.JTextArea;
 
 public class HelpWindow extends fridge.windows.CallableByListener{
   private int selectedListIndex;
-  private int myWindowIndex;
   private JTextArea helpText;
   //private fridge.action_handling.MyListSelectionListener LSListener;
   //private fridge.action_handling.ClassListSelectionListener CLSListener;
@@ -34,8 +33,9 @@ public class HelpWindow extends fridge.windows.CallableByListener{
                     fridge.window_content.WindowMaker winMaker,
                     fridge.action_handling.ClassListSelectionListener CLSL_ptr,
                     JTextArea textArea_ptr,
-                    fridge.window_content.Menu menu){
-    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr, menu), CLSL_ptr);
+                    fridge.window_content.Menu menu,
+                    int par_myWindowIndex){
+    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr, menu), CLSL_ptr, par_myWindowIndex);
     
     menu.setContainingWindow(this);
     

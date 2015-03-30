@@ -5,14 +5,14 @@ import javax.swing.JFrame;
 public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected fridge.action_handling.MyListener[] listeners = null;
   
-  CallableByListener(JFrame frame){
+  /*CallableByListener(JFrame frame){
     super(frame);
     //addListeners();
     givePtrToListeners();
-  }
+  }*/
   
-  CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener CLSL_ptr){
-    super(frame);
+  CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener CLSL_ptr, int par_myWindowIndex){
+    super(frame, par_myWindowIndex);
     addListener(CLSL_ptr);
     givePtrToListeners();
   }
@@ -20,8 +20,10 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   /*CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                      fridge.Fridge fridgeInstance){*/
     //super(frame, fridgeInstance);
-  CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener[] CLSL_list){
-    super(frame);
+  CallableByListener(JFrame frame, 
+                     fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                     int par_myWindowIndex){
+    super(frame, par_myWindowIndex);
     int i;
     
     for (i = 0; i < CLSL_list.length; i++){
@@ -32,8 +34,9 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   
   CallableByListener(JFrame frame,
                      fridge.action_handling.ClassListSelectionListener[] CLSL_list,
-                     fridge.action_handling.ClassActionListener[] CAL_list){
-    super(frame);
+                     fridge.action_handling.ClassActionListener[] CAL_list,
+                     int par_myWindowIndex){
+    super(frame, par_myWindowIndex);
     int i;
     
     for (i = 0; i < CLSL_list.length; i++){

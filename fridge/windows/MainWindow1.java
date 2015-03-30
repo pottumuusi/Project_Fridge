@@ -29,9 +29,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
   private JList<String> view1;
   private int[] selectedFolders;
   private int[] selectedQuickAccess;
-  private int myWindowIndex;
+  
   private String currentPath;
   private String[] quickAccessFolders;
+  private fridge.window_content.WindowCollection winCollection;
   
   /*public MainWindow1(fridge.window_content.WindowCollection winColl,
                      fridge.window_content.WindowMaker winMaker,
@@ -48,13 +49,15 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
                      JTextField fn_par,
                      JList view0_par,
                      JList view1_par,
-                     fridge.window_content.Menu menu){
+                     fridge.window_content.Menu menu,
+                     int par_myWindowIndex){
     /*super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par),
           CLSL_ptrs, CAL_ptrs, fridgeInstance);*/
   super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par, menu),
-        CLSL_ptrs, CAL_ptrs);
+        CLSL_ptrs, CAL_ptrs, par_myWindowIndex);
     menu.setContainingWindow(this);
     
+    winCollection = winColl;
     selectedFolders = null;
     quickAccessFolders = null;
     selectedQuickAccess = null;
@@ -102,9 +105,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
       break;
     case "ClassActionListener":
       if ("folderShowGroup" == ML_ptr.getName()){
-        String[] newContent = {"How", "do", "you", "like", "me", "now"};
-        System.out.println("folderShowGroup press");
-        view0.setListData(newContent);
+        frame.setVisible(false);
+        hide();
+        //windowCollection.addNew("MainWin2");
       }
       else if ("quickSave" == ML_ptr.getName()){
         System.out.println("quickSave press");
@@ -295,6 +298,13 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
     System.out.print("Selected files:\n\t");
     for (i = 0; i < selectedFolders.length; i++){
       System.out.print(selectedFolders[i] + ", ");
+    }
+  }
+  
+  private void hide(){
+    if (true == winCollection.hideNotificationOk("MainWin1", myWindowIndex)){
+      frame.setVisible(false);
+      winCollection.printHiddenWindows();
     }
   }
   
