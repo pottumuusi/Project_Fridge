@@ -33,8 +33,12 @@ public class HelpWindow extends fridge.windows.CallableByListener{
   public HelpWindow(fridge.window_content.WindowCollection winColl,
                     fridge.window_content.WindowMaker winMaker,
                     fridge.action_handling.ClassListSelectionListener CLSL_ptr,
-                    JTextArea textArea_ptr){
-    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr), CLSL_ptr);
+                    JTextArea textArea_ptr,
+                    fridge.window_content.Menu menu){
+    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr, menu), CLSL_ptr);
+    
+    menu.setContainingWindow(this);
+    
     helpText = textArea_ptr;
     selectedListIndex = 0;
     updateHelpText();

@@ -17,6 +17,9 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }
   
+  /*CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                     fridge.Fridge fridgeInstance){*/
+    //super(frame, fridgeInstance);
   CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener[] CLSL_list){
     super(frame);
     int i;

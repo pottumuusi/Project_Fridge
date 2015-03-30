@@ -105,6 +105,8 @@ public class WindowCollection extends WindowAdapter{
       view0 = new JList<String>(view0Data);
       String[] view1Data = {"folder1", "folder2"};
       view1 = new JList<String>();
+      
+      fridge.window_content.Menu mw1_menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
 	  
       myWindows[windowCount] = new fridge.windows.MainWindow1(this,
                                                               winMaker,
@@ -112,18 +114,20 @@ public class WindowCollection extends WindowAdapter{
                                                               CAL_list,
                                                               folderName,
                                                               view0,
-                                                              view1);
+                                                              view1,
+                                                              mw1_menu);
       //windowList[windowCount] = winMaker.newMainWin1(this, winMaker, listenerList);
       //windowList[windowCount] = winMaker.newMainWin1(this);
       //winMaker.newMainWin1(this);
       break;
     case "HelpWin":
       JTextArea helpTexts = new JTextArea(5, 30);
+      fridge.window_content.Menu hw_menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
       fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener("helpText");
       //windowList[windowCount] = winMaker.newHelpWin(this);
       //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
       //myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
-      myWindows[windowCount] = new fridge.windows.HelpWindow(this, winMaker, CLSListener, helpTexts); //replace 0 with windowCount when ready
+      myWindows[windowCount] = new fridge.windows.HelpWindow(this, winMaker, CLSListener, helpTexts, hw_menu); //replace 0 with windowCount when ready
       break;
     }
     windowCount++;

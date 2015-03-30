@@ -28,8 +28,12 @@ public class ActionHandlingContainer{
     
   }
   
-  public void MAE_brokerCall(String eventSource, String instance){
+  /*public void MAE_brokerCall(String eventSource, String instance){
     MAE_broker.brokerCall(eventSource, instance, MAE_handler);
+  }*/
+  
+  public void MAE_brokerCall(String eventSource, String instance, fridge.windows.MyWindow caller){
+    MAE_broker.brokerCall(eventSource, instance, MAE_handler, caller);
   }
   
   public void CA_brokerCall(){

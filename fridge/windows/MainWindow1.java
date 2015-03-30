@@ -33,14 +33,28 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
   private String currentPath;
   private String[] quickAccessFolders;
   
+  /*public MainWindow1(fridge.window_content.WindowCollection winColl,
+                     fridge.window_content.WindowMaker winMaker,
+                     fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs,
+                     fridge.action_handling.ClassActionListener[] CAL_ptrs,
+                     JTextField fn_par,
+                     JList view0_par,
+                     JList view1_par,
+                     fridge.Fridge fridgeInstance){*/
   public MainWindow1(fridge.window_content.WindowCollection winColl,
                      fridge.window_content.WindowMaker winMaker,
                      fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs,
                      fridge.action_handling.ClassActionListener[] CAL_ptrs,
                      JTextField fn_par,
                      JList view0_par,
-                     JList view1_par){
-    super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par), CLSL_ptrs, CAL_ptrs);
+                     JList view1_par,
+                     fridge.window_content.Menu menu){
+    /*super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par),
+          CLSL_ptrs, CAL_ptrs, fridgeInstance);*/
+  super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par, menu),
+        CLSL_ptrs, CAL_ptrs);
+    menu.setContainingWindow(this);
+    
     selectedFolders = null;
     quickAccessFolders = null;
     selectedQuickAccess = null;
@@ -105,6 +119,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
       }
       else if ("qa_operations" == ML_ptr.getName()){
         System.out.println("qa_operations press");
+        //AH_container.MAE_brokerCall("Quit", ):
       }
       else if ("folderNameField" == ML_ptr.getName()){
         //System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
@@ -234,17 +249,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
     }
   }
   
-  private void addSelectedToQuickAccess(){
-    //String[] newContent = null;
-    
-    //newContent = new String[selectedFolders.length];
-    //newContent view0.getSelectedValuesList();
-    
-    //copy old content to newContent using selectedFolders
-    //add new content to newContent
-    //view1.setListData(newContent);
-  }
-  
   private void loadSelectedQuickAccessFolder(){
     int QAF_index;
     if (1 == selectedQuickAccess.length){
@@ -292,6 +296,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
     for (i = 0; i < selectedFolders.length; i++){
       System.out.print(selectedFolders[i] + ", ");
     }
+  }
+  
+  public void close(){
+    System.out.println("[DEBUG] Close MainWindow1 here");
   }
   
   public void insertUpdate(DocumentEvent ev) {

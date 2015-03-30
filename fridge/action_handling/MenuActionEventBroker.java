@@ -1,10 +1,10 @@
 package fridge.action_handling;
 
 public class MenuActionEventBroker{
-  
   //earlier name of this method was: solveAction
   public void brokerCall(String eventSource, String className,
-                          fridge.action_handling.MenuActionEventHandler MAE_handler){
+                         fridge.action_handling.MenuActionEventHandler MAE_handler,
+                         fridge.windows.MyWindow caller){
     System.out.println("*MAE_broker invokingAction for*\n"
                       + "Event source: " + eventSource
                       + " (an instance of " + className + ")");
@@ -17,6 +17,9 @@ public class MenuActionEventBroker{
     }
     else if (eventSource.equals("Open file")){
       System.out.println("Open file pressed");
+    }
+    else if (eventSource.equals("Close")){
+      caller.close();
     }
   }
   
@@ -35,5 +38,6 @@ public class MenuActionEventBroker{
   
   private void invokeViewHelp(fridge.action_handling.MenuActionEventHandler MAE_handler){
     MAE_handler.viewHelp();
+    System.out.println("[DEBUG]viewHelp invoked");
   }
 }

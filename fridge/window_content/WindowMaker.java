@@ -46,10 +46,10 @@ public class WindowMaker{
                             fridge.action_handling.ClassActionListener[] CAL_list,
                             JTextField folderName,
                             JList view0,
-                            JList view1){
+                            JList view1,
+                            fridge.window_content.Menu menu){
     JFrame frame = new ListenedFrame(controller, "Fridge");
     
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("full"));
@@ -66,11 +66,10 @@ public class WindowMaker{
   
   public JFrame newHelpWin(fridge.window_content.WindowCollection controller,
                            fridge.action_handling.ClassListSelectionListener CLSListener,
-                           JTextArea helpText){
+                           JTextArea helpText,
+                           fridge.window_content.Menu menu){
     JFrame frame = new ListenedFrame(controller, "Help");
     
-    
-    fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
     frame.setJMenuBar(menu.createMenuBar("help"));

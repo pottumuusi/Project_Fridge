@@ -14,6 +14,7 @@ public class Menu implements ActionListener, ItemListener{
   private static final int MENU_BAR_TYPE_AMOUNT = 4;
   //private fridge.Fridge fridgeInstance;
   private fridge.action_handling.ActionHandlingContainer AH_Container;
+  private fridge.windows.MyWindow containingWindow;
   
   /*private fridge.action_handling.MenuActionEventBroker MAE_broker;
   private fridge.action_handling.MenuActionEventHandler MAE_handler;*/
@@ -50,6 +51,10 @@ public class Menu implements ActionListener, ItemListener{
   public Menu(int menuType){
     
   }*/
+  
+  public void setContainingWindow(fridge.windows.MyWindow set_par){
+    containingWindow = set_par;
+  }
   
   public void testFunction(){
     System.out.println("testing more");
@@ -271,8 +276,6 @@ public class Menu implements ActionListener, ItemListener{
     menu = createMenu("File", KeyEvent.VK_F, "File menu");
     submenu = createSubmenu("New", KeyEvent.VK_N);
     
-    menuItem = createMenuItem("Close", KeyEvent.VK_C, "Close current window");
-    
     /* Add content of submenu */
     menuItem = createMenuItem("Folder", KeyEvent.VK_L, ActionEvent.CTRL_MASK);
     submenu.add(menuItem);
@@ -283,6 +286,9 @@ public class Menu implements ActionListener, ItemListener{
     
     /* Add rest menu content */
     menuItem = createMenuItem("Refresh", KeyEvent.VK_T, KeyEvent.VK_F5, 0, "Reloads window");
+    menu.add(menuItem);
+    
+    menuItem = createMenuItem("Close", KeyEvent.VK_C, "Close current window");
     menu.add(menuItem);
     
     menuItem = createMenuItem("Quit", KeyEvent.VK_E, KeyEvent.VK_Q,
@@ -422,7 +428,7 @@ public class Menu implements ActionListener, ItemListener{
     /*MAE_broker.solveAction(source.getText(), getClassName(source), 
                            fridgeInstance.getMAE_handler(), fridgeInstance);*/
     //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source), fridgeInstance);
-    AH_Container.MAE_brokerCall(source.getText(), getClassName(source));
+    AH_Container.MAE_brokerCall(source.getText(), getClassName(source), containingWindow);
     //fridge.Fridge.MAE_brokerCall(source.getText(), getClassName(source));
     //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
   }
