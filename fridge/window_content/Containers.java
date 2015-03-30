@@ -128,9 +128,6 @@ public class Containers{
     qa_showGroup.addActionListener(CAL_list[4]);
     qa_operations.addActionListener(CAL_list[5]);
     
-    String[] view1Data = {"folder1_qa", "folder2_qa"}; // still testing
-    view1 = new JList(view1Data);
-    
     view1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     view1.setSelectedIndex(0);
     view1.setVisibleRowCount(5);
