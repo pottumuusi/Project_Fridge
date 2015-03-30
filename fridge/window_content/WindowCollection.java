@@ -2,6 +2,7 @@ package fridge.window_content;
 
 import javax.swing.JList;
 import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -45,10 +46,10 @@ public class WindowCollection extends WindowAdapter{
       System.out.println("after makeLonger method myWindows.length = " + myWindows.length);
     }
     
-    switch (winType){
-    case "MainWin1":
+    //switch (winType){
+    //case "MainWin1":
+    if ("MainWin1" == winType){
       newNamedWin("MainWin1");
-      //JTextArea fileView0 = new JTextArea(5,30);
       JList<String> view0, view1;
       
       fridge.action_handling.ClassListSelectionListener[] CLSL_list;
@@ -83,11 +84,55 @@ public class WindowCollection extends WindowAdapter{
                                                               view1,
                                                               mw1_menu,
                                                               windowCount);
-      //windowList[windowCount] = winMaker.newMainWin1(this, winMaker, listenerList);
-      //windowList[windowCount] = winMaker.newMainWin1(this);
-      //winMaker.newMainWin1(this);
-      break;
-    case "HelpWin":
+      //break;
+    }
+    else if("MainWin2" == winType){
+    //case "MainWin2":
+      newNamedWin("MainWin2");
+      JList<String> view0, view1;
+      //JList<String> mw2_view0, mw2_view1;
+      
+      fridge.action_handling.ClassListSelectionListener[] CLSL_list;
+      CLSL_list = new fridge.action_handling.ClassListSelectionListener[2];
+      CLSL_list[0] = new fridge.action_handling.ClassListSelectionListener("group");
+      CLSL_list[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[6];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("groupNameBox");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("groupShowFolder");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("quickSave");
+      CAL_list[3] = new fridge.action_handling.ClassActionListener("quickLoad");
+      CAL_list[4] = new fridge.action_handling.ClassActionListener("qa_showFolder");
+      CAL_list[5] = new fridge.action_handling.ClassActionListener("qa_operations");
+      
+      JComboBox groupList = new JComboBox();
+      
+      view0 = new JList<String>();
+      view1 = new JList<String>();
+      
+      fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+      
+      myWindows[windowCount] = new fridge.windows.MainWindow2(this,
+                                                              winMaker,
+                                                              CLSL_list,
+                                                              CAL_list,
+                                                              groupList,
+                                                              view0,
+                                                              view1,
+                                                              menu,
+                                                              windowCount);
+      //fridge.action_handling.ClassListSelectionListener[] mw2_CLSL_list;
+      //mw2_CLSL_list = new fridge.action_handling.ClassListSelectionListener[2];
+      //mw2_CLSL_list[0] = new fridge.action_handling.ClassListSelectionListener("group");
+      //mw2_CLSL_list[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
+      
+      
+      //break;
+    }
+    else if("HelpWin" == winType){
+    //case "HelpWin":
+      //newNamedWin(numberedWinName("HelpWin"));
       newNamedWin("HelpWin");
       JTextArea helpTexts = new JTextArea(5, 30);
       fridge.window_content.Menu hw_menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
@@ -97,10 +142,13 @@ public class WindowCollection extends WindowAdapter{
       //myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
       myWindows[windowCount] = new fridge.windows.HelpWindow(this, winMaker, CLSListener,
                                                              helpTexts, hw_menu, windowCount); //replace 0 with windowCount when ready
-      break;
-    default:
+      //break;
+    }
+    else{
+    //default:
       System.out.println("[DEBUG] no such winType. windowCount not incremented");
       windowCount--;
+    //}
     }
     windowCount++;
     System.out.println("[DEBUG] window count after creation == " + windowCount);
@@ -109,6 +157,22 @@ public class WindowCollection extends WindowAdapter{
   
   private void newNamedWin(String par_name){
     namedWindows[windowCount] = new fridge.window_content.NamedWindow(par_name, windowCount);
+  }
+  
+  private String numberedWinName(String wantedName){
+    int i, k;
+    int largestNum;
+    String nameWithoutNum;
+    String windowName;
+    
+    for (k = 0; k < namedWindows.length; k++){
+      windowName = namedWindows[k].getName();
+      for(i = 0; i < wantedName.length(); i++){
+        
+      }
+      
+    }
+    return null;
   }
   
   private JFrame[] makeShorter(JFrame[] oldList){
@@ -176,6 +240,11 @@ public class WindowCollection extends WindowAdapter{
     System.out.println("[DEBUG] hideNotificationOk got invalid window data. window should not be hidden now");
     return false;
   }
+  
+  /*public boolean isHidden(String windowName){
+    //scan all namedWindows and see if they match given name and are hidden
+    
+  }*/
   
   public void showWindow(String windowName){
     int i;

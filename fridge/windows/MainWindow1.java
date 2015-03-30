@@ -19,10 +19,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 
-public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener, ActionListener{
+//public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener, ActionListener{
   //private fridge.filesystem.fileOperator // = fridge.filesystem.fileOperator
   //private fridge.filesystem.folderOperator // = new fridge.filesystem.folderOperator
   //private fridge.filesystem.groupOperator // = new fridge.filesystem.groupOperator
+public class MainWindow1 extends fridge.windows.CallableByListener{
   private Path currFolder;
   private JTextField folderNameField;
   private JList<String> view0;
@@ -107,10 +108,15 @@ public class MainWindow1 extends fridge.windows.CallableByListener implements Do
       if ("folderShowGroup" == ML_ptr.getName()){
         frame.setVisible(false);
         hide();
+        
+        //if MainWin2 does not exist create it. if it is hidden show it
+        //if (){
         //windowCollection.addNew("MainWin2");
+        //}
       }
       else if ("quickSave" == ML_ptr.getName()){
         System.out.println("quickSave press");
+        //ask for alias. it could be passed to addToQuickAccess method as a parameter.
         addToQuickAccess();
       }
       else if ("quickLoad" == ML_ptr.getName()){
