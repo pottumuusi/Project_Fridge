@@ -225,6 +225,10 @@ public class WindowCollection extends WindowAdapter{
       System.out.println("All windows gone. Exiting");
       fridgeInstance.controlledExit();
     }
+    if (true == allWindowsHidden()){
+      System.out.println("All remaining windows are hidden. Exiting");
+      fridgeInstance.controlledExit();
+    }
     //winMaker.updateLocation();
   }
   
@@ -259,6 +263,40 @@ public class WindowCollection extends WindowAdapter{
         break;
       }
     }
+  }
+  
+  public boolean namedWindowIsHidden(String searchedWindowName){
+    int i;
+    
+    for (i = 0; i < windowCount; i++){
+      if (namedWindows[i].getName() == searchedWindowName && 
+          (true == namedWindows[i].getIsHidden())){
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean namedWindowExists(String searchedWindowName){
+    int i;
+    
+    for (i = 0; i < windowCount; i++){
+      if (namedWindows[i].getName() == searchedWindowName){
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  private boolean allWindowsHidden(){
+    int i;
+    
+    for (i = 0; i < windowCount; i++){
+      if (false == namedWindows[i].getIsHidden()){
+        return false;
+      }
+    }
+    return true;
   }
   
   public void printHiddenWindows(){

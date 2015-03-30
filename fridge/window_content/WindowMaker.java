@@ -2,6 +2,7 @@ package fridge.window_content;
 
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import java.awt.*;
@@ -58,6 +59,28 @@ public class WindowMaker{
     decideLocation(frame);
     
     //Display the window.
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    return frame;
+  }
+  
+  public JFrame newMainWin2(fridge.window_content.WindowCollection controller,
+                            fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                            fridge.action_handling.ClassActionListener[] CAL_list,
+                            JComboBox groupList,
+                            JList view0,
+                            JList view1,
+                            fridge.window_content.Menu menu){
+    JFrame frame = new ListenedFrame(controller, "Fridge");
+    
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
+    frame.setJMenuBar(menu.createMenuBar("full"));
+    frame.setContentPane(cont.createContentPane("mainWin2", CLSL_list, CAL_list, groupList, view0, view1));
+    
+    decideLocation(frame);
+    
     frame.setSize(450, 260);
     frame.setVisible(true);
     

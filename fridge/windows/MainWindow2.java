@@ -3,10 +3,21 @@ package fridge.windows;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JList;
+import javax.swing.JComboBox;
+
 public class MainWindow2 extends fridge.windows.CallableByListener{
+  private JComboBox groupListBox;
+  private JList<String> view0;
+  private JList<String> view1;
+  private int[] selectedGroupItems;
+  private int[] selectedQuickAccess;
+  //private Group currGroup;
+  private String currGroup; //should this be of Group class instead of String?
+  private String[] quickAccessGroups;
+  private fridge.window_content.WindowCollection winCollection;
   
-  
-  MainWindow2(fridge.window_content.WindowCollection winColl,
+  public MainWindow2(fridge.window_content.WindowCollection winColl,
               fridge.window_content.WindowMaker winMaker,
               fridge.action_handling.ClassListSelectionListener[] CLSL_ptrs,
               fridge.action_handling.ClassActionListener[] CAL_ptrs,
@@ -15,7 +26,7 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
               JList view1_par,
               fridge.window_content.Menu menu,
               int par_myWindowIndex){
-    super(winMaker.newMainWin2(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par, menu),
+    super(winMaker.newMainWin2(winColl, CLSL_ptrs, CAL_ptrs, groupList, view0_par, view1_par, menu),
           CLSL_ptrs, CAL_ptrs, par_myWindowIndex);
     menu.setContainingWindow(this);
     
@@ -41,17 +52,17 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       }
     }
     else if ("ClassActionListener" == ML_ptr.getType()){
-      if ("groupShowFolder"){
+      if ("groupShowFolder" == ML_ptr.getType()){
       }
-      else if ("quickSave" == ML.ptr.getType()){
+      else if ("quickSave" == ML_ptr.getType()){
       }
-      else if ("quickLoad" == ML.ptr.getType()){
+      else if ("quickLoad" == ML_ptr.getType()){
       }
-      else if ("qa_showFolder" == ML.ptr.getType()){
+      else if ("qa_showFolder" == ML_ptr.getType()){
       }
-      else if ("qa_operations" == ML.ptr.getType()){
+      else if ("qa_operations" == ML_ptr.getType()){
       }
-      else if ("groupNameBox" == ML.ptr.getType()){
+      else if ("groupNameBox" == ML_ptr.getType()){
       }
     }
   }

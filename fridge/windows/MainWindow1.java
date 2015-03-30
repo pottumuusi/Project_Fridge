@@ -92,8 +92,8 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     //if selectedFolders[i] == 0 then copy all else to selectedFolders
     //and update it to view?
     
-    switch (ML_ptr.getType()){
-    case "ClassListSelectionListener":
+    //switch (ML_ptr.getType()){
+    if ("ClassListSelectionListener" == ML_ptr.getType()){
       if ("folder" == ML_ptr.getName()){
         selectedFolders = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
         selectedFolders = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
@@ -103,16 +103,20 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
         selectedQuickAccess = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
         selectedQuickAccess = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
       }
-      break;
-    case "ClassActionListener":
+    }
+    else if ("ClassActionListener" == ML_ptr.getType()){
       if ("folderShowGroup" == ML_ptr.getName()){
-        frame.setVisible(false);
-        hide();
-        
+        if (true == hideSuccessful()){
+          if (false == winCollection.namedWindowExists("MainWin2")){
+            System.out.println("[DEBUG] creating MainWin2");
+            winCollection.addNew("MainWin2");
+          }
+          else if (false == winCollection.namedWindowIsHidden("MainWin2")){
+            System.out.println("[DEBUG] showing window: MainWin2");
+            winCollection.showWindow("MainWin2");
+          }
+        }
         //if MainWin2 does not exist create it. if it is hidden show it
-        //if (){
-        //windowCollection.addNew("MainWin2");
-        //}
       }
       else if ("quickSave" == ML_ptr.getName()){
         System.out.println("quickSave press");
@@ -141,7 +145,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           currFolder = Paths.get(tempStore);
         }
       }
-      break;
     }
   }
   
@@ -307,11 +310,13 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     }
   }
   
-  private void hide(){
+  private boolean hideSuccessful(){
     if (true == winCollection.hideNotificationOk("MainWin1", myWindowIndex)){
       frame.setVisible(false);
       winCollection.printHiddenWindows();
+      return true;
     }
+    return false;
   }
   
   public void close(){
