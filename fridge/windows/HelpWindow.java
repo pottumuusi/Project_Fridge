@@ -2,6 +2,7 @@ package fridge.windows;
 
 import javax.swing.JFrame;
 
+import java.nio.file.Path;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,25 +30,60 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     super(frame, CLSL_ptr);
   }*/
   
+  /*public HelpWindow(JFrame frame, fridge.action_handling.MyListSelectionListener LSL_ptr){
+    super(frame);
+    LSListener = LSL_ptr;
+  }*/
+  
   public HelpWindow(fridge.window_content.WindowCollection winColl,
                     fridge.window_content.WindowMaker winMaker,
                     fridge.action_handling.ClassListSelectionListener CLSL_ptr,
                     JTextArea textArea_ptr,
                     fridge.window_content.Menu menu,
                     int par_myWindowIndex){
-    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr, menu), CLSL_ptr, par_myWindowIndex);
+    super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr, menu), CLSL_ptr, par_myWindowIndex, menu, winColl);
     
-    menu.setContainingWindow(this);
+    //menu.setContainingWindow(this);
     
     helpText = textArea_ptr;
     selectedListIndex = 0;
     updateHelpText();
   }
   
-  /*public HelpWindow(JFrame frame, fridge.action_handling.MyListSelectionListener LSL_ptr){
-    super(frame);
-    LSListener = LSL_ptr;
+  /*protected void addGroup(String groupName){
+    
+  }
+  
+  protected void moveToGroup(String groupName, Path[] newItems){
+    
+  }
+  
+  protected void addToGroup(String groupName, Path[] newItems){
+    
   }*/
+  
+  //protected void handleEvent(String listenerType, fridge.action_handling.MyListener ML_ptr){
+  protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
+    int[] selectedIndexes;
+    //System.out.println("[DEBUG] CLSListener.getSelectedIndexesLen() ==");
+    
+    //switch (listenerType){
+    switch (ML_ptr.getType()){
+    case "ClassListSelectionListener":
+      System.out.println("[DEBUG] HelpWindow detected a ClassListSelectionListener event. handling... :O");
+      //selectedIndexes = new int[CLSListener.getSelectedIndexesLen()];
+      //selectedIndexes = CLSListener.getSelectedIndexes();
+      //selectedIndexes = new int[ML_ptr.getSelectedIndexesLen()];
+      selectedIndexes = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
+      selectedIndexes = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
+      CLSL_updateIndexes(selectedIndexes);
+      break;
+    }
+    
+    //System.out.println("[DEBUG] HelpWindow.handleEvent:\n\ttype of calling listener is: " + listenerType);
+    
+  }
+  
   
   /*protected void addListeners(){
     //listeners  CLSListener = CLSL_ptr;
@@ -87,27 +123,6 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] print correct text to textArea here");
   }
   
-  //protected void handleEvent(String listenerType, fridge.action_handling.MyListener ML_ptr){
-  protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
-    int[] selectedIndexes;
-    //System.out.println("[DEBUG] CLSListener.getSelectedIndexesLen() ==");
-    
-    //switch (listenerType){
-    switch (ML_ptr.getType()){
-    case "ClassListSelectionListener":
-      System.out.println("[DEBUG] HelpWindow detected a ClassListSelectionListener event. handling... :O");
-      //selectedIndexes = new int[CLSListener.getSelectedIndexesLen()];
-      //selectedIndexes = CLSListener.getSelectedIndexes();
-      //selectedIndexes = new int[ML_ptr.getSelectedIndexesLen()];
-      selectedIndexes = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
-      selectedIndexes = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
-      CLSL_updateIndexes(selectedIndexes);
-      break;
-    }
-    
-    //System.out.println("[DEBUG] HelpWindow.handleEvent:\n\ttype of calling listener is: " + listenerType);
-    
-  }
   
   private void CLSL_updateIndexes(int[] selectedIndexes){
     if (1 == selectedIndexes.length){

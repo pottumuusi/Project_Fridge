@@ -14,7 +14,8 @@ public class Menu implements ActionListener, ItemListener{
   private static final int MENU_BAR_TYPE_AMOUNT = 4;
   //private fridge.Fridge fridgeInstance;
   private fridge.action_handling.ActionHandlingContainer AH_Container;
-  private fridge.windows.MyWindow containingWindow;
+  //private fridge.windows.MyWindow containingWindow;
+  private fridge.windows.CallableByListener containingWindow; //earlier this was MyWindow
   
   /*private fridge.action_handling.MenuActionEventBroker MAE_broker;
   private fridge.action_handling.MenuActionEventHandler MAE_handler;*/
@@ -52,7 +53,9 @@ public class Menu implements ActionListener, ItemListener{
     
   }*/
   
-  public void setContainingWindow(fridge.windows.MyWindow set_par){
+  
+  //public void setContainingWindow(fridge.windows.MyWindow set_par){
+  public void setContainingWindow(fridge.windows.CallableByListener set_par){
     containingWindow = set_par;
   }
   

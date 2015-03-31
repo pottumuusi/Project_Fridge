@@ -6,6 +6,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import java.nio.file.Path;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.WindowEvent;
@@ -57,7 +59,7 @@ public class WindowCollection extends WindowAdapter{
   }
   
   public fridge.windows.MyWindow getMyWindow(int index){
-    return myWindow[index];
+    return myWindows[index];
   }
   
   public void addNew(String winType){
@@ -186,6 +188,7 @@ public class WindowCollection extends WindowAdapter{
     namedWindows[windowCount] = new fridge.window_content.NamedWindow(par_name, windowCount);
   }
   
+  // create new group with given name
   public void addGroup(String newGroupName){
     boolean groupWithSameName = false;
     int i;
@@ -204,7 +207,7 @@ public class WindowCollection extends WindowAdapter{
       //errorMessage("Could not create group. Group with given name already exists.");
     }
     else{
-      groups[groupCount] = new fridge.group.Group(name);
+      groups[groupCount] = new fridge.group.Group(newGroupName);
     }
     
     groupCount++;

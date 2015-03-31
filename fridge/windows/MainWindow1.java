@@ -32,9 +32,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   private int[] selectedQuickAccess;
   
   private String currentPath;
-  private String[] fullFileNames;
+  private String[] fullFileNames; //need this?
   private String[] quickAccessFolders;
-  private fridge.window_content.WindowCollection winCollection;
+  //private fridge.window_content.WindowCollection winCollection;
   
   /*public MainWindow1(fridge.window_content.WindowCollection winColl,
                      fridge.window_content.WindowMaker winMaker,
@@ -56,8 +56,8 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     /*super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par),
           CLSL_ptrs, CAL_ptrs, fridgeInstance);*/
   super(winMaker.newMainWin1(winColl, CLSL_ptrs, CAL_ptrs, fn_par, view0_par, view1_par, menu),
-        CLSL_ptrs, CAL_ptrs, par_myWindowIndex);
-    menu.setContainingWindow(this);
+        CLSL_ptrs, CAL_ptrs, par_myWindowIndex, menu, winColl);
+    //menu.setContainingWindow(this); // move menu to upper class !!!!!!!!!!!!!!
     
     winCollection = winColl;
     selectedFolders = null;
@@ -83,6 +83,18 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     frame.pack();
     System.out.println("[DEBUG] after pack()");
   }
+  
+  /*protected void addGroup(String groupName){
+    
+  }
+  
+  protected void moveToGroup(String groupName, Path[] newItems){
+    
+  }
+  
+  protected void addToGroup(String groupName, Path[] newItems){
+    
+  }*/
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     //int[] selectedIndexes;
@@ -169,7 +181,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           
           //READ
           //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-          fullFileNames = file.toString(); //make full fileNames size go up!!!!!!!
+          //fullFileNames = file.toString(); //make full fileNames size go up!!!!!!!
           //fullFileNames are used in storing folder information to groups
           //alternatively similar code to the code in this method could be
           //run and the result then stored to group
@@ -331,10 +343,56 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   
   public void addToGroup(){
     int i;
+    Path[] itemsToPass;
+    
+    itemsToPass = getPathsOfCurrentFolder();
     
     for (i = 0; i < selectedFolders.length; i++){
-      ((fridge.windows.MainWindow2)getMyWindow(getMyWindowsIndex("MainWin2"))).addToGroup(selectedFolders[i]);
+      //addItemsToGroups expects Path[] variable!!!
+      ((fridge.windows.MainWindow2)winCollection.getMyWindow(winCollection.getMyWindowsIndex("MainWin2"))).addItemsToGroup(itemsToPass);
     }
+  }
+  
+  private Path[] getPathsOfCurrentFolder(){
+    int i;
+    int pathCount = 0;
+    Path[] temp = null;
+    Path[] paths = null;
+    Path processedPath = null;
+    //edit this to make sense
+    
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(currFolder)){
+      for (Path file: stream){
+        
+        //currFileName = file.getFileName().toString();
+        processedPath = file.getFileName();
+        
+        if ('.' != processedPath.getFileName().toString().charAt(0) || 
+            '.' == processedPath.getFileName().toString().charAt(1)){
+          if (null == paths){
+            paths = new Path[1];
+            newContent[pathCount] = processedPath;
+            pathCount++;
+          }
+          else{
+            //temp = new String[folderFileCount];
+            temp = paths;
+            //System.out.println(file.getFileName());
+            paths = new Path[pathCount + 1];
+            for (i = 0; i < pathCount; i++){
+              paths[i] = temp[i];
+            }
+            paths[pathCount] = processedPath;
+            folderFileCount++;
+          }
+        }
+      }
+    }
+    catch (IOException | DirectoryIteratorException x){
+      System.err.println(x);
+    }
+    
+    return paths;
   }
   
   public void close(){

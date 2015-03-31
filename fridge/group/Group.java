@@ -49,7 +49,7 @@ public class Group{
     int i;
     
     items = new Path[newItems.length];
-    for (i; i < items.length; i++){
+    for (i = 0; i < items.length; i++){
       items[i] = newItems[i];
     }
     itemCount = items.length;

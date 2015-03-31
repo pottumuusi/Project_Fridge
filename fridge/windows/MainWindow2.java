@@ -18,7 +18,7 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
   private int currGroup; //should this be of Group class instead of String?
   private String[] quickAccessGroups;
   private fridge.group.Group[] groups;
-  private fridge.window_content.WindowCollection winCollection;
+  //private fridge.window_content.WindowCollection winCollection;
   
   public MainWindow2(fridge.window_content.WindowCollection winColl,
               fridge.window_content.WindowMaker winMaker,
@@ -30,8 +30,8 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
               fridge.window_content.Menu menu,
               int par_myWindowIndex){
     super(winMaker.newMainWin2(winColl, CLSL_ptrs, CAL_ptrs, groupList, view0_par, view1_par, menu),
-          CLSL_ptrs, CAL_ptrs, par_myWindowIndex);
-    menu.setContainingWindow(this);
+          CLSL_ptrs, CAL_ptrs, par_myWindowIndex, menu, winColl);
+    //menu.setContainingWindow(this);
     
     winCollection = winColl;
     quickAccessGroups = null;
@@ -44,6 +44,18 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     view1 = view1_par;
     frame.pack();
   }
+  
+  /*protected void addGroup(String groupName){
+    
+  }
+  
+  protected void moveToGroup(String groupName, Path[] newItems){
+    
+  }
+  
+  protected void addToGroup(String groupName, Path[] newItems){
+    
+  }*/
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     int i;
