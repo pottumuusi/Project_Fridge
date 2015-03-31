@@ -12,9 +12,11 @@ import java.awt.event.WindowEvent;
 
 
 public class WindowCollection extends WindowAdapter{
+  private int groupCount;
   private int windowCount;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
+  private fridge.group.Group[] groups;
   private fridge.Fridge fridgeInstance;
   private fridge.window_content.Containers cont; // want this to be here?
   private fridge.window_content.WindowMaker winMaker;
@@ -26,13 +28,36 @@ public class WindowCollection extends WindowAdapter{
     fridgeInstance = FI_ptr;
     winMaker = new WindowMaker(FI_ptr);
     windowCount = 0;
+    groupCount = 0;
     //lastLocation = null;
     
     windowList = new JFrame[4];
+    groups = new fridge.group.Group[10];
     myWindows = new fridge.windows.MyWindow[4];
     namedWindows = new fridge.window_content.NamedWindow[4];
     
+    addNew("MainWin2");
+    if (-1 != getMyWindowsIndex("MainWin2")){
+      if (false == ((fridge.windows.MainWindow2)myWindows[getMyWindowsIndex("MainWin2")]).hideSuccessful()){
+        System.out.println("[DEBUG] could not hide MainWin2");
+      }
+    }
     addNew("MainWin1");
+  }
+  
+  public int getMyWindowsIndex(String windowName){
+    int i;
+    
+    for (i = 0; i < windowCount; i++){
+      if (namedWindows[i].getName() == windowName){
+        return namedWindows[i].getMyWindowIndex();
+      }
+    }
+    return -1;
+  }
+  
+  public fridge.windows.MyWindow getMyWindow(int index){
+    return myWindow[index];
   }
   
   public void addNew(String winType){
@@ -67,6 +92,8 @@ public class WindowCollection extends WindowAdapter{
       CAL_list[5] = new fridge.action_handling.ClassActionListener("qa_operations");
       
       JTextField folderName = new JTextField("/");
+      //JtextField could be initialized to the name of root directory acquired by
+      //using Files class. not just "/"
   
       String[] view0Data = {"folder1    group1", "folder2"}; // still testing. will be initialized empty
       view0 = new JList<String>(view0Data);
@@ -159,6 +186,51 @@ public class WindowCollection extends WindowAdapter{
     namedWindows[windowCount] = new fridge.window_content.NamedWindow(par_name, windowCount);
   }
   
+  public void addGroup(String newGroupName){
+    boolean groupWithSameName = false;
+    int i;
+    
+    if (groupCount + 1 == groups.length){
+      groups = makeLonger(groups);
+    }
+    
+    for (i = 0; i < groupCount; i++){
+      if (groups[i].getName() == newGroupName){
+        groupWithSameName = true;
+      }
+    }
+    
+    if (groupWithSameName){
+      //errorMessage("Could not create group. Group with given name already exists.");
+    }
+    else{
+      groups[groupCount] = new fridge.group.Group(name);
+    }
+    
+    groupCount++;
+  }
+  
+  public void setGroupItems(String groupName, Path[] newGroupItems){
+    int i;
+    
+    for (i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].setItems(newGroupItems);
+        break;
+      }
+    }
+  }
+  
+  public void addGroupItems(String groupName, Path[] newGroupItems){
+    int i;
+    
+    for (i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].addItems(newGroupItems);
+      }
+    }
+  }
+  
   private String numberedWinName(String wantedName){
     int i, k;
     int largestNum;
@@ -218,6 +290,19 @@ public class WindowCollection extends WindowAdapter{
     return newList;
   }
   
+  private fridge.group.Group[] makeLonger(fridge.group.Group[] oldList){
+    int i;
+    fridge.group.Group[] newList = new fridge.group.Group[oldList.length + 10];
+    
+    System.out.println("[DEBUG] making groups longer");
+    
+    for (i = 0; i < oldList.length; i++){
+      newList[i] = oldList[i];
+    }
+    
+    return newList;
+  }
+  
   public void windowClosed(WindowEvent e){
     windowCount--;
     System.out.println("[DEBUG] window closed. windowCount == " + windowCount);
@@ -249,6 +334,7 @@ public class WindowCollection extends WindowAdapter{
     //scan all namedWindows and see if they match given name and are hidden
     
   }*/
+  
   
   public void showWindow(String windowName){
     int i;
@@ -293,6 +379,7 @@ public class WindowCollection extends WindowAdapter{
     
     for (i = 0; i < windowCount; i++){
       if (false == namedWindows[i].getIsHidden()){
+        System.out.println("[DEBUG] namedWindows[" + i + "] (" + namedWindows[i].getName() + ") is not hidden");
         return false;
       }
     }

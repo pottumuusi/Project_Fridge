@@ -32,6 +32,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   private int[] selectedQuickAccess;
   
   private String currentPath;
+  private String[] fullFileNames;
   private String[] quickAccessFolders;
   private fridge.window_content.WindowCollection winCollection;
   
@@ -111,7 +112,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
             System.out.println("[DEBUG] creating MainWin2");
             winCollection.addNew("MainWin2");
           }
-          else if (false == winCollection.namedWindowIsHidden("MainWin2")){
+          else if (true == winCollection.namedWindowIsHidden("MainWin2")){
             System.out.println("[DEBUG] showing window: MainWin2");
             winCollection.showWindow("MainWin2");
           }
@@ -165,6 +166,15 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           //temp = file.getFileName();
           //if ('.' != file.getFileName().getCharAt(0)){
           currFileName = file.getFileName().toString();
+          
+          //READ
+          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          fullFileNames = file.toString(); //make full fileNames size go up!!!!!!!
+          //fullFileNames are used in storing folder information to groups
+          //alternatively similar code to the code in this method could be
+          //run and the result then stored to group
+          //READ
+          
           if ('.' != currFileName.charAt(0) || 
               '.' == currFileName.charAt(1)){
             if (null == newContent){
@@ -310,13 +320,21 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     }
   }
   
-  private boolean hideSuccessful(){
+  public boolean hideSuccessful(){
     if (true == winCollection.hideNotificationOk("MainWin1", myWindowIndex)){
       frame.setVisible(false);
       winCollection.printHiddenWindows();
       return true;
     }
     return false;
+  }
+  
+  public void addToGroup(){
+    int i;
+    
+    for (i = 0; i < selectedFolders.length; i++){
+      ((fridge.windows.MainWindow2)getMyWindow(getMyWindowsIndex("MainWin2"))).addToGroup(selectedFolders[i]);
+    }
   }
   
   public void close(){

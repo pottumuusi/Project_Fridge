@@ -1,5 +1,7 @@
 package fridge.windows;
 
+import java.nio.file.Paths;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -13,8 +15,9 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
   private int[] selectedGroupItems;
   private int[] selectedQuickAccess;
   //private Group currGroup;
-  private String currGroup; //should this be of Group class instead of String?
+  private int currGroup; //should this be of Group class instead of String?
   private String[] quickAccessGroups;
+  private fridge.group.Group[] groups;
   private fridge.window_content.WindowCollection winCollection;
   
   public MainWindow2(fridge.window_content.WindowCollection winColl,
@@ -35,7 +38,7 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     selectedGroupItems = null;
     selectedQuickAccess = null;
     
-    currGroup = null;
+    currGroup = -1;
     groupListBox = groupList;
     view0 = view0_par;
     view1 = view1_par;
@@ -63,7 +66,31 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       else if ("qa_operations" == ML_ptr.getType()){
       }
       else if ("groupNameBox" == ML_ptr.getType()){
+        //currGroup = boxSelection
+        //updateContent();
       }
     }
+  }
+  
+  private void updateContent(){
+    int i;
+    String[] newContent;
+    
+    newContent = new String[groups[currGroup].getItemsLength()];
+    
+    for (i = 0; i < newContent.length; i++){
+      newContent[i] = groups[currGroup].getItem(i).toString();
+    }
+    
+    groups[currGroup].getItems();
+    view0.setListData(newContent);
+  }
+  
+  public boolean hideSuccessful(){
+    if (true == winCollection.hideNotificationOk("MainWin2", myWindowIndex)){
+      frame.setVisible(false);
+      return true;
+    }
+    return false;
   }
 }
