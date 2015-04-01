@@ -51,6 +51,10 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] MainWin2 addGroup not set");
   }
   
+  public void groupButtonMenuPress(String buttonName){
+    if ()
+  }
+  
   protected void moveItemsToGroup(String groupName){
     System.out.println("[DEBUG] MainWin2 moveItemsToGroup not set");
   }
@@ -94,6 +98,7 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       groupListBox.addItem(tempGroups[i].getName());
     }
     System.out.println("[DEBUG] updateContent done");
+    updateMenu();
   }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){

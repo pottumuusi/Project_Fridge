@@ -65,16 +65,34 @@ public class Menu implements ActionListener, ItemListener{
   
   public void update(fridge.window_content.WindowCollection winColl){
     System.out.println("[DEBUG] executing menu update");
-    int i;
+    int i, k;
+    int groupCount;
     JMenu tempMenu;
-    JMenuItem tempItem;
+    JMenuItem tempItem, testItem;
     JMenuBar tempMenuBar;
+    fridge.group.Group[] tempGroups;
+    
+    groupCount = winColl.getGroupCount();
+    tempGroups = winColl.getGroups();
+    
     tempMenuBar = containingWindow.getMenuBar();
     tempMenu = tempMenuBar.getMenu(2);
     System.out.println("MenuItems:");
+    
+    //testItem = createMenuItem("testItem", KeyEvent.VK_T, "testing");
+    
     for (i = 0; i < tempMenu.getItemCount(); i++){
       tempItem = tempMenu.getItem(i);
       System.out.println("    " + tempItem.getActionCommand());
+      if ("Add to group" == tempItem.getActionCommand() ||
+          "Move to group" == tempItem.getActionCommand()){
+        ((JMenu)tempItem).removeAll();
+        for (k = 0; k < groupCount; k++){
+          ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
+        }
+        //((JMenu)tempItem).add(testItem);
+        System.out.println("Added groups to menu");
+      }
     }
   }
   
@@ -233,10 +251,29 @@ public class Menu implements ActionListener, ItemListener{
     submenu.setMnemonic(keyEvent);
     submenu.getAccessibleContext().setAccessibleDescription(
         description);
+    submenu.addActionListener(this);
     
     return submenu;
   }
   
+  private JMenuItem createMenuItem(String name){
+    JMenuItem menuItem;
+    
+    menuItem = new JMenuItem(name);
+    menuItem.addActionListener(this);
+    
+    return menuItem;
+  }
+  
+  private JMenuItem createMenuItem(String name, String description){
+    JMenuItem menuItem;
+    
+    menuItem = new JMenuItem(name);
+    menuItem.getAccessibleContext().setAccessibleDescription(description);
+    menuItem.addActionListener(this);
+    
+    return menuItem;
+  }
   
   private JMenuItem createMenuItem(String name, int mnemonic, String description){
     JMenuItem menuItem;
@@ -440,6 +477,7 @@ public class Menu implements ActionListener, ItemListener{
   public void actionPerformed(ActionEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
     
+    
     /*System.out.println("*Action event*\n"
                    + "Event source: " + source.getText()
                    + " (an instance of " + getClassName(source) + ")");*/
@@ -465,6 +503,8 @@ public class Menu implements ActionListener, ItemListener{
                      + ((e.getStateChange() == ItemEvent.SELECTED) ?
                         "selected":"unselected"));
   }
+  
+  
   
   /* Class name will be returned */
   protected String getClassName(Object o){

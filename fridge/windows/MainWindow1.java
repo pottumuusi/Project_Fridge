@@ -89,7 +89,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     // name should be asked in a window here
     groupName = "testGroup";
     winCollection.addGroup(groupName);
-    winCollection.updateMenus();
+  }
+  
+  protected void groupButtonMenuPress(String buttonName){
+    
   }
   
   protected void moveItemsToGroup(String groupName){
@@ -121,7 +124,8 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   }
   
   public void updateContent(){
-    System.out.println("[DEBUG] MainWin1 updateCotnent not set");
+    //System.out.println("[DEBUG] MainWin1 updateCotnent not set");
+    updateMenu();
   }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){

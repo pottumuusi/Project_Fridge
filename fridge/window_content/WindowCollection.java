@@ -218,10 +218,6 @@ public class WindowCollection extends WindowAdapter{
     namedWindows[windowCount] = new fridge.window_content.NamedWindow(par_name, windowCount);
   }
   
-  public void updateMenus(){
-    
-  }
-  
   // create new group with given name
   public void addGroup(String newGroupName){
     boolean groupWithSameName = false;
@@ -245,7 +241,8 @@ public class WindowCollection extends WindowAdapter{
       System.out.println("addedd group " + groups[groupCount].getName());
       groupCount++;
       
-      groupWindowsNewGroupNotify();
+      //groupWindowsNewGroupNotify();
+      newGroupNotify();
     }
   }
   
@@ -285,11 +282,11 @@ public class WindowCollection extends WindowAdapter{
     //all group windows.updateGroupView
   }
   
-  private void groupWindowsNewGroupNotify(){
+  private void newGroupNotify(){
     int i;
     
-    for (i = 0; i < groupWindows.length; i++){
-      ((fridge.windows.CallableByListener)myWindows[groupWindows[i]]).updateContent();
+    for (i = 0; i < windowCount; i++){
+      ((fridge.windows.CallableByListener)myWindows[i]).updateContent();
     }
   }
   

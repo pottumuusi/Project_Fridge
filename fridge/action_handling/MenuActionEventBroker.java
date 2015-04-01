@@ -29,6 +29,16 @@ public class MenuActionEventBroker{
     else if(eventSource.equals("Cut")){
       
     }
+    else{
+      caller.groupButtonMenuPress(eventSource);
+    }
+  }
+  
+  public void brokerCall(String eventSource, String className,
+                         fridge.action_handling.MenuActionEventHandler MAE_handler,
+                         fridge.windows.MyWindow caller,
+                         String eventContainingMenu){
+    System.out.println("[DEBUG] this broker call has no functionality");
   }
   
   private void invokeQuit(fridge.action_handling.MenuActionEventHandler MAE_handler){
