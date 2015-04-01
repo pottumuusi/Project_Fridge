@@ -36,6 +36,11 @@ public class ActionHandlingContainer{
     MAE_broker.brokerCall(eventSource, instance, MAE_handler, caller);
   }
   
+  public void MAE_brokerCall(String eventSource, String instance,
+                             fridge.windows.MyWindow caller, String sourceName){
+    MAE_broker.brokerCall(eventSource, instance, MAE_handler, caller, sourceName);
+  }
+  
   public void CA_brokerCall(){
     
   }

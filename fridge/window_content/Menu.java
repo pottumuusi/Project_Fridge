@@ -89,7 +89,7 @@ public class Menu implements ActionListener, ItemListener{
         for (k = 0; k < groupCount; k++){
           ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
           System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());
-          ((JMenu)tempItem).getItem(k).setName("Add");
+          ((JMenu)tempItem).getItem(k).setName("Add to group");
         }
         //((JMenu)tempItem).add(testItem);
         
@@ -99,7 +99,7 @@ public class Menu implements ActionListener, ItemListener{
         for (k = 0; k < groupCount; k++){
           ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
           System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());
-          ((JMenu)tempItem).getItem(k).setName("Move");
+          ((JMenu)tempItem).getItem(k).setName("Move to group");
         }
       }
     }
@@ -486,9 +486,6 @@ public class Menu implements ActionListener, ItemListener{
   public void actionPerformed(ActionEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
     
-    System.out.println("[DEBUG] actionPerformed. source name: " + source.getName());
-    //System.out.println("[DEBUG] menu: ActionPerformed source.getParent " + ((JMenu)source.getParent()).getText());
-    
     /*System.out.println("*Action event*\n"
                    + "Event source: " + source.getText()
                    + " (an instance of " + getClassName(source) + ")");*/
@@ -499,7 +496,18 @@ public class Menu implements ActionListener, ItemListener{
     /*MAE_broker.solveAction(source.getText(), getClassName(source), 
                            fridgeInstance.getMAE_handler(), fridgeInstance);*/
     //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source), fridgeInstance);
-    AH_Container.MAE_brokerCall(source.getText(), getClassName(source), containingWindow);
+    if (null == source.getName()){
+      AH_Container.MAE_brokerCall(source.getText(),
+                                  getClassName(source),
+                                  containingWindow);
+    }
+    else{
+      AH_Container.MAE_brokerCall(source.getText(),
+                                  getClassName(source),
+                                  containingWindow,
+                                  source.getName());
+    }
+    
     //fridge.Fridge.MAE_brokerCall(source.getText(), getClassName(source));
     //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
   }

@@ -2,7 +2,8 @@ package fridge.action_handling;
 
 public class MenuActionEventBroker{
   //earlier name of this method was: solveAction
-  public void brokerCall(String eventSource, String className,
+  public void brokerCall(String eventSource,
+                         String className,
                          fridge.action_handling.MenuActionEventHandler MAE_handler,
                          fridge.windows.MyWindow caller){
     System.out.println("*MAE_broker invokingAction for*\n"
@@ -29,16 +30,16 @@ public class MenuActionEventBroker{
     else if(eventSource.equals("Cut")){
       
     }
-    else{
-      ((fridge.windows.CallableByListener)caller).groupButtonMenuPress(eventSource);
-    }
   }
   
-  public void brokerCall(String eventSource, String className,
+  public void brokerCall(String eventSource,
+                         String className,
                          fridge.action_handling.MenuActionEventHandler MAE_handler,
                          fridge.windows.MyWindow caller,
                          String eventContainingMenu){
-    System.out.println("[DEBUG] this broker call has no functionality");
+    
+    ((fridge.windows.CallableByListener)caller).groupButtonMenuPress(eventSource,
+                                                                     eventContainingMenu);
   }
   
   private void invokeQuit(fridge.action_handling.MenuActionEventHandler MAE_handler){

@@ -91,16 +91,23 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     winCollection.addGroup(groupName);
   }
   
-  public void groupButtonMenuPress(String buttonName){
-    
-  }
+  /*public void groupButtonMenuPress(String buttonName, String containingMenu){
+    if (){
+      
+    }
+  }*/
   
   protected void moveItemsToGroup(String groupName){
-    System.out.println("MainWin1 moveItemsToGroup");
-    
+    int i;
     Path[] itemsToPass;
+    Path[] tempPaths;
     
-    itemsToPass = getPathsOfCurrentFolder();
+    tempPaths = getPathsOfCurrentFolder();
+    itemsToPass = new Path[selectedFolders.length];
+    
+    for (i = 0; i < selectedFolders.length; i++){
+      itemsToPass[i] = tempPaths[selectedFolders[i]];
+    }
     
     winCollection.setGroupItems(groupName, itemsToPass);
   }
@@ -108,8 +115,14 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   protected void addItemsToGroup(String groupName){
     int i;
     Path[] itemsToPass;
+    Path[] tempPaths;
     
-    itemsToPass = getPathsOfCurrentFolder();
+    tempPaths = getPathsOfCurrentFolder();
+    itemsToPass = new Path[selectedFolders.length];
+    
+    for (i = 0; i < selectedFolders.length; i++){
+      itemsToPass[i] = tempPaths[selectedFolders[i]];
+    }
     
     winCollection.addGroupItems(groupName, itemsToPass);
     /*for (i = 0; i < selectedFolders.length; i++){

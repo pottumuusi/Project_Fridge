@@ -51,9 +51,9 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] MainWin2 addGroup not set");
   }
   
-  public void groupButtonMenuPress(String buttonName){
+  /*public void groupButtonMenuPress(String buttonName){
     //if ()
-  }
+  }*/
   
   protected void moveItemsToGroup(String groupName){
     System.out.println("[DEBUG] MainWin2 moveItemsToGroup not set");
@@ -67,6 +67,10 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     int i;
     String[] newContent = null;
     Path[] groupItems;
+    
+    System.out.println("[DEBUG] updating MainWin2 views");
+    currGroup = groupListBox.getSelectedItem().toString();
+    System.out.println("currGroup == " + currGroup);
     //fridge.group.Group tempGroup;
     //fridge.group.Group[] tempGroups;
     
@@ -75,13 +79,30 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     
     //tempGroup = winCollection.getGroups(currGroup);
     if (null != currGroup){
-      groupItems = winCollection.getGroup(currGroup).getItems();
-      newContent = new String[groupItems.length];
+      if (null != winCollection.getGroup(currGroup).getName() &&
+          null != winCollection.getGroup(currGroup).getItems()){
+        System.out.println("[DEBUG] getting items from group: " + winCollection.getGroup(currGroup).getName());
       
-      for (i = 0; i < groupItems.length; i++){
-        newContent[i] = groupItems[i].toString();
+        groupItems = winCollection.getGroup(currGroup).getItems();
+        if (groupItems.length > 0){
+          newContent = new String[groupItems.length];
+        
+          for (i = 0; i < groupItems.length; i++){
+            newContent[i] = groupItems[i].toString();
+          }
+        
+          view0.setListData(newContent);
+        }
       }
-      
+      else{
+        newContent = new String[1];
+        newContent[0] = "";
+        view0.setListData(newContent);
+      }
+    }
+    else{
+      newContent = new String[1];
+      newContent[0] = "";
       view0.setListData(newContent);
     }
   }
@@ -98,24 +119,33 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       groupListBox.addItem(tempGroups[i].getName());
     }
     System.out.println("[DEBUG] updateContent done");
+    
+    currGroup = groupListBox.getSelectedItem().toString();
     updateMenu();
   }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     int i;
     
-    System.out.println("[DEBUG] MainWin2 handleEvent");
+    System.out.println("[DEBUG] MainWin2 handleEvent. type is: " + ML_ptr.getType() + ". name is: " + ML_ptr.getName());
     
     if ("ClassListSelectionListener" == ML_ptr.getType()){
       if ("group" == ML_ptr.getName()){
       }
       else if ("quickAccess" == ML_ptr.getName()){
       }
+      
     }
     else if ("ClassActionListener" == ML_ptr.getType()){
       if ("groupShowFolder" == ML_ptr.getName()){
       }
       else if ("quickSave" == ML_ptr.getName()){
+        if (null == quickAccessGroups){
+          
+        }
+        else{
+          
+        }
       }
       else if ("quickLoad" == ML_ptr.getName()){
       }
@@ -128,9 +158,11 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
         testPath[0] = ;
         winCollection.addGroupItems("fromMainWin2", testPaths);*/
       }
-      else if ("groupNameBox" == ML_ptr.getType()){
+      else if ("groupNameBox" == ML_ptr.getName()){
         //currGroup = boxSelection
         //updateContent();
+        System.out.println("[DEBUG] comboBox selected item: " + groupListBox.getSelectedItem().toString());
+        updateViews();
       }
     }
   }

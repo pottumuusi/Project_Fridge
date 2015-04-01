@@ -49,6 +49,7 @@ public class WindowCollection extends WindowAdapter{
       }
     }
     addNew("MainWin1");
+    addGroup("testGroup0");
   }
   
   public int getMyWindowsIndex(String windowName){
