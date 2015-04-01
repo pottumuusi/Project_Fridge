@@ -3,11 +3,12 @@ package fridge.windows;
 import java.nio.file.Path;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected fridge.window_content.WindowCollection winCollection;
   protected fridge.action_handling.MyListener[] listeners = null;
-  //protected fridge.window_content.Menu menu = null;
+  protected fridge.window_content.Menu menu = null;
   
   /*CallableByListener(JFrame frame){
     super(frame);
@@ -18,10 +19,11 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   CallableByListener(JFrame frame, 
                      fridge.action_handling.ClassListSelectionListener CLSL_ptr,
                      int par_myWindowIndex,
-                     fridge.window_content.Menu menu,
+                     fridge.window_content.Menu par_menu,
                      fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     winCollection = winColl;
+    menu = par_menu;
     menu.setContainingWindow(this);
     addListener(CLSL_ptr);
     givePtrToListeners();
@@ -33,11 +35,12 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   CallableByListener(JFrame frame, 
                      fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                      int par_myWindowIndex,
-                     fridge.window_content.Menu menu,
+                     fridge.window_content.Menu par_menu,
                      fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     int i;
     winCollection = winColl;
+    menu = par_menu;
     menu.setContainingWindow(this);
     
     for (i = 0; i < CLSL_list.length; i++){
@@ -50,11 +53,12 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
                      fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                      fridge.action_handling.ClassActionListener[] CAL_list,
                      int par_myWindowIndex,
-                     fridge.window_content.Menu menu,
+                     fridge.window_content.Menu par_menu,
                      fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     int i;
     winCollection = winColl;
+    menu = par_menu;
     menu.setContainingWindow(this);
     
     for (i = 0; i < CLSL_list.length; i++){
@@ -72,6 +76,14 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   
   public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
     handleEvent(ML_ptr);
+  }
+  
+  public void updateMenu(){
+    menu.update(winCollection);
+  }
+  
+  public JMenuBar getMenuBar(){
+    return frame.getJMenuBar();
   }
   
   //protected abstract void addListeners();
@@ -96,6 +108,7 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   
   //protected abstract void handleEvent(String listenerType);
   //protected abstract void handleEvent(String listenerType, fridge.action_handling.MyListener);
+  
   /*protected void addGroup(String groupName){
     
   }
@@ -107,6 +120,7 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected void addItemsToGroup(String groupName, Path[] newItems){
     
   }*/
+  
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // Note that at least all abstract methods concerned with groups could be moved here if
   // pointer to windowCollection was stored in this class instead of all the subclasses.
@@ -115,10 +129,13 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   // so confused
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   
+  //protected abstract void moveItemsToGroup(String groupName, Path[] newItems);
   protected abstract void handleEvent(fridge.action_handling.MyListener ML_ptr);
-  /*protected abstract void addGroup(String name);
-  protected abstract void addToGroup(String groupName, Path[] newItems);
-  protected abstract void moveToGroup(String groupName, Path[] newItems);*/
+  protected abstract void addGroup();
+  protected abstract void addItemsToGroup(String groupName, Path[] newItems);
+  protected abstract void moveItemsToGroup(String groupName);
+  public abstract void updateContent(); 
+  public abstract void updateViews();
   
   //protected abstract void givePtrToListeners();
   protected void givePtrToListeners(){

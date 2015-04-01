@@ -21,6 +21,14 @@ public class MenuActionEventBroker{
     else if (eventSource.equals("Close")){
       caller.close();
     }
+    else if (eventSource.equals("Settings")){
+      //call with selected group name
+      //(fridge.windows.CallableByListener)caller.moveItemsToGroup();
+      
+    }
+    else if(eventSource.equals("Cut")){
+      
+    }
   }
   
   private void invokeQuit(fridge.action_handling.MenuActionEventHandler MAE_handler){

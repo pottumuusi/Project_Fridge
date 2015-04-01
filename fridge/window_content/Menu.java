@@ -63,6 +63,25 @@ public class Menu implements ActionListener, ItemListener{
     System.out.println("testing more");
   }
   
+  public void update(fridge.window_content.WindowCollection winColl){
+    System.out.println("[DEBUG] executing menu update");
+    int i;
+    JMenu tempMenu;
+    JMenuItem tempItem;
+    JMenuBar tempMenuBar;
+    tempMenuBar = containingWindow.getMenuBar();
+    tempMenu = tempMenuBar.getMenu(2);
+    System.out.println("MenuItems:");
+    for (i = 0; i < tempMenu.getItemCount(); i++){
+      tempItem = tempMenu.getItem(i);
+      System.out.println("    " + tempItem.getActionCommand());
+    }
+  }
+  
+  private void setGroups(fridge.window_content.WindowCollection winColl){
+    winColl.getGroups();
+  }
+  
   /*public JMenuBar newMenuBar(int menuType){
     switch (menuType){
     case 0:

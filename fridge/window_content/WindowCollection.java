@@ -16,6 +16,7 @@ import java.awt.event.WindowEvent;
 public class WindowCollection extends WindowAdapter{
   private int groupCount;
   private int windowCount;
+  private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
   private fridge.group.Group[] groups;
@@ -33,10 +34,13 @@ public class WindowCollection extends WindowAdapter{
     groupCount = 0;
     //lastLocation = null;
     
+    groupWindows = null;
     windowList = new JFrame[4];
     groups = new fridge.group.Group[10];
     myWindows = new fridge.windows.MyWindow[4];
     namedWindows = new fridge.window_content.NamedWindow[4];
+    
+    //groups[0] = new fridge.group.Group("testGroup");
     
     addNew("MainWin2");
     if (-1 != getMyWindowsIndex("MainWin2")){
@@ -60,6 +64,31 @@ public class WindowCollection extends WindowAdapter{
   
   public fridge.windows.MyWindow getMyWindow(int index){
     return myWindows[index];
+  }
+  
+  public int getGroupCount(){
+    return groupCount;
+  }
+  
+  public fridge.group.Group[] getGroups(){
+    return groups;
+  }
+  
+  public int getGroupsLength(){
+    return groups.length;
+  }
+  
+  public fridge.group.Group getGroup(String groupName){
+    int i;
+    
+    for (i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        return groups[i];
+      }
+    }
+    System.out.println("[DEBUG] getGroup could not locate group: " + groupName);
+    
+    return null;
   }
   
   public void addNew(String winType){
@@ -118,6 +147,7 @@ public class WindowCollection extends WindowAdapter{
     else if("MainWin2" == winType){
     //case "MainWin2":
       newNamedWin("MainWin2");
+      newGroupWindow(windowCount);
       JList<String> view0, view1;
       //JList<String> mw2_view0, mw2_view1;
       
@@ -188,6 +218,10 @@ public class WindowCollection extends WindowAdapter{
     namedWindows[windowCount] = new fridge.window_content.NamedWindow(par_name, windowCount);
   }
   
+  public void updateMenus(){
+    
+  }
+  
   // create new group with given name
   public void addGroup(String newGroupName){
     boolean groupWithSameName = false;
@@ -203,14 +237,16 @@ public class WindowCollection extends WindowAdapter{
       }
     }
     
-    if (groupWithSameName){
+    if (true == groupWithSameName){
       //errorMessage("Could not create group. Group with given name already exists.");
     }
     else{
       groups[groupCount] = new fridge.group.Group(newGroupName);
+      System.out.println("addedd group " + groups[groupCount].getName());
+      groupCount++;
+      
+      groupWindowsNewGroupNotify();
     }
-    
-    groupCount++;
   }
   
   public void setGroupItems(String groupName, Path[] newGroupItems){
@@ -222,6 +258,8 @@ public class WindowCollection extends WindowAdapter{
         break;
       }
     }
+    
+    groupWindowsItemsChangeNotify();
   }
   
   public void addGroupItems(String groupName, Path[] newGroupItems){
@@ -231,6 +269,45 @@ public class WindowCollection extends WindowAdapter{
       if (groupName == groups[i].getName()){
         groups[i].addItems(newGroupItems);
       }
+    }
+    
+    groupWindowsItemsChangeNotify();
+  }
+  
+  private void groupWindowsItemsChangeNotify(){
+    int i;
+    
+    for (i = 0; i < groupWindows.length; i++){
+      if (groupWindows[i] >= 0){
+        ((fridge.windows.CallableByListener)myWindows[groupWindows[i]]).updateViews();
+      }
+    }
+    //all group windows.updateGroupView
+  }
+  
+  private void groupWindowsNewGroupNotify(){
+    int i;
+    
+    for (i = 0; i < groupWindows.length; i++){
+      ((fridge.windows.CallableByListener)myWindows[groupWindows[i]]).updateContent();
+    }
+  }
+  
+  private void newGroupWindow(int myWindowIndex){
+    int i;
+    int[] temp = null;
+    
+    if (null == groupWindows){
+      groupWindows = new int[1];
+      groupWindows[0] = myWindowIndex;
+    }
+    else{
+      temp = groupWindows;
+      groupWindows = new int[groupWindows.length + 1];
+      for(i = 0; i < temp.length; i++){
+        groupWindows[i] = temp[i];
+      }
+      groupWindows[i] = myWindowIndex;
     }
   }
   
@@ -253,6 +330,7 @@ public class WindowCollection extends WindowAdapter{
   private JFrame[] makeShorter(JFrame[] oldList){
     return null;
   }
+  
   
   private JFrame[] makeLonger(JFrame[] oldList){
     int i;

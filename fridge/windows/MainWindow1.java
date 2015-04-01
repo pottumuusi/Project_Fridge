@@ -84,17 +84,45 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] after pack()");
   }
   
-  /*protected void addGroup(String groupName){
-    
+  protected void addGroup(){
+    String groupName = null;
+    // name should be asked in a window here
+    groupName = "testGroup";
+    winCollection.addGroup(groupName);
+    winCollection.updateMenus();
   }
   
-  protected void moveToGroup(String groupName, Path[] newItems){
+  protected void moveItemsToGroup(String groupName){
+    System.out.println("MainWin1 moveItemsToGroup");
     
+    Path[] itemsToPass;
+    
+    itemsToPass = getPathsOfCurrentFolder();
+    
+    winCollection.setGroupItems(groupName, itemsToPass);
   }
   
-  protected void addToGroup(String groupName, Path[] newItems){
+  protected void addItemsToGroup(String groupName, Path[] newItems){
+    int i;
+    Path[] itemsToPass;
     
-  }*/
+    itemsToPass = getPathsOfCurrentFolder();
+    
+    winCollection.addGroupItems(groupName, itemsToPass);
+    /*for (i = 0; i < selectedFolders.length; i++){
+      //addItemsToGroups expects Path[] variable!!!
+      addItemsToGroups();
+      //((fridge.windows.MainWindow2)winCollection.getMyWindow(winCollection.getMyWindowsIndex("MainWin2"))).addItemsToGroup(itemsToPass);
+    }*/
+  }
+  
+  public void updateViews(){
+    System.out.println("[DEBUG] MainWin1 updateViews not set");
+  }
+  
+  public void updateContent(){
+    System.out.println("[DEBUG] MainWin1 updateCotnent not set");
+  }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     //int[] selectedIndexes;
@@ -341,17 +369,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     return false;
   }
   
-  public void addToGroup(){
-    int i;
-    Path[] itemsToPass;
-    
-    itemsToPass = getPathsOfCurrentFolder();
-    
-    for (i = 0; i < selectedFolders.length; i++){
-      //addItemsToGroups expects Path[] variable!!!
-      ((fridge.windows.MainWindow2)winCollection.getMyWindow(winCollection.getMyWindowsIndex("MainWin2"))).addItemsToGroup(itemsToPass);
-    }
-  }
   
   private Path[] getPathsOfCurrentFolder(){
     int i;
@@ -371,7 +388,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
             '.' == processedPath.getFileName().toString().charAt(1)){
           if (null == paths){
             paths = new Path[1];
-            newContent[pathCount] = processedPath;
+            paths[pathCount] = processedPath;
             pathCount++;
           }
           else{
@@ -383,7 +400,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
               paths[i] = temp[i];
             }
             paths[pathCount] = processedPath;
-            folderFileCount++;
+            pathCount++;
           }
         }
       }

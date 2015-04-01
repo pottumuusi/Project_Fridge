@@ -50,17 +50,25 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     updateHelpText();
   }
   
-  /*protected void addGroup(String groupName){
-    
+  protected void addGroup(){
+    System.out.println("[DEBUG] HelpWin addGroup not set");
   }
   
-  protected void moveToGroup(String groupName, Path[] newItems){
-    
+  protected void moveItemsToGroup(String groupName){
+    System.out.println("[DEBUG] HelpWin moveItemsToGroup not set");
   }
   
-  protected void addToGroup(String groupName, Path[] newItems){
-    
-  }*/
+  protected void addItemsToGroup(String groupName, Path[] newItems){
+    System.out.println("[DEBUG] HelpWin addItemsToGroup not set");
+  }
+  
+  public void updateViews(){
+    System.out.println("[DEBUG] HelpWin updateViews not set");
+  }
+  
+  public void updateContent(){
+    System.out.println("[DEBUG] HelpWin update content not set");
+  }
   
   //protected void handleEvent(String listenerType, fridge.action_handling.MyListener ML_ptr){
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
