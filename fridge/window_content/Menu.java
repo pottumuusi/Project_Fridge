@@ -96,6 +96,7 @@ public class Menu implements ActionListener, ItemListener{
         System.out.println("Added groups to menu");
       }
       else if("Move to group" == tempItem.getActionCommand()){
+        ((JMenu)tempItem).removeAll();
         for (k = 0; k < groupCount; k++){
           ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
           System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());

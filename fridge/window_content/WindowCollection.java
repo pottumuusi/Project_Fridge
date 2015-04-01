@@ -266,6 +266,7 @@ public class WindowCollection extends WindowAdapter{
     for (i = 0; i < groupCount; i++){
       if (groupName == groups[i].getName()){
         groups[i].addItems(newGroupItems);
+        break;
       }
     }
     

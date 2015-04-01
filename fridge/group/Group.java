@@ -70,6 +70,8 @@ public class Group{
       items[i] = newItems[i];
     }
     itemCount = items.length;
+    
+    System.out.println("[DEBUG] setItems complete");
   }
   
   public void addItem(Path newItem){

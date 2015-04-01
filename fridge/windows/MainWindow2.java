@@ -14,6 +14,7 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
   private JList<String> view1;
   private int[] selectedGroupItems;
   private int[] selectedQuickAccess;
+  private boolean viewUpdateAllowed;
   //private Group currGroup;
   //private int currGroup; //should this be of Group class instead of String?
   private String currGroup;
@@ -105,6 +106,15 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       newContent[0] = "";
       view0.setListData(newContent);
     }
+    
+    if (null == quickAccessGroups){
+      newContent = new String[1];
+      newContent[0] = "";
+      view1.setListData(newContent);
+    }
+    else{
+      view1.setListData(quickAccessGroups);
+    }
   }
   
   public void updateContent(){
@@ -114,40 +124,47 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     tempGroups = winCollection.getGroups();
     groupCount = winCollection.getGroupCount();
     
+    viewUpdateAllowed = false;
+    groupListBox.removeAllItems();
+    
     for (i = 0; i < groupCount; i++){
       System.out.println("[DEBUG] adding group " + i + " " + tempGroups[i].getName());
       groupListBox.addItem(tempGroups[i].getName());
     }
     System.out.println("[DEBUG] updateContent done");
     
+    viewUpdateAllowed = true;
     currGroup = groupListBox.getSelectedItem().toString();
     updateMenu();
   }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     int i;
+    String[] tempQuickAccess;
     
     System.out.println("[DEBUG] MainWin2 handleEvent. type is: " + ML_ptr.getType() + ". name is: " + ML_ptr.getName());
     
     if ("ClassListSelectionListener" == ML_ptr.getType()){
       if ("group" == ML_ptr.getName()){
+        selectedGroupItems = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
       }
       else if ("quickAccess" == ML_ptr.getName()){
+        selectedQuickAccess = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
       }
-      
     }
     else if ("ClassActionListener" == ML_ptr.getType()){
       if ("groupShowFolder" == ML_ptr.getName()){
+        if (true == hideSuccessful()){
+          if (true == winCollection.namedWindowIsHidden("MainWin1")){
+            winCollection.showWindow("MainWin1");
+          }
+        }
       }
       else if ("quickSave" == ML_ptr.getName()){
-        if (null == quickAccessGroups){
-          
-        }
-        else{
-          
-        }
+        addToQuickAccess();
       }
       else if ("quickLoad" == ML_ptr.getName()){
+        loadSelectedQuickAccessGroup();
       }
       else if ("qa_showFolder" == ML_ptr.getName()){
       }
@@ -161,9 +178,52 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       else if ("groupNameBox" == ML_ptr.getName()){
         //currGroup = boxSelection
         //updateContent();
-        System.out.println("[DEBUG] comboBox selected item: " + groupListBox.getSelectedItem().toString());
-        updateViews();
+        //System.out.println("[DEBUG] comboBox selected item: " + groupListBox.getSelectedItem().toString());
+        if (true == viewUpdateAllowed){
+          updateViews();
+        }
       }
+    }
+  }
+  
+  private void addToQuickAccess(){
+    int i;
+    String[] tempQuickAccess = quickAccessGroups;
+    
+    if (null == quickAccessGroups){
+      quickAccessGroups = new String[1];
+      quickAccessGroups[0] = currGroup;
+      updateViews();
+    }
+    else{
+      tempQuickAccess = quickAccessGroups;
+      quickAccessGroups = new String[quickAccessGroups.length + 1];
+      for (i = 0; i < tempQuickAccess.length; i++){
+        quickAccessGroups[i] = tempQuickAccess[i];
+      }
+      quickAccessGroups[i] = currGroup;
+      updateViews();
+    }
+  }
+  
+  private void loadSelectedQuickAccessGroup(){
+    int i;
+    String selection;
+    
+    if (1 == selectedQuickAccess.length){
+      selection = quickAccessGroups[view1.getMinSelectionIndex()];
+      
+      for (i = 0; i < groupListBox.getItemCount(); i++){
+        if (groupListBox.getItemAt(i).toString() == selection){
+          System.out.println("[DEBUG] loading quick access. " + selection + " matches " + groupListBox.getItemAt(i).toString());
+          groupListBox.setSelectedIndex(i);
+          updateViews();
+          break;
+        }
+      }
+    }
+    else{
+      //errorMessage("Cannot load multiple Quick Access Groups");
     }
   }
   

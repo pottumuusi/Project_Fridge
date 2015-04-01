@@ -139,6 +139,7 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   public abstract void updateViews();
   
   public void groupButtonMenuPress(String buttonName, String containingMenu){
+    System.out.println("[DEBUG] groupButtonMenuPress containingMenu == " + containingMenu);
     if ("Add to group" == containingMenu){
       System.out.println("");
       addItemsToGroup(buttonName);
