@@ -134,9 +134,15 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected abstract void addGroup();
   protected abstract void addItemsToGroup(String groupName);
   protected abstract void moveItemsToGroup(String groupName);
-  public abstract void groupButtonMenuPress(String eventSource);
+  public abstract void groupButtonMenuPress(String buttonName);
   public abstract void updateContent(); 
   public abstract void updateViews();
+  
+  /*public void groupButtonMenuPress(String buttonName){
+    if (buttonName.equals(arg0)){
+      
+    }
+  }*/
   
   //protected abstract void givePtrToListeners();
   protected void givePtrToListeners(){

@@ -62,7 +62,7 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] HelpWin moveItemsToGroup not set");
   }
   
-  protected void addItemsToGroup(String groupName, Path[] newItems){
+  protected void addItemsToGroup(String groupName){
     System.out.println("[DEBUG] HelpWin addItemsToGroup not set");
   }
   

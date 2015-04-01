@@ -52,14 +52,14 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
   }
   
   public void groupButtonMenuPress(String buttonName){
-    if ()
+    //if ()
   }
   
   protected void moveItemsToGroup(String groupName){
     System.out.println("[DEBUG] MainWin2 moveItemsToGroup not set");
   }
   
-  protected void addItemsToGroup(String groupName, Path[] newItems){
+  protected void addItemsToGroup(String groupName){
     System.out.println("[DEBUG] MainWin2 addItemsToGroup not set");
   }
   

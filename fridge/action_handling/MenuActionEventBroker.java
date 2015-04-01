@@ -30,7 +30,7 @@ public class MenuActionEventBroker{
       
     }
     else{
-      caller.groupButtonMenuPress(eventSource);
+      ((fridge.windows.CallableByListener)caller).groupButtonMenuPress(eventSource);
     }
   }
   

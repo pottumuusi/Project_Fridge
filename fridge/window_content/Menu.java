@@ -84,14 +84,23 @@ public class Menu implements ActionListener, ItemListener{
     for (i = 0; i < tempMenu.getItemCount(); i++){
       tempItem = tempMenu.getItem(i);
       System.out.println("    " + tempItem.getActionCommand());
-      if ("Add to group" == tempItem.getActionCommand() ||
-          "Move to group" == tempItem.getActionCommand()){
+      if ("Add to group" == tempItem.getActionCommand()){
         ((JMenu)tempItem).removeAll();
         for (k = 0; k < groupCount; k++){
           ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
+          System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());
+          ((JMenu)tempItem).getItem(k).setName("Add");
         }
         //((JMenu)tempItem).add(testItem);
+        
         System.out.println("Added groups to menu");
+      }
+      else if("Move to group" == tempItem.getActionCommand()){
+        for (k = 0; k < groupCount; k++){
+          ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
+          System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());
+          ((JMenu)tempItem).getItem(k).setName("Move");
+        }
       }
     }
   }
@@ -477,6 +486,8 @@ public class Menu implements ActionListener, ItemListener{
   public void actionPerformed(ActionEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
     
+    System.out.println("[DEBUG] actionPerformed. source name: " + source.getName());
+    //System.out.println("[DEBUG] menu: ActionPerformed source.getParent " + ((JMenu)source.getParent()).getText());
     
     /*System.out.println("*Action event*\n"
                    + "Event source: " + source.getText()
@@ -495,6 +506,7 @@ public class Menu implements ActionListener, ItemListener{
   
   public void itemStateChanged(ItemEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
+    
 
     System.out.println("*Item event*"
                      + "Event source: " + source.getText()

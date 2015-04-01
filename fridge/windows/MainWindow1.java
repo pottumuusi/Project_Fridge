@@ -91,7 +91,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     winCollection.addGroup(groupName);
   }
   
-  protected void groupButtonMenuPress(String buttonName){
+  public void groupButtonMenuPress(String buttonName){
     
   }
   
@@ -105,7 +105,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     winCollection.setGroupItems(groupName, itemsToPass);
   }
   
-  protected void addItemsToGroup(String groupName, Path[] newItems){
+  protected void addItemsToGroup(String groupName){
     int i;
     Path[] itemsToPass;
     
