@@ -206,15 +206,15 @@ public class WindowCollection extends WindowAdapter{
     }
     else if("newGroupWin" == winType){
       newNamedWin("newGroupWin");
-      JTextField = new nameField JTextField();
+      JTextField nameField = new JTextField();
       
       fridge.action_handling.ClassActionListener[] CAL_list;
       CAL_list = new fridge.action_handling.ClassActionListener[3];
       CAL_list[0] = new fridge.action_handling.ClassActionListener("newNameField");
       CAL_list[1] = new fridge.action_handling.ClassActionListener("Create");
-      CAL_list[3] = new fridge.action_handling.ClassActionListener("Cancel");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("Cancel");
       
-      fridge.window_content.Menu hw_menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+      fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
       
       myWindows[windowCount] = new fridge.windows.NewGroupWindow(this,
                                                                  winMaker,

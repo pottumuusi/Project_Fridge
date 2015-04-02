@@ -30,6 +30,9 @@ public class MenuActionEventBroker{
     else if(eventSource.equals("Cut")){
       
     }
+    else if(eventSource.equals("Group")){
+      ((fridge.windows.CallableByListener)caller).addGroup();
+    }
   }
   
   public void brokerCall(String eventSource,

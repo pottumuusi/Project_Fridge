@@ -75,6 +75,18 @@ public class Containers{
     return contentPane;
   }
   
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassActionListener[] CAL_list,
+                                     JTextField groupNameField){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    if ("newGroupWin" == cpType){
+      createNewGroupWinContent(contentPane, CAL_list, groupNameField);
+    }
+    
+    return contentPane;
+  }
+  
   private void createMainWin1Content(JPanel contentPane,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
@@ -594,6 +606,65 @@ public class Containers{
     contentPane.add(scrollPane, BorderLayout.EAST);
     
     
+  }
+  
+  private void createNewGroupWinContent(JPanel contentPane,
+                                        fridge.action_handling.ClassActionListener[] CAL_list,
+                                        JTextField groupNameField){
+    JButton create, cancel;
+    JLabel newGroupName = new JLabel();
+    
+    newGroupName.setText("Name for new group:");
+    
+    create = new JButton("Create");
+    create.setVerticalTextPosition(AbstractButton.CENTER);
+    create.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    cancel = new JButton("Cancel");
+    cancel.setVerticalTextPosition(AbstractButton.CENTER);
+    cancel.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    groupNameField.addActionListener(CAL_list[0]);
+    create.addActionListener(CAL_list[1]);
+    cancel.addActionListener(CAL_list[2]);
+    
+    contentPane.setOpaque(true);
+    GroupLayout layout = new GroupLayout(contentPane);
+    contentPane.setLayout(layout);
+    
+    //set layout. oh god
+    ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup h1 = layout.createSequentialGroup();
+    
+    h1.addContainerGap();
+    h1.addComponent(newGroupName);
+    h1.addComponent(groupNameField);
+    h1.addComponent(create);
+    h1.addComponent(cancel);
+    h1.addContainerGap();
+    
+    hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
+    layout.setHorizontalGroup(hGroup);
+    
+    
+    ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup v1 = layout.createSequentialGroup();
+    
+    v1.addContainerGap();
+    v1.addComponent(newGroupName);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addComponent(groupNameField);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addComponent(create);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
+    v1.addComponent(cancel);
+    v1.addContainerGap();
+    
+    vGroup.addGroup(v1);
+    
+    layout.setVerticalGroup(vGroup);
   }
   
   /*private class MyList extends JPanel

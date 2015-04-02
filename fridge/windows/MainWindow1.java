@@ -84,13 +84,12 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] after pack()");
   }
   
-  protected void addGroup(){
+  public void addGroup(){
     String groupName = null;
     
+    winCollection.addNew("newGroupWin");
     // name should be asked in a window here
     
-    groupName = "testGroup";
-    winCollection.addGroup(groupName);
   }
   
   /*public void groupButtonMenuPress(String buttonName, String containingMenu){

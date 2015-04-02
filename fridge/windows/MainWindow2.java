@@ -49,7 +49,7 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     frame.pack();
   }
   
-  protected void addGroup(){
+  public void addGroup(){
     System.out.println("[DEBUG] MainWin2 addGroup not set");
   }
   
