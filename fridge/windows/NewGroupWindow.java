@@ -37,6 +37,9 @@ public class NewGroupWindow extends fridge.windows.CallableByListener{
         System.out.println("should create now. nameField text: " + nameField.getText());
         winCollection.addGroup(nameField.getText());
       }
+      else if ("Cancel" == ML_ptr.getName()){
+        //Close();
+      }
     }
   }
   

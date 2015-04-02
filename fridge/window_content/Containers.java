@@ -636,12 +636,32 @@ public class Containers{
     ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
     
     SequentialGroup h1 = layout.createSequentialGroup();
+    ParallelGroup h2 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+    ParallelGroup h3 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+    ParallelGroup h4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
     
     h1.addContainerGap();
-    h1.addComponent(newGroupName);
-    h1.addComponent(groupNameField);
-    h1.addComponent(create);
-    h1.addComponent(cancel);
+    //h1.addComponent(newGroupName);
+    
+    h2.addComponent(newGroupName, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE);
+    h2.addComponent(groupNameField, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE);
+    
+    //h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h3.addComponent(create, GroupLayout.Alignment.LEADING);
+    h3.addComponent(cancel, GroupLayout.Alignment.TRAILING);
+    
+    
+    //h1.addGroup(h2);
+    //h1.addGroup(h3);
+    h4.addGroup(h2);
+    h4.addGroup(h3);
+    
+    h1.addGroup(h4);
+    //h1.addComponent(groupNameField);
+    
+    //h1.addComponent(create);
+    //h1.addComponent(cancel);
+    
     h1.addContainerGap();
     
     hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
