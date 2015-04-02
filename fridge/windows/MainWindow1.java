@@ -86,7 +86,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   
   protected void addGroup(){
     String groupName = null;
+    
     // name should be asked in a window here
+    
     groupName = "testGroup";
     winCollection.addGroup(groupName);
   }

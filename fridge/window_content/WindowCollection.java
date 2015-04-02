@@ -204,6 +204,25 @@ public class WindowCollection extends WindowAdapter{
                                                              helpTexts, hw_menu, windowCount); //replace 0 with windowCount when ready
       //break;
     }
+    else if("newGroupWin" == winType){
+      newNamedWin("newGroupWin");
+      JTextField = new nameField JTextField();
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[3];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("newNameField");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("Create");
+      CAL_list[3] = new fridge.action_handling.ClassActionListener("Cancel");
+      
+      fridge.window_content.Menu hw_menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+      
+      myWindows[windowCount] = new fridge.windows.NewGroupWindow(this,
+                                                                 winMaker,
+                                                                 CAL_list,
+                                                                 nameField,
+                                                                 menu,
+                                                                 windowCount);
+    }
     else{
     //default:
       System.out.println("[DEBUG] no such winType. windowCount not incremented");

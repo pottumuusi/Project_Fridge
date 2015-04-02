@@ -2,6 +2,7 @@ package fridge.windows;
 
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -57,11 +58,19 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
   }*/
   
   protected void moveItemsToGroup(String groupName){
-    System.out.println("[DEBUG] MainWin2 moveItemsToGroup not set");
+    Path[] itemsToPass;
+    
+    itemsToPass = getPathsOfSelectedItems(groupName);
+    
+    winCollection.setGroupItems(groupName, itemsToPass);
   }
   
   protected void addItemsToGroup(String groupName){
-    System.out.println("[DEBUG] MainWin2 addItemsToGroup not set");
+    Path[] itemsToPass;
+    
+    itemsToPass = getPathsOfSelectedItems(groupName);
+    
+    winCollection.addGroupItems(groupName, itemsToPass);
   }
   
   public void updateViews(){
@@ -225,6 +234,21 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     else{
       //errorMessage("Cannot load multiple Quick Access Groups");
     }
+  }
+  
+  private Path[] getPathsOfSelectedItems(String groupName){
+    int i;
+    Path[] pathsToPass;
+    Path[] tempPaths;
+    
+    pathsToPass = new Path[selectedGroupItems.length];
+    tempPaths = winCollection.getGroup(currGroup).getItems();
+    
+    for (i = 0; i < selectedGroupItems.length; i++){
+      pathsToPass[i] = tempPaths[selectedGroupItems[i]];
+    }
+    
+    return pathsToPass;
   }
   
   private void updateGroupView(){
