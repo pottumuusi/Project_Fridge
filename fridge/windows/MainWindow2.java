@@ -49,10 +49,6 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     frame.pack();
   }
   
-  public void addGroup(){
-    System.out.println("[DEBUG] MainWin2 addGroup not set");
-  }
-  
   /*public void groupButtonMenuPress(String buttonName){
     //if ()
   }*/

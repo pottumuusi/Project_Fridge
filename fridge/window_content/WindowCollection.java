@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 
 
 public class WindowCollection extends WindowAdapter{
+  private int caller;
   private int groupCount;
   private int windowCount;
   private int[] groupWindows;
@@ -90,6 +91,11 @@ public class WindowCollection extends WindowAdapter{
     System.out.println("[DEBUG] getGroup could not locate group: " + groupName);
     
     return null;
+  }
+  
+  public void traceableAdd(String winType, int callerMyWindowIndex){
+    caller = callerMyWindowIndex;
+    addNew(winType);
   }
   
   public void addNew(String winType){
@@ -222,6 +228,37 @@ public class WindowCollection extends WindowAdapter{
                                                                  nameField,
                                                                  menu,
                                                                  windowCount);
+    }
+    else if("operationsWin" == winType){
+      newNamedWin("operationsWin");
+      boolean callByGroupWindow = false;
+      String[] windowsWithGroups;
+      windowsWithGroups = new String[1];
+      windowsWithGroups[0] = "MainWin2";
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[4];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("SaveCollection");
+      CAL_list[1] = new fridge.action_hanlding.ClassActionListener("LoadCollection");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("DeleteCollection");
+      CAL_list[3] = new fridge.action_handling.ClassActionListener("Cancel");
+      
+      for (int i = 0; i <  windowCount; i++){
+        if (namedWindows[i].getMyWindowIndex() == caller){
+          for (itn k = 0; k < windowsWithGroups.length; k++){
+            if (windowsWithGroups[i] == namedWindows[k].getName()){
+              callByGroupWindow = true;
+            }
+          }
+          break;
+        }
+      }
+      if (true == callByGroupWindow){
+        //myWindows[windowCount] = new fridge.windows.GroupQAOperations();
+      }
+      else{
+        //myWindows[windowCount] = new fridge.windows.GroupQAOpreations();
+      }
     }
     else{
     //default:

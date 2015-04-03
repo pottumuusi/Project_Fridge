@@ -50,10 +50,6 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     updateHelpText();
   }
   
-  public void addGroup(){
-    System.out.println("[DEBUG] HelpWin addGroup not set");
-  }
-  
   /*public void groupButtonMenuPress(String buttonName){
     
   }*/

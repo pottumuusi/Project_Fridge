@@ -84,12 +84,8 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] after pack()");
   }
   
-  public void addGroup(){
-    String groupName = null;
-    
-    winCollection.addNew("newGroupWin");
-    // name should be asked in a window here
-    
+  private void addFolder(){
+    //pi
   }
   
   /*public void groupButtonMenuPress(String buttonName, String containingMenu){
@@ -191,7 +187,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       }
       else if ("qa_operations" == ML_ptr.getName()){
         System.out.println("qa_operations press");
-        //AH_container.MAE_brokerCall("Quit", ):
+        winCollection.addNew("operationsWin");
       }
       else if ("folderNameField" == ML_ptr.getName()){
         //System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());

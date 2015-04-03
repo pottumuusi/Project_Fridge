@@ -124,6 +124,10 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     }
   }
   
+  public void addGroup(){
+    winCollection.addNew("newGroupWin");
+  }
+  
   //protected abstract void handleEvent(String listenerType);
   //protected abstract void handleEvent(String listenerType, fridge.action_handling.MyListener);
   

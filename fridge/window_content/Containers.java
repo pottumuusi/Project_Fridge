@@ -352,7 +352,7 @@ public class Containers{
     ParallelGroup h3 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
     SequentialGroup h4 = layout.createSequentialGroup();
     SequentialGroup h5 = layout.createSequentialGroup();
-    SequentialGroup h6 = layout.createSequentialGroup();
+    ParallelGroup h6 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
     
     
     h2.addComponent(groupLabel, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
@@ -373,8 +373,10 @@ public class Containers{
     h5.addComponent(qa_operations);
     h5.addContainerGap();
     
+    h6.addGroup(h5);
+    
     h1.addContainerGap();
-    h4.addGroup(h5);
+    h4.addGroup(h6);
     h3.addGroup(h4);
     h2.addGroup(h3);
     h1.addGroup(h2);
