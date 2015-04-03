@@ -254,10 +254,18 @@ public class WindowCollection extends WindowAdapter{
         }
       }
       if (true == callByGroupWindow){
-        //myWindows[windowCount] = new fridge.windows.GroupQAOperations();
+        myWindows[windowCount] = new fridge.windows.QAOperations(this,
+                                                                 winMaker,
+                                                                 CAL_list,
+                                                                 windowCount,
+                                                                 "group");
       }
       else{
-        //myWindows[windowCount] = new fridge.windows.GroupQAOpreations();
+        myWindows[windowCount] = new fridge.windows.QAOpreations(this,
+                                                                 winMaker,
+                                                                 CAL_list,
+                                                                 windowCount,
+                                                                 "folder");
       }
     }
     else{

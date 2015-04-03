@@ -88,6 +88,8 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     frame.pack();
   }
   
+  
+  
   /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
     handleEvent(ML_ptr.getType(), ML_ptr);
   }*/

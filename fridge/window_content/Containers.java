@@ -87,6 +87,17 @@ public class Containers{
     return contentPane;
   }
   
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassActionListener[] CAL_list){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    if ("QAOperations"){
+      createQAOperationsContent(contentPane, CAL_list);
+    }
+    
+    return contentPane;
+  }
+  
   private void createMainWin1Content(JPanel contentPane,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
@@ -688,6 +699,8 @@ public class Containers{
     
     layout.setVerticalGroup(vGroup);
   }
+  
+  public 
   
   /*private class MyList extends JPanel
                        implements ListSelectionListener{

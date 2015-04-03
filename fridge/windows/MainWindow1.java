@@ -85,7 +85,14 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   }
   
   private void addFolder(){
-    //pi
+    /*
+     * Noticee!
+     * all folder variables could be moved to WindowCollection. the group stuff is
+     * already there. this would make it easier to access folder data from other locations
+     * than MainWin1. Maybe even create a class for the folders and make WindowCollection
+     * have an object made from this class. And of course make methods to WindowCollection
+     * which access data from this object
+     */
   }
   
   /*public void groupButtonMenuPress(String buttonName, String containingMenu){
@@ -187,7 +194,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       }
       else if ("qa_operations" == ML_ptr.getName()){
         System.out.println("qa_operations press");
-        winCollection.addNew("operationsWin");
+        winCollection.addNew("operationsWin", myWindowIndex);
       }
       else if ("folderNameField" == ML_ptr.getName()){
         //System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());

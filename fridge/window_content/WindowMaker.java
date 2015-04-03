@@ -125,6 +125,21 @@ public class WindowMaker{
     return frame;
   }
   
+  public JFramenewQAOperationsWin(fridge.window_content.WindowCollection controller,
+                                  fridge.action_handling.ClassActionListener[] CAL_list){
+    JFrame frame = new ListenedFrame(controller, "Quick Access operations");
+    
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    frame.setContentPane(cont.createContentPane("QAOperations", CAL_list));
+    
+    frame.setSize(450, 260);
+    frame.setVieisble(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }
+  
   /*public void closed(WindowEvent e){
     System.out.println("window closed");
   }*/
