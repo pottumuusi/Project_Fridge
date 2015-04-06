@@ -214,6 +214,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     String[] newContent = null;
     String[] temp = null;
     String currFileName = null;
+    String nextRowString = null;
     int folderFileCount = 0;
     int testFileCount = 0;
     int i;
@@ -228,6 +229,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           //if ('.' != file.getFileName().getCharAt(0)){
           currFileName = file.getFileName().toString();
           
+          
           //READ
           //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           //fullFileNames = file.toString(); //make full fileNames size go up!!!!!!!
@@ -239,8 +241,14 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           if ('.' != currFileName.charAt(0) || 
               '.' == currFileName.charAt(1)){
             if (null == newContent){
+              if (true == Files.isDirectory(file)){
+                nextRowString = "<dir> ";
+              }
+              else{
+                nextRowString = "      ";
+              }
               newContent = new String[folderFileCount + 1];
-              newContent[folderFileCount] = currFileName;
+              newContent[folderFileCount] = nextRowString + currFileName;
               folderFileCount++;
             }
             else{
@@ -251,7 +259,13 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
               for (i = 0; i < folderFileCount; i++){
                 newContent[i] = temp[i];
               }
-              newContent[folderFileCount] = currFileName;
+              if (true == Files.isDirectory(file)){
+                nextRowString = "<dir> ";
+              }
+              else{
+                nextRowString = "           ";
+              }
+              newContent[folderFileCount] = nextRowString + currFileName;
               folderFileCount++;
             }
           }

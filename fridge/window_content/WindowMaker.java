@@ -125,7 +125,7 @@ public class WindowMaker{
     return frame;
   }
   
-  public JFramenewQAOperationsWin(fridge.window_content.WindowCollection controller,
+  public JFrame newQAOperationsWin(fridge.window_content.WindowCollection controller,
                                   fridge.action_handling.ClassActionListener[] CAL_list){
     JFrame frame = new ListenedFrame(controller, "Quick Access operations");
     
@@ -133,7 +133,7 @@ public class WindowMaker{
     frame.setContentPane(cont.createContentPane("QAOperations", CAL_list));
     
     frame.setSize(450, 260);
-    frame.setVieisble(true);
+    frame.setVisible(true);
     
     decideLocation(frame);
     

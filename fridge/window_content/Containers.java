@@ -91,7 +91,7 @@ public class Containers{
                                      fridge.action_handling.ClassActionListener[] CAL_list){
     JPanel contentPane = new JPanel(new BorderLayout());
     
-    if ("QAOperations"){
+    if ("QAOperations" == cpType){
       createQAOperationsContent(contentPane, CAL_list);
     }
     
@@ -700,7 +700,76 @@ public class Containers{
     layout.setVerticalGroup(vGroup);
   }
   
-  public 
+  private void createQAOperationsContent(JPanel contentPane,
+                                         fridge.action_handling.ClassActionListener[] CAL_list){
+    JButton saveColl, loadColl, deleteColl, cancel;
+    
+    saveColl = new JButton("Save quick access collection");
+    saveColl.setVerticalTextPosition(AbstractButton.CENTER);
+    saveColl.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    loadColl = new JButton("Load quick access collection");
+    loadColl.setVerticalTextPosition(AbstractButton.CENTER);
+    loadColl.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    deleteColl = new JButton("Delete quick access collection");
+    deleteColl.setVerticalTextPosition(AbstractButton.CENTER);
+    deleteColl.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    cancel = new JButton("Cancel");
+    cancel.setVerticalTextPosition(AbstractButton.CENTER);
+    cancel.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    saveColl.addActionListener(CAL_list[0]);
+    loadColl.addActionListener(CAL_list[1]);
+    deleteColl.addActionListener(CAL_list[2]);
+    cancel.addActionListener(CAL_list[3]);
+    
+    contentPane.setOpaque(true);
+    GroupLayout layout = new GroupLayout(contentPane);
+    contentPane.setLayout(layout);
+    
+    ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup h1 = layout.createSequentialGroup();
+    SequentialGroup h2 = layout.createSequentialGroup();
+    SequentialGroup h3 = layout.createSequentialGroup();
+    
+    h2.addComponent(saveColl);
+    h2.addComponent(loadColl);
+    
+    h3.addComponent(deleteColl);
+    h3.addComponent(cancel);
+    
+    h1.addContainerGap();
+    h1.addGroup(h2);
+    h1.addGroup(h3);
+    h1.addContainerGap();
+    
+    hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
+    layout.setHorizontalGroup(hGroup);
+    
+    ParallelGroup  vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup v1 = layout.createSequentialGroup();
+    ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    ParallelGroup v3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    v2.addComponent(saveColl);
+    v2.addComponent(loadColl);
+    
+    v3.addComponent(deleteColl);
+    v3.addComponent(cancel);
+    
+    v1.addContainerGap();
+    v1.addGroup(v2);
+    //add preferred gap here
+    v1.addGroup(v3);
+    v1.addContainerGap();
+    
+    vGroup.addGroup(v1);
+    layout.setVerticalGroup(vGroup);
+  }
   
   /*private class MyList extends JPanel
                        implements ListSelectionListener{

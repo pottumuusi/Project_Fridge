@@ -88,7 +88,19 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     frame.pack();
   }
   
-  
+  CallableByListener(JFrame frame,
+                     fridge.action_handling.ClassActionListener[] CAL_list,
+                     int par_myWindowIndex,
+                     fridge.window_content.WindowCollection winColl){
+    super(frame, par_myWindowIndex);
+    winCollection = winColl;
+    
+    for (int i = 0; i < CAL_list.length; i++){
+      addListener(CAL_list[i]);
+    }
+    givePtrToListeners();
+    frame.pack();
+  }
   
   /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
     handleEvent(ML_ptr.getType(), ML_ptr);
@@ -155,7 +167,7 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   
   //protected abstract void moveItemsToGroup(String groupName, Path[] newItems);
   protected abstract void handleEvent(fridge.action_handling.MyListener ML_ptr);
-  public abstract void addGroup();
+  //public abstract void addGroup();
   protected abstract void addItemsToGroup(String groupName);
   protected abstract void moveItemsToGroup(String groupName);
   //public abstract void groupButtonMenuPress(String buttonName);

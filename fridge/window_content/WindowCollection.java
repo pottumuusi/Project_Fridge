@@ -17,6 +17,7 @@ public class WindowCollection extends WindowAdapter{
   private int caller;
   private int groupCount;
   private int windowCount;
+  private int passedWinIndex;
   private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
@@ -95,6 +96,11 @@ public class WindowCollection extends WindowAdapter{
   
   public void traceableAdd(String winType, int callerMyWindowIndex){
     caller = callerMyWindowIndex;
+    addNew(winType);
+  }
+  
+  public void addNew(String winType, int par_windowIndex){
+    passedWinIndex = par_windowIndex;
     addNew(winType);
   }
   
@@ -239,13 +245,13 @@ public class WindowCollection extends WindowAdapter{
       fridge.action_handling.ClassActionListener[] CAL_list;
       CAL_list = new fridge.action_handling.ClassActionListener[4];
       CAL_list[0] = new fridge.action_handling.ClassActionListener("SaveCollection");
-      CAL_list[1] = new fridge.action_hanlding.ClassActionListener("LoadCollection");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("LoadCollection");
       CAL_list[2] = new fridge.action_handling.ClassActionListener("DeleteCollection");
       CAL_list[3] = new fridge.action_handling.ClassActionListener("Cancel");
       
       for (int i = 0; i <  windowCount; i++){
         if (namedWindows[i].getMyWindowIndex() == caller){
-          for (itn k = 0; k < windowsWithGroups.length; k++){
+          for (int k = 0; k < windowsWithGroups.length; k++){
             if (windowsWithGroups[i] == namedWindows[k].getName()){
               callByGroupWindow = true;
             }
@@ -261,7 +267,7 @@ public class WindowCollection extends WindowAdapter{
                                                                  "group");
       }
       else{
-        myWindows[windowCount] = new fridge.windows.QAOpreations(this,
+        myWindows[windowCount] = new fridge.windows.QAOperations(this,
                                                                  winMaker,
                                                                  CAL_list,
                                                                  windowCount,

@@ -20,7 +20,7 @@ public class QAOperations extends fridge.windows.CallableByListener{
   public void updateContent(){
   }
   
-  protected void moveItemsToGoup(String groupName){
+  protected void moveItemsToGroup(String groupName){
   }
   
   protected void addItemsToGroup(String groupName){
