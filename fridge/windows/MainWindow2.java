@@ -178,7 +178,8 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
       else if ("qa_showFolder" == ML_ptr.getName()){
       }
       else if ("qa_operations" == ML_ptr.getName()){
-        winCollection.addGroup("fromMainWin2");
+        //winCollection.addGroup("fromMainWin2");
+        winCollection.addNew("operationsWin", myWindowIndex);
         System.out.println("[DEBUG] MainWin2 qa_operations press");
         /*Path[] testPath = new Path[3];
         testPath[0] = ;

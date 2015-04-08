@@ -31,8 +31,15 @@ public class QAOperations extends fridge.windows.CallableByListener{
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     if ("ClassActionListener" == ML_ptr.getType()){
-      if ("Close" == ML_ptr.getName()){
+      if ("Cancel" == ML_ptr.getName()){
         close();
+      }
+      else if ("SaveCollection" == ML_ptr.getName()){
+        System.out.println("Save Press");
+      }
+      else if ("LoadCollection" == ML_ptr.getName()){
+      }
+      else if ("DeleteCollection" == ML_ptr.getName()){
       }
     }
   }

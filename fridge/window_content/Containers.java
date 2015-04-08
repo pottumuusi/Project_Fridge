@@ -734,16 +734,20 @@ public class Containers{
     SequentialGroup h1 = layout.createSequentialGroup();
     SequentialGroup h2 = layout.createSequentialGroup();
     SequentialGroup h3 = layout.createSequentialGroup();
+    ParallelGroup h4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING); 
     
     h2.addComponent(saveColl);
+    h2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
     h2.addComponent(loadColl);
     
     h3.addComponent(deleteColl);
+    h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
     h3.addComponent(cancel);
     
     h1.addContainerGap();
-    h1.addGroup(h2);
-    h1.addGroup(h3);
+    h4.addGroup(h2);
+    h4.addGroup(h3);
+    h1.addGroup(h4);
     h1.addContainerGap();
     
     hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
@@ -763,13 +767,15 @@ public class Containers{
     
     v1.addContainerGap();
     v1.addGroup(v2);
-    //add preferred gap here
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
     v1.addGroup(v3);
     v1.addContainerGap();
     
     vGroup.addGroup(v1);
     layout.setVerticalGroup(vGroup);
   }
+  
+  
   
   /*private class MyList extends JPanel
                        implements ListSelectionListener{

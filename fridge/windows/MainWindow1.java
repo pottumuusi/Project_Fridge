@@ -228,7 +228,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
         System.out.println("qa_showGroup press");
       }
       else if ("qa_operations" == ML_ptr.getName()){
-        System.out.println("qa_operations press");
         winCollection.addNew("operationsWin", myWindowIndex);
       }
       else if ("folderNameField" == ML_ptr.getName()){

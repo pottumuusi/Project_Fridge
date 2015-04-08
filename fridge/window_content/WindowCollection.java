@@ -17,7 +17,6 @@ public class WindowCollection extends WindowAdapter{
   private int caller;
   private int groupCount;
   private int windowCount;
-  private int passedWinIndex;
   private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
@@ -100,7 +99,8 @@ public class WindowCollection extends WindowAdapter{
   }
   
   public void addNew(String winType, int par_windowIndex){
-    passedWinIndex = par_windowIndex;
+    int i;
+    caller = par_windowIndex;
     addNew(winType);
   }
   
@@ -236,9 +236,9 @@ public class WindowCollection extends WindowAdapter{
                                                                  windowCount);
     }
     else if("operationsWin" == winType){
+      String[] windowsWithGroups;
       newNamedWin("operationsWin");
       boolean callByGroupWindow = false;
-      String[] windowsWithGroups;
       windowsWithGroups = new String[1];
       windowsWithGroups[0] = "MainWin2";
       
@@ -249,7 +249,7 @@ public class WindowCollection extends WindowAdapter{
       CAL_list[2] = new fridge.action_handling.ClassActionListener("DeleteCollection");
       CAL_list[3] = new fridge.action_handling.ClassActionListener("Cancel");
       
-      for (int i = 0; i <  windowCount; i++){
+      /*for (int i = 0; i <  windowCount; i++){
         if (namedWindows[i].getMyWindowIndex() == caller){
           for (int k = 0; k < windowsWithGroups.length; k++){
             if (windowsWithGroups[i] == namedWindows[k].getName()){
@@ -258,8 +258,15 @@ public class WindowCollection extends WindowAdapter{
           }
           break;
         }
+      }*/
+      for (int k = 0; k < windowsWithGroups.length; k++){
+        if (windowsWithGroups[k] == namedWindows[caller].getName()){
+          callByGroupWindow = true;
+        }
       }
+      
       if (true == callByGroupWindow){
+        System.out.println("[DEBUG] creating group quick access operations window");
         myWindows[windowCount] = new fridge.windows.QAOperations(this,
                                                                  winMaker,
                                                                  CAL_list,
@@ -267,6 +274,7 @@ public class WindowCollection extends WindowAdapter{
                                                                  "group");
       }
       else{
+        System.out.println("[DEBUG] creating folder quick access operations window");
         myWindows[windowCount] = new fridge.windows.QAOperations(this,
                                                                  winMaker,
                                                                  CAL_list,
