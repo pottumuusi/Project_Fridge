@@ -222,7 +222,7 @@ public class WindowCollection extends WindowAdapter{
       
       fridge.action_handling.ClassActionListener[] CAL_list;
       CAL_list = new fridge.action_handling.ClassActionListener[3];
-      CAL_list[0] = new fridge.action_handling.ClassActionListener("newNameField");
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("NewNameField");
       CAL_list[1] = new fridge.action_handling.ClassActionListener("Create");
       CAL_list[2] = new fridge.action_handling.ClassActionListener("Cancel");
       
@@ -256,18 +256,12 @@ public class WindowCollection extends WindowAdapter{
       if (true == callByGroupWindow){
         System.out.println("[DEBUG] creating group quick access operations window");
         newGroupWindow(windowCount);
-        myWindows[windowCount] = new fridge.windows.QAOperations(this,
-                                                                 winMaker,
-                                                                 CAL_list,
-                                                                 windowCount,
+        myWindows[windowCount] = new fridge.windows.QAOperations(this, winMaker, CAL_list, windowCount,
                                                                  "group");
       }
       else{
         System.out.println("[DEBUG] creating folder quick access operations window");
-        myWindows[windowCount] = new fridge.windows.QAOperations(this,
-                                                                 winMaker,
-                                                                 CAL_list,
-                                                                 windowCount,
+        myWindows[windowCount] = new fridge.windows.QAOperations(this, winMaker, CAL_list, windowCount,
                                                                  "folder");
       }
     }
@@ -281,7 +275,7 @@ public class WindowCollection extends WindowAdapter{
       
       fridge.action_handling.ClassActionListener[] CAL_list;
       CAL_list = new fridge.action_handling.ClassActionListener[3];
-      CAL_list[0] = new fridge.action_handling.ClassActionListener("saveNameField");
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("SaveNameField");
       CAL_list[1] = new fridge.action_handling.ClassActionListener("Save");
       CAL_list[2] = new fridge.action_handling.ClassActionListener("Close");
       
@@ -296,28 +290,51 @@ public class WindowCollection extends WindowAdapter{
       if (true == callByGroupWindow){
         System.out.println("[DEBUG] creating group collectionSave");
         newGroupWindow(windowCount);
-        myWindows[windowCount] = new fridge.windows.CollectionSave(this,
-                                                                   winMaker,
-                                                                   CLSListener,
-                                                                   CAL_list,
-                                                                   nameField,
-                                                                   view0,
-                                                                   windowCount,
+        myWindows[windowCount] = new fridge.windows.CollectionSave(this, winMaker, CLSListener, CAL_list,
+                                                                   nameField, view0, windowCount,
                                                                    "group");
       }
       else{
         System.out.println("[DEBUG] creating folder collectionSave");
-        myWindows[windowCount] = new fridge.windows.CollectionSave(this,
-                                                                   winMaker,
-                                                                   CLSListener,
-                                                                   CAL_list,
-                                                                   nameField,
-                                                                   view0,
-                                                                   windowCount,
+        myWindows[windowCount] = new fridge.windows.CollectionSave(this, winMaker, CLSListener, CAL_list,
+                                                                   nameField, view0, windowCount,
                                                                    "folder");
       }
     }
     else if ("collectionLoad" == winType){
+      newNamedWin("collectionLoad");
+      
+      JComboBox collectionList = new JComboBox();
+      boolean callByGroupWindow = false;
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[3];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("CollectionList");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("Load");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("Close");
+      
+      for (int i = 0; i < groupWindows.length; i++){
+        if (groupWindows[i] == caller){
+          callByGroupWindow = true;
+        }
+      }
+      
+      if (true == callByGroupWindow){
+        System.out.println("[DEBUG] creating group collectionLoad");
+        newGroupWindow(windowCount);
+        myWindows[windowCount] = new fridge.windows.CollectionLoad(this, winMaker, CAL_list,
+                                                                   collectionList, windowCount,
+                                                                   "group");
+      }
+      else{
+        System.out.println("[DEBUG] creating folder collectionLoad");
+        myWindows[windowCount] = new fridge.windows.CollectionLoad(this, winMaker, CAL_list,
+                                                                   collectionList, windowCount,
+                                                                   "folder");
+      }
+    }
+    else if ("collectionDelete" == winType){
+      
     }
     else{
     //default:

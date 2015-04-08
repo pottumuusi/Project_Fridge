@@ -111,6 +111,18 @@ public class Containers{
     return contentPane;
   }
   
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassActionListener[] CAL_list,
+                                     JComboBox collList){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    if ("collLoadWin" == cpType){
+      createCollLoadWinContent(contentPane, CAL_list, collList);
+    }
+    
+    return contentPane;
+  }
+  
   private void createMainWin1Content(JPanel contentPane,
                                      fridge.action_handling.ClassListSelectionListener[] CLSListenerList,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
@@ -840,7 +852,7 @@ public class Containers{
     h2.addComponent(saveNameField);
     
     h3.addComponent(save);
-    h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
     h3.addComponent(close);
     
     h2.addGroup(h3);
@@ -873,6 +885,74 @@ public class Containers{
     v1.addGroup(v2);
     v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
     v1.addGroup(v3);
+    v1.addContainerGap();
+    
+    vGroup.addGroup(v1);
+    layout.setVerticalGroup(vGroup);
+  }
+  
+  private void createCollLoadWinContent(JPanel contentPane,
+                                        fridge.action_handling.ClassActionListener[] CAL_list,
+                                        JComboBox collList){
+    JButton load, close;
+    
+    JLabel collectionsLabel = new JLabel();
+    collectionsLabel.setText("Collections");
+    
+    load = new JButton("Load");
+    load.setVerticalTextPosition(AbstractButton.CENTER);
+    load.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    close = new JButton("Close");
+    close.setVerticalTextPosition(AbstractButton.CENTER);
+    close.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    collList.addActionListener(CAL_list[0]);
+    load.addActionListener(CAL_list[1]);
+    close.addActionListener(CAL_list[2]);
+    
+    contentPane.setOpaque(true);
+    GroupLayout layout = new GroupLayout(contentPane);
+    contentPane.setLayout(layout);
+    
+    ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup h1 = layout.createSequentialGroup();
+    SequentialGroup h2 = layout.createSequentialGroup();
+    ParallelGroup h3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    h2.addComponent(load);
+    h2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
+    h2.addComponent(close);
+    
+    h3.addComponent(collectionsLabel);
+    h3.addComponent(collList);
+    h3.addGroup(h2);
+    
+    h1.addContainerGap();
+    h1.addGroup(h3);
+    h1.addContainerGap();
+    
+    hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
+    layout.setHorizontalGroup(hGroup);
+    
+    ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup v1 = layout.createSequentialGroup();
+    SequentialGroup v2 = layout.createSequentialGroup();
+    ParallelGroup v3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    v3.addComponent(load);
+    v3.addComponent(close);
+    
+    v2.addComponent(collectionsLabel);
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v2.addComponent(collList);
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v2.addGroup(v3);
+    
+    v1.addContainerGap();
+    v1.addGroup(v2);
     v1.addContainerGap();
     
     vGroup.addGroup(v1);

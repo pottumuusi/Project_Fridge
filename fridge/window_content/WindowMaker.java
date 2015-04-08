@@ -166,6 +166,30 @@ public class WindowMaker{
     return frame;
   }
   
+  public JFrame newCollLoadWin(fridge.window_content.WindowCollection controller,
+                               fridge.action_handling.ClassActionListener[] CAL_list,
+                               JComboBox collList,
+                               String loadWinType){
+    JFrame frame;
+    
+    if ("group" == loadWinType){
+      frame = new ListenedFrame(controller, "Load group collection");
+    }
+    else{
+      frame = new ListenedFrame(controller, "Load folder collection");
+    }
+    
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    frame.setContentPane(cont.createContentPane("collLoadWin", CAL_list, collList));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }
+  
   /*public void closed(WindowEvent e){
     System.out.println("window closed");
   }*/
