@@ -71,6 +71,9 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     updateMenu();
   }
   
+  public void openFile(){
+  }
+  
   //protected void handleEvent(String listenerType, fridge.action_handling.MyListener ML_ptr){
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     int[] selectedIndexes;

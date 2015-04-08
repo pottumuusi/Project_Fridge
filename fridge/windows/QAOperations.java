@@ -20,6 +20,9 @@ public class QAOperations extends fridge.windows.CallableByListener{
   public void updateContent(){
   }
   
+  public void openFile(){
+  }
+  
   protected void moveItemsToGroup(String groupName){
   }
   

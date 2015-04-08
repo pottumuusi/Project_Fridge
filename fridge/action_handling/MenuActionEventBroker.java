@@ -17,7 +17,7 @@ public class MenuActionEventBroker{
       invokeViewHelp(MAE_handler);
     }
     else if (eventSource.equals("Open file")){
-      System.out.println("Open file pressed");
+      ((fridge.windows.CallableByListener)caller).openFile();
     }
     else if (eventSource.equals("Close")){
       caller.close();

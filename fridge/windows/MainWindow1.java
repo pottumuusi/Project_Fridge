@@ -1,6 +1,8 @@
 package fridge.windows;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -145,6 +147,39 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     updateMenu();
   }
   
+  public void openFile(){
+    Path tempPath = null;
+    
+    if (selectedFolders.length != 1){
+      System.out.println("[DEBUG] trying to open file when multiple files are selected");
+    }
+    else{
+      //tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
+      System.out.println("[DEBUG] fullFileNames[selectedFolders[0]] == " + 
+                          fullFileNames[selectedFolders[0]]);
+      
+      tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
+      
+      //open the folder
+      if (Files.isDirectory(tempPath)){
+        currFolder = tempPath;
+        updateFolderContent();
+      }
+      //open the file
+      else{
+        try{
+          java.awt.Desktop.getDesktop().open(new File(tempPath.toString()));
+        }
+        catch (IOException ex){
+          System.out.println("IOException: " + ex.getMessage());
+          /*if (null != fex){
+            System.out.println("FileNotFoundException while opening a file: " + ex.getMessage());
+          }*/
+        }
+      }
+    }
+  }
+  
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     //int[] selectedIndexes;
     String tempStore = null;
@@ -224,6 +259,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     //newContent = createFolderViewContent();
     if (Files.isDirectory(currFolder)){
       try (DirectoryStream<Path> stream = Files.newDirectoryStream(currFolder)){
+        fullFileNames = null; //reset earlier file names
         for (Path file: stream){
           //temp = file.getFileName();
           //if ('.' != file.getFileName().getCharAt(0)){
@@ -237,6 +273,19 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           //alternatively similar code to the code in this method could be
           //run and the result then stored to group
           //READ
+          
+          if (null == fullFileNames){
+            fullFileNames = new String[1];
+            fullFileNames[0] = file.toString();
+          }
+          else{
+            temp = fullFileNames;
+            fullFileNames = new String[fullFileNames.length + 1];
+            for (i = 0; i < fullFileNames.length - 1; i++){
+              fullFileNames[i] = temp[i];
+            }
+            fullFileNames[i] = file.toString();
+          }
           
           if ('.' != currFileName.charAt(0) || 
               '.' == currFileName.charAt(1)){
@@ -359,9 +408,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     else{
       //errorMessage("Cannot load multiple Quick Access Folders");
     }
-  }
-  
-  private void openFile(){
   }
   
   private void openSelectedFolder(){

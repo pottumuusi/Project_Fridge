@@ -69,6 +69,10 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
     winCollection.addGroupItems(groupName, itemsToPass);
   }
   
+  public void openFile(){
+    
+  }
+  
   public void updateViews(){
     int i;
     String[] newContent = null;
