@@ -236,11 +236,9 @@ public class WindowCollection extends WindowAdapter{
                                                                  windowCount);
     }
     else if("operationsWin" == winType){
-      String[] windowsWithGroups;
       newNamedWin("operationsWin");
+      
       boolean callByGroupWindow = false;
-      windowsWithGroups = new String[1];
-      windowsWithGroups[0] = "MainWin2";
       
       fridge.action_handling.ClassActionListener[] CAL_list;
       CAL_list = new fridge.action_handling.ClassActionListener[4];
@@ -249,24 +247,15 @@ public class WindowCollection extends WindowAdapter{
       CAL_list[2] = new fridge.action_handling.ClassActionListener("DeleteCollection");
       CAL_list[3] = new fridge.action_handling.ClassActionListener("Cancel");
       
-      /*for (int i = 0; i <  windowCount; i++){
-        if (namedWindows[i].getMyWindowIndex() == caller){
-          for (int k = 0; k < windowsWithGroups.length; k++){
-            if (windowsWithGroups[i] == namedWindows[k].getName()){
-              callByGroupWindow = true;
-            }
-          }
-          break;
-        }
-      }*/
-      for (int k = 0; k < windowsWithGroups.length; k++){
-        if (windowsWithGroups[k] == namedWindows[caller].getName()){
+      for (int i = 0; i < groupWindows.length; i++){
+        if (groupWindows[i] == caller){
           callByGroupWindow = true;
         }
       }
       
       if (true == callByGroupWindow){
         System.out.println("[DEBUG] creating group quick access operations window");
+        newGroupWindow(windowCount);
         myWindows[windowCount] = new fridge.windows.QAOperations(this,
                                                                  winMaker,
                                                                  CAL_list,
@@ -281,6 +270,54 @@ public class WindowCollection extends WindowAdapter{
                                                                  windowCount,
                                                                  "folder");
       }
+    }
+    else if ("collectionSave" == winType){
+      newNamedWin("collectionSave");
+      
+      JList<String> view0;
+      JTextField nameField = new JTextField();
+      boolean callByGroupWindow = false;
+      fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener("collections");
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[3];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("saveNameField");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("Save");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("Close");
+      
+      view0 = new JList<String>();
+      
+      for (int i = 0; i < groupWindows.length; i++){
+        if (groupWindows[i] == caller){
+          callByGroupWindow = true;
+        }
+      }
+      
+      if (true == callByGroupWindow){
+        System.out.println("[DEBUG] creating group collectionSave");
+        newGroupWindow(windowCount);
+        myWindows[windowCount] = new fridge.windows.CollectionSave(this,
+                                                                   winMaker,
+                                                                   CLSListener,
+                                                                   CAL_list,
+                                                                   nameField,
+                                                                   view0,
+                                                                   windowCount,
+                                                                   "group");
+      }
+      else{
+        System.out.println("[DEBUG] creating folder collectionSave");
+        myWindows[windowCount] = new fridge.windows.CollectionSave(this,
+                                                                   winMaker,
+                                                                   CLSListener,
+                                                                   CAL_list,
+                                                                   nameField,
+                                                                   view0,
+                                                                   windowCount,
+                                                                   "folder");
+      }
+    }
+    else if ("collectionLoad" == winType){
     }
     else{
     //default:

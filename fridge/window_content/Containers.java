@@ -30,7 +30,6 @@ public class Containers{
     contListeners = CL_ptr;
   }
   
-  
   public Container createContentPane(String cpType,
                                      fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
@@ -93,6 +92,20 @@ public class Containers{
     
     if ("QAOperations" == cpType){
       createQAOperationsContent(contentPane, CAL_list);
+    }
+    
+    return contentPane;
+  }
+  
+  public Container createContentPane(String cpType,
+                                     fridge.action_handling.ClassListSelectionListener CLSL,
+                                     fridge.action_handling.ClassActionListener[] CAL_list,
+                                     JTextField saveNameField,
+                                     JList view0){
+    JPanel contentPane = new JPanel(new BorderLayout());
+    
+    if ("collSaveWin" == cpType){
+      createCollSaveWinContent(contentPane, CLSL, CAL_list, saveNameField, view0);
     }
     
     return contentPane;
@@ -775,7 +788,96 @@ public class Containers{
     layout.setVerticalGroup(vGroup);
   }
   
-  
+  private void createCollSaveWinContent(JPanel contentPane,
+                                        fridge.action_handling.ClassListSelectionListener CLSListener,
+                                        fridge.action_handling.ClassActionListener[] CAL_list,
+                                        JTextField saveNameField,
+                                        JList view0){
+    JButton save, close;
+    JLabel collectionsLabel = new JLabel();
+    JLabel saveName = new JLabel();
+    
+    collectionsLabel.setText("Collections");
+    saveName.setText("New collection name:");
+    
+    JScrollPane view0scrollPane;
+    DefaultListModel listModel;
+    ListSelectionModel listSelectionModel;
+    
+    view0.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    view0.setSelectedIndex(0);
+    view0.setVisibleRowCount(5);
+    
+    listSelectionModel = view0.getSelectionModel();
+    listSelectionModel.addListSelectionListener(CLSListener);
+    view0scrollPane = new JScrollPane(view0);
+    
+    save = new JButton("Save");
+    save.setVerticalTextPosition(AbstractButton.CENTER);
+    save.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    close = new JButton("Close");
+    close.setVerticalTextPosition(AbstractButton.CENTER);
+    close.setHorizontalTextPosition(AbstractButton.LEADING);
+    
+    saveNameField.addActionListener(CAL_list[0]);
+    save.addActionListener(CAL_list[1]);
+    close.addActionListener(CAL_list[2]);
+    
+    contentPane.setOpaque(true);
+    GroupLayout layout = new GroupLayout(contentPane);
+    contentPane.setLayout(layout);
+    
+    ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup h1 = layout.createSequentialGroup();
+    ParallelGroup h2 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    SequentialGroup h3 = layout.createSequentialGroup();
+    
+    h2.addComponent(collectionsLabel);
+    h2.addComponent(view0scrollPane);
+    h2.addComponent(saveName);
+    h2.addComponent(saveNameField);
+    
+    h3.addComponent(save);
+    h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    h3.addComponent(close);
+    
+    h2.addGroup(h3);
+    
+    h1.addContainerGap();
+    h1.addGroup(h2);
+    h1.addContainerGap();
+    
+    hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);
+    layout.setHorizontalGroup(hGroup);
+    
+    ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    SequentialGroup v1 = layout.createSequentialGroup();
+    SequentialGroup v2 = layout.createSequentialGroup();
+    ParallelGroup v3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    
+    v2.addComponent(collectionsLabel);
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v2.addComponent(view0scrollPane);
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
+    v2.addComponent(saveName);
+    v2.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v2.addComponent(saveNameField);
+    
+    v3.addComponent(save);
+    v3.addComponent(close);
+    
+    v1.addContainerGap();
+    v1.addGroup(v2);
+    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
+    v1.addGroup(v3);
+    v1.addContainerGap();
+    
+    vGroup.addGroup(v1);
+    layout.setVerticalGroup(vGroup);
+  }
   
   /*private class MyList extends JPanel
                        implements ListSelectionListener{

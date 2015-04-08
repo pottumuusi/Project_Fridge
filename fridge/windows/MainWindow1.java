@@ -154,10 +154,6 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       System.out.println("[DEBUG] trying to open file when multiple files are selected");
     }
     else{
-      //tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
-      System.out.println("[DEBUG] fullFileNames[selectedFolders[0]] == " + 
-                          fullFileNames[selectedFolders[0]]);
-      
       tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
       
       //open the folder

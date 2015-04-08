@@ -36,6 +36,7 @@ public class QAOperations extends fridge.windows.CallableByListener{
       }
       else if ("SaveCollection" == ML_ptr.getName()){
         System.out.println("Save Press");
+        winCollection.addNew("collectionSave", myWindowIndex);
       }
       else if ("LoadCollection" == ML_ptr.getName()){
       }

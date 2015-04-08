@@ -140,6 +140,32 @@ public class WindowMaker{
     return frame;
   }
   
+  public JFrame newCollSaveWin(fridge.window_content.WindowCollection controller,
+                               fridge.action_handling.ClassListSelectionListener CLSListener,
+                               fridge.action_handling.ClassActionListener[] CAL_list,
+                               JTextField saveNameField,
+                               JList view0,
+                               String saveWinType){
+    JFrame frame;
+    
+    if ("group" == saveWinType){
+      frame = new ListenedFrame(controller, "Save group collection");
+    }
+    else{
+      frame = new ListenedFrame(controller, "Save folder collection");
+    }
+    
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    frame.setContentPane(cont.createContentPane("collSaveWin", CLSListener, CAL_list, saveNameField, view0));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }
+  
   /*public void closed(WindowEvent e){
     System.out.println("window closed");
   }*/

@@ -102,6 +102,40 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     frame.pack();
   }
   
+  public CallableByListener(JFrame frame,
+                            fridge.action_handling.ClassListSelectionListener CLSListener,
+                            fridge.action_handling.ClassActionListener[] CAL_list,
+                            int par_myWindowIndex,
+                            fridge.window_content.WindowCollection winColl){
+    super(frame, par_myWindowIndex);
+    winCollection = winColl;
+    
+    for (int i = 0; i < CAL_list.length; i++){
+      addListener(CAL_list[i]);
+    }
+    addListener(CLSListener);
+    givePtrToListeners();
+    frame.pack();
+  }
+  
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Note that at least all abstract methods concerned with groups could be moved here if
+  // pointer to windowCollection was stored in this class instead of all the subclasses.
+  // propably not. would need files and such.
+  // or maybe if they were passed as arguments?? <-- i think this is wrong
+  // so confused
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
+  //protected abstract void moveItemsToGroup(String groupName, Path[] newItems);
+  protected abstract void handleEvent(fridge.action_handling.MyListener ML_ptr);
+  //public abstract void addGroup();
+  protected abstract void addItemsToGroup(String groupName);
+  protected abstract void moveItemsToGroup(String groupName);
+  //public abstract void groupButtonMenuPress(String buttonName);
+  public abstract void updateContent(); 
+  public abstract void updateViews();
+  public abstract void openFile();
+  
   /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
     handleEvent(ML_ptr.getType(), ML_ptr);
   }*/
@@ -156,24 +190,6 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected void addItemsToGroup(String groupName, Path[] newItems){
     
   }*/
-  
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // Note that at least all abstract methods concerned with groups could be moved here if
-  // pointer to windowCollection was stored in this class instead of all the subclasses.
-  // propably not. would need files and such.
-  // or maybe if they were passed as arguments?? <-- i think this is wrong
-  // so confused
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  
-  //protected abstract void moveItemsToGroup(String groupName, Path[] newItems);
-  protected abstract void handleEvent(fridge.action_handling.MyListener ML_ptr);
-  //public abstract void addGroup();
-  protected abstract void addItemsToGroup(String groupName);
-  protected abstract void moveItemsToGroup(String groupName);
-  //public abstract void groupButtonMenuPress(String buttonName);
-  public abstract void updateContent(); 
-  public abstract void updateViews();
-  public abstract void openFile();
   
   public void groupButtonMenuPress(String buttonName, String containingMenu){
     System.out.println("[DEBUG] groupButtonMenuPress containingMenu == " + containingMenu);
