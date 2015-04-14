@@ -86,6 +86,8 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] after pack()");
   }
   
+  
+  
   private void addFolder(){
     /*
      * Noticee!
@@ -159,6 +161,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       //open the folder
       if (Files.isDirectory(tempPath)){
         currFolder = tempPath;
+        folderNameField.setText(currFolder.toString());
         updateFolderContent();
       }
       //open the file
@@ -289,7 +292,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
                 nextRowString = "<dir> ";
               }
               else{
-                nextRowString = "      ";
+                nextRowString = "           ";
               }
               newContent = new String[folderFileCount + 1];
               newContent[folderFileCount] = nextRowString + currFileName;
@@ -344,6 +347,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       allIndices = new int[maxIndex + 1];
       //temp = new String[maxIndex + 1];
       
+      //copy earlier quick access content to storeArray
       for (i = 0; i <= maxIndex; i++){
         //allIndices[i] = i;
         view1.setSelectedIndex(i);

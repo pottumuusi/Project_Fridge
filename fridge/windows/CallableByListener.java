@@ -16,11 +16,11 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }*/
   
-  CallableByListener(JFrame frame, 
-                     fridge.action_handling.ClassListSelectionListener CLSL_ptr,
-                     int par_myWindowIndex,
-                     fridge.window_content.Menu par_menu,
-                     fridge.window_content.WindowCollection winColl){
+  public CallableByListener(JFrame frame, 
+                            fridge.action_handling.ClassListSelectionListener CLSL_ptr,
+                            int par_myWindowIndex,
+                            fridge.window_content.Menu par_menu,
+                            fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     winCollection = winColl;
     menu = par_menu;
@@ -32,11 +32,11 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   /*CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                      fridge.Fridge fridgeInstance){*/
     //super(frame, fridgeInstance);
-  CallableByListener(JFrame frame, 
-                     fridge.action_handling.ClassListSelectionListener[] CLSL_list,
-                     int par_myWindowIndex,
-                     fridge.window_content.Menu par_menu,
-                     fridge.window_content.WindowCollection winColl){
+  public CallableByListener(JFrame frame, 
+                            fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                            int par_myWindowIndex,
+                            fridge.window_content.Menu par_menu,
+                            fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     int i;
     winCollection = winColl;
@@ -49,12 +49,12 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }
   
-  CallableByListener(JFrame frame,
-                     fridge.action_handling.ClassListSelectionListener[] CLSL_list,
-                     fridge.action_handling.ClassActionListener[] CAL_list,
-                     int par_myWindowIndex,
-                     fridge.window_content.Menu par_menu,
-                     fridge.window_content.WindowCollection winColl){
+  public CallableByListener(JFrame frame,
+                            fridge.action_handling.ClassListSelectionListener[] CLSL_list,
+                            fridge.action_handling.ClassActionListener[] CAL_list,
+                            int par_myWindowIndex,
+                            fridge.window_content.Menu par_menu,
+                            fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     int i;
     winCollection = winColl;
@@ -70,11 +70,11 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }
   
-  CallableByListener(JFrame frame,
-                     fridge.action_handling.ClassActionListener[] CAL_list,
-                     int par_myWindowIndex,
-                     fridge.window_content.Menu par_menu,
-                     fridge.window_content.WindowCollection winColl){
+  public CallableByListener(JFrame frame,
+                            fridge.action_handling.ClassActionListener[] CAL_list,
+                            int par_myWindowIndex,
+                            fridge.window_content.Menu par_menu,
+                            fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     int i;
     winCollection = winColl;
@@ -88,10 +88,10 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     frame.pack();
   }
   
-  CallableByListener(JFrame frame,
-                     fridge.action_handling.ClassActionListener[] CAL_list,
-                     int par_myWindowIndex,
-                     fridge.window_content.WindowCollection winColl){
+  public CallableByListener(JFrame frame,
+                            fridge.action_handling.ClassActionListener[] CAL_list,
+                            int par_myWindowIndex,
+                            fridge.window_content.WindowCollection winColl){
     super(frame, par_myWindowIndex);
     winCollection = winColl;
     

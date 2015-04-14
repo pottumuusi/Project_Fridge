@@ -35,5 +35,10 @@ public class CollectionLoad extends CallableByListener{
   }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
+    if ("ClassActionListener" == ML_ptr.getType()){
+      if ("Close" == ML_ptr.getName()){
+        close();
+      }
+    }
   }
 }
