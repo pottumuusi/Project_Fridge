@@ -2,22 +2,22 @@ package fridge.data;
 
 public class FolderCollectionItem{
   private String collectionCreator;
-  private String[] names;
+  private String collection_name;
+  private String[] aliases;
   private Path[] paths;
   
-  public FolderCollectionItem(){
-    collectionCreator = null;
-    names = null;
-    paths = null;
-  }
-  
-  public FolderCollectionItem(String[] par_names, Path[] par_paths){
-    names = par_names;
+  public FolderCollectionItem(String par_name,
+                              String par_creator,
+                              String[] par_aliases,
+                              Path[] par_paths){
+    collectionCreator = par_creator;
+    collection_name = par_name;
+    aliases = par_aliases;
     paths = par_paths;
   }
   
-  public String[] getNames(){
-    return names;
+  public String[] getAliases(){
+    return aliases;
   }
   
   public Path[] getPaths(){
@@ -28,7 +28,7 @@ public class FolderCollectionItem{
     return collectionCreator;
   }
   
-  public void setCreator(String par_creator){
-    collectionCreator = par_creator;
+  public String getName(){
+    return collection_aliases;
   }
 }

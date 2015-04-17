@@ -86,7 +86,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     System.out.println("[DEBUG] after pack()");
   }
   
-  
+  public String[] getQAFolders(){
+    return quickAccessFolders();
+  }
   
   private void addFolder(){
     /*
