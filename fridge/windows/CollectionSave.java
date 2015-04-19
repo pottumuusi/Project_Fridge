@@ -47,6 +47,16 @@ public class CollectionSave extends CallableByListener{
       if ("Close" == ML_ptr.getName()){
         close();
       }
+      else if ("Save" == ML_ptr.getName()){
+        if ("folder" == saveWinType){
+          
+        }
+        else if ("group" == saveWinType){
+        }
+        else{
+          System.out.println("[DEBUG] ");
+        }
+      }
     }
   }
 }

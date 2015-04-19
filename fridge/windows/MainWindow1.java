@@ -87,7 +87,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   }
   
   public String[] getQAFolders(){
-    return quickAccessFolders();
+    return quickAccessFolders;
   }
   
   private void addFolder(){
@@ -237,6 +237,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
         currFolder = Paths.get(((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
         if (Files.isDirectory(currFolder)){
           updateFolderContent();
+          winCollection.setCurrFolder(currFolder);
         }
         else{
           currFolder = Paths.get(tempStore);
@@ -358,6 +359,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       
       addQuickAccessFolder(currFolder.toString());
       storeArray[i] = currFolder.getFileName().toString();
+      winCollection.setQA_folderAliases(storeArray);
       view1.setListData(storeArray);
       
       System.out.println("[DEBUG] storeArray:");
@@ -394,6 +396,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       }
       quickAccessFolders[i] = newFolder;
     }
+    winCollection.setQuickAccessFolders(quickAccessFolders);
   }
   
   private void loadSelectedQuickAccessFolder(){

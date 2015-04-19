@@ -1,5 +1,7 @@
 package fridge.data;
 
+import java.nio.file.Path;
+
 public class FolderCollectionItem{
   private String collectionCreator;
   private String collection_name;
@@ -29,6 +31,6 @@ public class FolderCollectionItem{
   }
   
   public String getName(){
-    return collection_aliases;
+    return collection_name;
   }
 }

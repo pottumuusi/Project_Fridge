@@ -17,9 +17,12 @@ public class WindowCollection extends WindowAdapter{
   private int caller;
   private int groupCount;
   private int windowCount;
+  private Path currFolder;
   private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
+  private String[] QA_folderAliases;
+  private String[] quickAccessFolders;
   private fridge.group.Group[] groups;
   private fridge.Fridge fridgeInstance;
   private fridge.window_content.Containers cont; // want this to be here?
@@ -91,6 +94,30 @@ public class WindowCollection extends WindowAdapter{
     System.out.println("[DEBUG] getGroup could not locate group: " + groupName);
     
     return null;
+  }
+  
+  public Path getCurrFolder(){
+    return currFolder;
+  }
+  
+  public String[] getQuickAccessFolders(){
+    return quickAccessFolders;
+  }
+  
+  public String[] getQA_folderAliases(){
+    return QA_folderAliases;
+  }
+  
+  public void setQuickAccessFolders(String[] par_QAFolders){
+    quickAccessFolders = par_QAFolders;
+  }
+  
+  public void setCurrFolder(Path par_currFolder){
+    currFolder = par_currFolder;
+  }
+  
+  public void setQA_folderAliases(String[] par_aliases){
+    QA_folderAliases = par_aliases;
   }
   
   public void traceableAdd(String winType, int callerMyWindowIndex){
