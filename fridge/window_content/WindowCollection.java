@@ -112,12 +112,12 @@ public class WindowCollection extends WindowAdapter{
     quickAccessFolders = par_QAFolders;
   }
   
-  public void setCurrFolder(Path par_currFolder){
-    currFolder = par_currFolder;
-  }
-  
   public void setQA_folderAliases(String[] par_aliases){
     QA_folderAliases = par_aliases;
+  }
+  
+  public void setCurrFolder(Path par_currFolder){
+    currFolder = par_currFolder;
   }
   
   public void traceableAdd(String winType, int callerMyWindowIndex){

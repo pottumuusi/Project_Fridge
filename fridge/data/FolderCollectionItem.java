@@ -6,12 +6,12 @@ public class FolderCollectionItem{
   private String collectionCreator;
   private String collection_name;
   private String[] aliases;
-  private Path[] paths;
+  private String[] paths;
   
   public FolderCollectionItem(String par_name,
                               String par_creator,
                               String[] par_aliases,
-                              Path[] par_paths){
+                              String[] par_paths){
     collectionCreator = par_creator;
     collection_name = par_name;
     aliases = par_aliases;
@@ -22,7 +22,7 @@ public class FolderCollectionItem{
     return aliases;
   }
   
-  public Path[] getPaths(){
+  public String[] getPaths(){
     return paths;
   }
   

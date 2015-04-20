@@ -2,6 +2,7 @@ package fridge.windows;
 
 import javax.swing.JList;
 import javax.swing.JTextField;
+import fridge.data.CollectionDataUser;
 
 
 public class CollectionSave extends CallableByListener{
@@ -49,7 +50,7 @@ public class CollectionSave extends CallableByListener{
       }
       else if ("Save" == ML_ptr.getName()){
         if ("folder" == saveWinType){
-          
+          saveFolderCollection();
         }
         else if ("group" == saveWinType){
         }
@@ -58,5 +59,16 @@ public class CollectionSave extends CallableByListener{
         }
       }
     }
+  }
+  
+  private void saveFolderCollection(){
+    CollectionDataUser dataUser = new CollectionDataUser();
+    String creator = "-";
+    
+    dataUser.saveFolderCollection(saveNameField.getText(),
+                                  creator,
+                                  winCollection.getQA_folderAliases(),
+                                  winCollection.getQuickAccessFolders(),
+                                  this);
   }
 }
