@@ -70,5 +70,6 @@ public class CollectionDataUser{
     //FolderCollectionItem folderData = new FolderCollectionItem
     // do set methods to folderCollection or waste memory by storing
     // data temporarily to variables before constructor call
+    return null;
   }
 }

@@ -362,21 +362,22 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       winCollection.setQA_folderAliases(storeArray);
       view1.setListData(storeArray);
       
-      System.out.println("[DEBUG] storeArray:");
+      System.err.println("[DEBUG] storeArray:");
       for (i = 0; i < storeArray.length; i++){
-        System.out.println("    " + storeArray[i]);
+        System.err.println("    " + storeArray[i]);
       }
       
-      System.out.println("[DEBUG] quickAccessFolders:");
+      System.err.println("[DEBUG] quickAccessFolders:");
       for (i = 0; i < quickAccessFolders.length; i++){
-        System.out.println("    " + quickAccessFolders[i]);
+        System.err.println("    " + quickAccessFolders[i]);
       }
     }
     else{
       storeArray = new String[1];
       addQuickAccessFolder(currFolder.toString());
       storeArray[0] = currFolder.getFileName().toString();
-      System.out.println("[DEBUG] storeArray[0] = " + storeArray[0]);
+      winCollection.setQA_folderAliases(storeArray);
+      System.err.println("[DEBUG] storeArray[0] = " + storeArray[0]);
       view1.setListData(storeArray);
     }
   }
