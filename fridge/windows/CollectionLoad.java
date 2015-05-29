@@ -1,6 +1,7 @@
 package fridge.windows;
 
 import javax.swing.JComboBox;
+import fridge.data.CollectionDataUser;
 
 public class CollectionLoad extends CallableByListener{
   private JComboBox collectionList;
@@ -39,6 +40,17 @@ public class CollectionLoad extends CallableByListener{
       if ("Close" == ML_ptr.getName()){
         close();
       }
+      else if("Load" == ML_ptr.getName()){
+        if ("folder" == loadWinType){
+          loadFolderCollection();
+        }
+      }
     }
+  }
+  
+  private void loadFolderCollection(){
+    CollectionDataUser dataUser = new CollectionDataUser();
+    
+    dataUser.loadFolderCollection();
   }
 }

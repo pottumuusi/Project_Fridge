@@ -154,8 +154,15 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   public void openFile(){
     Path tempPath = null;
     
-    if (selectedFolders.length != 1){
-      System.out.println("[DEBUG] trying to open file when multiple files are selected");
+    if (null == selectedFolders){
+      System.err.println("[ERROR] got null to selectedFolders at some point]");
+      //handle error by not opening
+    }
+    else if (selectedFolders.length > 1){
+      System.err.println("[DEBUG] trying to open file when multiple files are selected");
+    }
+    else if (selectedFolders.length < 1){
+      System.err.println("Trying to open file when none selected");
     }
     else{
       tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
@@ -440,9 +447,11 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   private void printSelectedFiles(){
     int i;
     
-    System.out.print("Selected files:\n\t");
-    for (i = 0; i < selectedFolders.length; i++){
-      System.out.print(selectedFolders[i] + ", ");
+    if (null != selectedFolders){
+      System.err.print("Selected files:\n\t");
+      for (i = 0; i < selectedFolders.length; i++){
+        System.out.print(selectedFolders[i] + ", ");
+      }
     }
   }
   

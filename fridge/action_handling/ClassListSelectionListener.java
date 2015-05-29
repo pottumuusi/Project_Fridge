@@ -22,7 +22,10 @@ public class ClassListSelectionListener extends fridge.action_handling.MyListene
   }
   
   public int getSelectedIndexesLen(){
-    return selectedIndexes.length;
+    if (null != selectedIndexes){
+      return selectedIndexes.length;
+    }
+    return 0;
   }
   
   public int[] getSelectedIndexes(){

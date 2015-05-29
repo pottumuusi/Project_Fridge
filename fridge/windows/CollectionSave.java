@@ -6,9 +6,12 @@ import fridge.data.CollectionDataUser;
 
 
 public class CollectionSave extends CallableByListener{
+  private JList<String> collections_view;
+  private CollectionDataUser dataUser;
   private JTextField saveNameField;
-  private JList<String> view0;
   private String saveWinType;
+  private String[] collection_names;
+  private String creator;
   
   public CollectionSave(fridge.window_content.WindowCollection winColl,
                         fridge.window_content.WindowMaker winMaker,
@@ -22,9 +25,13 @@ public class CollectionSave extends CallableByListener{
     super(winMaker.newCollSaveWin(winColl, CLSL_ptr, CAL_ptrs, par_nameField, par_view0, par_saveWinType),
           CLSL_ptr, CAL_ptrs, par_myWindowIndex, winColl);
     
+    dataUser = new CollectionDataUser();
     saveWinType = par_saveWinType;
     saveNameField = par_nameField;
-    view0 = par_view0;
+    collections_view = par_view0;
+    creator = "-";
+    
+    updateViews();
     frame.pack();
   }
   
@@ -32,6 +39,10 @@ public class CollectionSave extends CallableByListener{
   }
   
   public void updateViews(){
+    collection_names = dataUser.getCollectionNames(); 
+    if (null != collection_names){
+      collections_view.setListData(collection_names);
+    }
   }
   
   public void updateContent(){
@@ -62,13 +73,32 @@ public class CollectionSave extends CallableByListener{
   }
   
   private void saveFolderCollection(){
-    CollectionDataUser dataUser = new CollectionDataUser();
-    String creator = "-";
+    int i;
+    String[] aliases = winCollection.getQA_folderAliases();
+    String[] folders = winCollection.getQuickAccessFolders();
     
-    dataUser.saveFolderCollection(saveNameField.getText(),
-                                  creator,
-                                  winCollection.getQA_folderAliases(),
-                                  winCollection.getQuickAccessFolders(),
-                                  this);
+    System.err.println("\nCollectionSave.saveFolderCollection()");
+    System.err.println("[DEBUG] QA_folderAliases:");
+    for (i = 0; i < aliases.length; i++){
+      System.err.println("\t" + aliases[i]);
+    }
+    
+    System.err.println("[DEBUG] QA_folders:");
+    for (i = 0; i < folders.length; i++){
+      System.err.println("\t" + folders[i]);
+    }
+    
+    if (null == dataUser){
+      System.err.println("Could not save Folder collection");
+      System.err.println("CollectionSave.saveFolderCollection(): dataUser is null");
+    }
+    else{
+      dataUser.saveFolderCollection(saveNameField.getText(),
+                                    creator,
+                                    winCollection.getQA_folderAliases(),
+                                    winCollection.getQuickAccessFolders(),
+                                    this);
+      updateViews();
+    }
   }
 }
