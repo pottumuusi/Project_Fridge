@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.WindowEvent;
 
+import fridge.data.FolderCollectionItem;
 
 public class WindowCollection extends WindowAdapter{
   private int caller;
@@ -130,6 +131,28 @@ public class WindowCollection extends WindowAdapter{
     caller = par_windowIndex;
     addNew(winType);
   }
+  
+  public void loadFolderQA(FolderCollectionItem collectionItem){
+    int i;
+    String[] aliases = collectionItem.getAliases();
+    String[] paths = collectionItem.getPaths();
+    
+    System.err.println("-folder quick access update-");
+    setQA_folderAliases(collectionItem.getAliases());
+    setQuickAccessFolders(collectionItem.getPaths());
+    
+    System.err.println("[DEBUG] folderAliases to load");
+    for (i = 0; i < aliases.length; i++) {
+      System.err.println("\t" + aliases[i]);
+    }
+    
+    System.err.println("[DEBUG] folder paths to load");
+    for (i = 0; i < paths.length; i++){
+      System.err.println("\t" + paths[i]);
+    }
+    
+    ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).loadQuickAccessCollection(collectionItem);
+  } 
   
   public void addNew(String winType){
     System.out.println("start of addNew: myWindows.length = " + myWindows.length);
@@ -611,6 +634,17 @@ public class WindowCollection extends WindowAdapter{
       }
     }
     return false;
+  }
+  
+  private fridge.window_content.NamedWindow getNamedWindow(String searchedWindowName){
+    int i;
+    
+    for (i = 0; i < windowCount; i++){
+      if (namedWindows[i].getName().equals(searchedWindowName)){
+        return namedWindows[i];
+      }
+    }
+    return null;
   }
   
   private boolean allWindowsHidden(){

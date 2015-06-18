@@ -1,9 +1,13 @@
 package fridge.windows;
 
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import fridge.data.CollectionDataUser;
+import fridge.data.FolderCollectionItem;
 
 public class CollectionLoad extends CallableByListener{
+  private fridge.window_content.WindowCollection windowCollection;
+  private CollectionDataUser dataUser;
   private JComboBox collectionList;
   private String loadWinType;
   
@@ -15,15 +19,27 @@ public class CollectionLoad extends CallableByListener{
                         String par_winType){
     super(winMaker.newCollLoadWin(winColl, CAL_ptrs, collList, par_winType),
                                   CAL_ptrs, par_myWindowIndex, winColl);
+    //ComboBoxModel<String> strBoxModel = new ComboBoxModel<String>();
+    DefaultComboBoxModel<String> strBoxModel = new DefaultComboBoxModel();
+    dataUser = new CollectionDataUser();
+    
+    windowCollection = winColl;
     loadWinType = par_winType;
     collectionList = collList;
+    collectionList.setModel(strBoxModel);
+    //collectionList.addItem("testi1");
+    //collectionList.addItem("testi2");
+    updateCollectionList();
+    
     frame.pack();
+    updateContent();
   }
   
   public void openFile(){
   }
   
   public void updateViews(){
+    //updateComboBoxNames();
   }
   
   public void updateContent(){
@@ -49,8 +65,24 @@ public class CollectionLoad extends CallableByListener{
   }
   
   private void loadFolderCollection(){
-    CollectionDataUser dataUser = new CollectionDataUser();
+    FolderCollectionItem collectionItem = null;
     
-    dataUser.loadFolderCollection();
+    String collectionName = (String)collectionList.getSelectedItem();
+    System.err.println("loading collection (" + collectionName + ")");
+    collectionItem = dataUser.loadFolderCollection(collectionName);
+    windowCollection.loadFolderQA(collectionItem);
+  }
+  
+  private void updateCollectionList(){
+    int i;
+    String[] collectionNames;
+    
+    collectionNames = dataUser.getCollectionNames();
+    
+    collectionList.removeAllItems();
+    
+    for (i = 0; i < collectionNames.length; i++){
+      collectionList.addItem(collectionNames[i]);
+    }
   }
 }

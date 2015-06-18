@@ -21,6 +21,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 
+import fridge.data.FolderCollectionItem;
+
 //public class MainWindow1 extends fridge.windows.CallableByListener implements DocumentListener, ActionListener{
   //private fridge.filesystem.fileOperator // = fridge.filesystem.fileOperator
   //private fridge.filesystem.folderOperator // = new fridge.filesystem.folderOperator
@@ -148,7 +150,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   
   public void updateContent(){
     //System.out.println("[DEBUG] MainWin1 updateCotnent not set");
-    updateMenu();
+    //updateMenu();
+    updateFolderContent();
+    //updateQuickAccess();
   }
   
   public void openFile(){
@@ -239,7 +243,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
         winCollection.addNew("operationsWin", myWindowIndex);
       }
       else if ("folderNameField" == ML_ptr.getName()){
-        //System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
+        System.out.println("actionCommand == " + ((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
         tempStore = currFolder.toString();
         currFolder = Paths.get(((fridge.action_handling.ClassActionListener)ML_ptr).getActionCommand());
         if (Files.isDirectory(currFolder)){
@@ -431,6 +435,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     else{
       //errorMessage("Cannot load multiple Quick Access Folders");
     }
+  }
+  
+  public void loadQuickAccessCollection(FolderCollectionItem collectionItem){
+    System.err.println("MainWin1 loadQuickAccessCollection execution!");
   }
   
   private void getFiles (){
