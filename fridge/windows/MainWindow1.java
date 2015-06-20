@@ -434,9 +434,9 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     String loadedFolderCollection = null;
     
     
-    setQuickAccessFolders(winCollection.getQuickAccessFolders());
+    /*setQuickAccessFolders(winCollection.getQuickAccessFolders());
     setQuickAccessAliases(winCollection.getQA_folderAliases());
-    loadedFolderCollection = winCollection.getLoadedFolderCollection();
+    loadedFolderCollection = winCollection.getLoadedFolderCollection();*/
     
     /*if (null == folders){
       

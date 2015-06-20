@@ -62,7 +62,7 @@ public class CollectionDelete extends CallableByListener{
     updateCollectionList();
     
     System.err.println("next inform window collection about the delete");
-    windowCollection.deleteFolderQA(collectionItem.getName());
+    windowCollection.deleteFolderQA(collectionName);
   }
   
   private void updateCollectionList(){
@@ -70,11 +70,15 @@ public class CollectionDelete extends CallableByListener{
     String[] collectionNames;
     
     collectionNames = dataUser.getCollectionNames();
-    System.out.println("collectionNames len ==" + collectionNames.length);
+    if (null != collectionNames){
+      System.out.println("collectionNames len ==" + collectionNames.length);
+    }
     collectionList.removeAllItems();
     
-    for (i = 0; i < collectionNames.length; i++){
-      collectionList.addItem(collectionNames[i]);
+    if (null != collectionNames){
+      for (i = 0; i < collectionNames.length; i++){
+        collectionList.addItem(collectionNames[i]);
+      }
     }
   }
 }
