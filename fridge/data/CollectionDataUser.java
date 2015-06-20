@@ -231,16 +231,39 @@ public class CollectionDataUser{
     FolderCollectionItem folderCollection = null;
     
     try{
-      System.err.println("CollectionDataUser loading collection...");
-      lineItemAmount = getFolderLineLengths(collectionName);
-      folderAliases = new String[lineItemAmount[0]];
-      folderPaths = new String[lineItemAmount[1]];
-      System.err.println("length of folderAliases: " + folderAliases.length);
-      System.err.println("length of folderPaths: " + folderPaths.length);
+      int i;
       
-      creator = getFolderCreator(collectionName);
-      loadAliases(collectionName, folderAliases);
-      loadFolderPaths(collectionName, folderPaths);
+      if (collectionExists(collectionName)){
+        System.err.println("CollectionDataUser loading collection...");
+        lineItemAmount = getFolderLineLengths(collectionName);
+        System.err.println("lineItemAmount[0] == " + lineItemAmount[0]);
+        System.err.println("lineItemAmount[1] == " + lineItemAmount[1]);
+        folderAliases = new String[lineItemAmount[0]];
+        folderPaths = new String[lineItemAmount[1]];
+        System.err.println("length of folderAliases: " + folderAliases.length);
+        System.err.println("length of folderPaths: " + folderPaths.length);
+        
+        name = collectionName;
+        creator = getFolderCreator(collectionName);
+        folderAliases = loadAliases(collectionName, folderAliases);
+        folderPaths = loadFolderPaths(collectionName, folderPaths);
+        
+        System.err.println("collectionCreator: " + creator);
+        
+        System.err.println("folderAliases:");
+        for (i = 0; i < folderAliases.length; i++){
+          System.err.println("\t" + folderAliases[i]);
+        }
+        
+        System.err.println("folderPaths");
+        for (i = 0; i < folderPaths.length; i++){
+          System.err.println("\t" + folderPaths[i]);
+        }
+      }
+      else{
+        //error
+      }
+      
       
       //folderCollection = createFolderCollectionItem(collectionName);
     } catch(IOException ioe){
@@ -293,8 +316,33 @@ public class CollectionDataUser{
     return folderCollection;
   }
   
+  public boolean collectionExists(String collectionName){
+    String[] collectionNames = null;
+    int i;
+    
+    collectionNames = getCollectionNames();
+    
+    if (null == collectionNames){
+      return false;
+    }
+    
+    for (i = 0; i < collectionNames.length; i++){
+      if (collectionName.equals(collectionNames[i])){
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
   private int[] getFolderLineLengths(String collectionName) throws IOException{
     int[] lineLengths = new int[2];
+    String readStr = null;
+    
+    readStr = getCollectionData(collectionName, ALIAS_LEN_POSITION);
+    System.err.println("alias lengths row: " + readStr);
+    readStr = getCollectionData(collectionName, FOLDERS_LEN_POSITION);
+    System.err.println("collection folder lengths row" + readStr);
     
     lineLengths[0] = Integer.parseInt(getCollectionData(collectionName, ALIAS_LEN_POSITION));
     lineLengths[1] = Integer.parseInt(getCollectionData(collectionName, FOLDERS_LEN_POSITION));
@@ -322,20 +370,30 @@ public class CollectionDataUser{
     return getCollectionData(collectionName, FOLDERS_POSITION);
   }
   
-  private void loadAliases(String collectionName, String[] loadDestination) throws IOException{
+  private String[] loadAliases(String collectionName, String[] loadDestination) throws IOException{
     String unprocessedAliases = null;
     String[] aliases = null;
     
     unprocessedAliases = getFolderAliases(collectionName);
-    /* kay lapi unprocessedAliases ja tallenna aliases muuttujaan */
+    loadDestination = unprocessedAliases.split(";", loadDestination.length);
+    
+    /* remove last char of last string in loadDestination which is ';' */
+    loadDestination[loadDestination.length - 1] = loadDestination[loadDestination.length - 1].substring(0, loadDestination[loadDestination.length - 1].length() - 1);
+    
+    return loadDestination;
   }
   
-  private void loadFolderPaths(String collectionName, String[] loadDestination) throws IOException{
+  private String[] loadFolderPaths(String collectionName, String[] loadDestination) throws IOException{
     String unprocessedFolders = null;
     String[] folders = null;
     
     unprocessedFolders = getFolderPaths(collectionName);
-    /* kay lapi unprocessedFolders ja tallenna folders muuttujaan */
+    loadDestination = unprocessedFolders.split(";", loadDestination.length);
+    
+    /* remove last char of last string in loadDestination which is ';' */
+    loadDestination[loadDestination.length - 1] = loadDestination[loadDestination.length - 1].substring(0, loadDestination[loadDestination.length - 1].length() - 1);
+    
+    return loadDestination;
   }
   
   private String getCollectionData(String collectionName, int offset) throws IOException{
@@ -362,10 +420,12 @@ public class CollectionDataUser{
     String line = null;
     
     do {
+      reader.mark(4096); // 4096 bytes can be read before reset
       line = reader.readLine();
       System.err.println("line == " + line + ", line.length == " + line.length());
       
       if (line.equals(collectionName)){
+        reader.reset();
         return 0;
       }
     } while(line != null);
@@ -382,5 +442,9 @@ public class CollectionDataUser{
     }
     
     return data;
+  }
+  
+  public void deleteFolderCollection(String collectionName){
+    
   }
 }

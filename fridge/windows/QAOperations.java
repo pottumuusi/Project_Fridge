@@ -42,6 +42,7 @@ public class QAOperations extends fridge.windows.CallableByListener{
         winCollection.addNew("collectionLoad", myWindowIndex);
       }
       else if ("DeleteCollection" == ML_ptr.getName()){
+        winCollection.addNew("collectionDelete", myWindowIndex);
       }
     }
   }

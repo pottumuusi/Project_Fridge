@@ -92,6 +92,14 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     return quickAccessFolders;
   }
   
+  private void setQuickAccessFolders(String[] newFolders){
+    quickAccessFolders = newFolders;
+  }
+  
+  private void setQuickAccessAliases(String[] newAliases){
+    view1.setListData(newAliases);
+  }
+  
   private void addFolder(){
     /*
      * Noticee!
@@ -438,7 +446,26 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   }
   
   public void loadQuickAccessCollection(FolderCollectionItem collectionItem){
+    int i;
+    String[] aliases = collectionItem.getAliases();
+    String[] paths = collectionItem.getPaths();
+    
     System.err.println("MainWin1 loadQuickAccessCollection execution!");
+    System.err.println(collectionItem.getName());
+    System.err.println(collectionItem.getCreator());
+    
+    System.err.println("[DEBUG] folderAliases to load");
+    for (i = 0; i < aliases.length; i++) {
+      System.err.println("\t" + aliases[i]);
+    }
+    
+    System.err.println("[DEBUG] folder paths to load");
+    for (i = 0; i < paths.length; i++){
+      System.err.println("\t" + paths[i]);
+    }
+    
+    setQuickAccessFolders(collectionItem.getPaths());
+    setQuickAccessAliases(collectionItem.getAliases());
   }
   
   private void getFiles (){

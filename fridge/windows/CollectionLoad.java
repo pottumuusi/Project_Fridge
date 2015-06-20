@@ -18,7 +18,7 @@ public class CollectionLoad extends CallableByListener{
                         int par_myWindowIndex,
                         String par_winType){
     super(winMaker.newCollLoadWin(winColl, CAL_ptrs, collList, par_winType),
-                                  CAL_ptrs, par_myWindowIndex, winColl);
+          CAL_ptrs, par_myWindowIndex, winColl);
     //ComboBoxModel<String> strBoxModel = new ComboBoxModel<String>();
     DefaultComboBoxModel<String> strBoxModel = new DefaultComboBoxModel();
     dataUser = new CollectionDataUser();
@@ -32,7 +32,7 @@ public class CollectionLoad extends CallableByListener{
     updateCollectionList();
     
     frame.pack();
-    updateContent();
+    //updateContent();
   }
   
   public void openFile(){

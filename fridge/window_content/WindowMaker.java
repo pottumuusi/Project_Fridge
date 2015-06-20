@@ -190,6 +190,30 @@ public class WindowMaker{
     return frame;
   }
   
+  public JFrame newCollDeleteWin(fridge.window_content.WindowCollection controller,
+                                 fridge.action_handling.ClassActionListener[] CAL_list,
+                                 JComboBox collList,
+                                 String loadWinType){
+    JFrame frame;
+    
+    if ("group" == loadWinType){
+      frame = new ListenedFrame(controller, "Delete group collection");
+    }
+    else {
+      frame = new ListenedFrame(controller, "Delete folder collection");
+    }
+    
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    frame.setContentPane(cont.createContentPane("collDeleteWin", CAL_list, collList));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }
+  
   /*public void closed(WindowEvent e){
     System.out.println("window closed");
   }*/

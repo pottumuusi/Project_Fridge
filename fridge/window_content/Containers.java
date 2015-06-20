@@ -115,9 +115,17 @@ public class Containers{
                                      fridge.action_handling.ClassActionListener[] CAL_list,
                                      JComboBox collList){
     JPanel contentPane = new JPanel(new BorderLayout());
+    String[] loadParams = null;
     
     if ("collLoadWin" == cpType){
-      createCollLoadWinContent(contentPane, CAL_list, collList);
+      loadParams = new String[1];
+      loadParams[0] = "Load";
+      createCollDropDownContent(contentPane, CAL_list, collList, loadParams);
+    }
+    else if("collDeleteWin" == cpType){
+      loadParams = new String [1];
+      loadParams[0] = "Delete";
+      createCollDropDownContent(contentPane, CAL_list, collList, loadParams);
     }
     
     return contentPane;
@@ -891,15 +899,16 @@ public class Containers{
     layout.setVerticalGroup(vGroup);
   }
   
-  private void createCollLoadWinContent(JPanel contentPane,
+  private void createCollDropDownContent(JPanel contentPane,
                                         fridge.action_handling.ClassActionListener[] CAL_list,
-                                        JComboBox collList){
+                                        JComboBox collList,
+                                        String[] windowTexts){
     JButton load, close;
     
     JLabel collectionsLabel = new JLabel();
     collectionsLabel.setText("Collections");
     
-    load = new JButton("Load");
+    load = new JButton(windowTexts[0]); // delete or load
     load.setVerticalTextPosition(AbstractButton.CENTER);
     load.setHorizontalTextPosition(AbstractButton.LEADING);
     

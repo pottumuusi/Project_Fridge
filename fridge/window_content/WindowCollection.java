@@ -133,23 +133,9 @@ public class WindowCollection extends WindowAdapter{
   }
   
   public void loadFolderQA(FolderCollectionItem collectionItem){
-    int i;
-    String[] aliases = collectionItem.getAliases();
-    String[] paths = collectionItem.getPaths();
-    
     System.err.println("-folder quick access update-");
     setQA_folderAliases(collectionItem.getAliases());
     setQuickAccessFolders(collectionItem.getPaths());
-    
-    System.err.println("[DEBUG] folderAliases to load");
-    for (i = 0; i < aliases.length; i++) {
-      System.err.println("\t" + aliases[i]);
-    }
-    
-    System.err.println("[DEBUG] folder paths to load");
-    for (i = 0; i < paths.length; i++){
-      System.err.println("\t" + paths[i]);
-    }
     
     ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).loadQuickAccessCollection(collectionItem);
   } 
@@ -384,7 +370,35 @@ public class WindowCollection extends WindowAdapter{
       }
     }
     else if ("collectionDelete" == winType){
+      newNamedWin("collectionDelete");
       
+      JComboBox collectionList = new JComboBox();
+      boolean callByGroupWindow = false;
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[3];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("CollectionList");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("Delete");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("Close");
+      
+      for (int i = 0; i < groupWindows.length; i++){
+        if (groupWindows[i] == caller){
+          callByGroupWindow = true;
+        }
+      }
+      
+      if (true == callByGroupWindow){
+        System.err.println("creating group collectionDelete");
+        newGroupWindow(windowCount);
+        myWindows[windowCount] = new fridge.windows.CollectionDelete(this, winMaker, CAL_list,
+                                                                     collectionList, windowCount,
+                                                                     "group");
+      }
+      else{
+        myWindows[windowCount] = new fridge.windows.CollectionDelete(this, winMaker, CAL_list,
+                                                                     collectionList, windowCount,
+                                                                     "folder");
+      }
     }
     else{
     //default:
