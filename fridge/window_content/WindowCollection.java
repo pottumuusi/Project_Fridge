@@ -24,6 +24,7 @@ public class WindowCollection extends WindowAdapter{
   private JFrame[][] listContainer;
   private String[] QA_folderAliases;
   private String[] quickAccessFolders;
+  private String loadedFolderCollection;
   private fridge.group.Group[] groups;
   private fridge.Fridge fridgeInstance;
   private fridge.window_content.Containers cont; // want this to be here?
@@ -109,6 +110,14 @@ public class WindowCollection extends WindowAdapter{
     return QA_folderAliases;
   }
   
+  public String getLoadedFolderCollection(){
+    return loadedFolderCollection;
+  }
+  
+  public void setLoadedFolderCollection(String loadedCollection){
+    loadedFolderCollection = loadedCollection;
+  }
+  
   public void setQuickAccessFolders(String[] par_QAFolders){
     quickAccessFolders = par_QAFolders;
   }
@@ -139,6 +148,16 @@ public class WindowCollection extends WindowAdapter{
     
     ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).loadQuickAccessCollection(collectionItem);
   } 
+  
+  public void deleteFolderQA(String deletedName){
+    if (loadedFolderCollection.equals(deletedName)){
+      setLoadedFolderCollection(null);
+      setQuickAccessFolders(null);
+      setQA_folderAliases(null);
+      
+      ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).updateViews();
+    }
+  }
   
   public void addNew(String winType){
     System.out.println("start of addNew: myWindows.length = " + myWindows.length);

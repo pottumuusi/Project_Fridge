@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
+import javax.swing.DefaultListModel;
 
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -29,6 +30,7 @@ import fridge.data.FolderCollectionItem;
   //private fridge.filesystem.groupOperator // = new fridge.filesystem.groupOperator
 public class MainWindow1 extends fridge.windows.CallableByListener{
   private Path currFolder;
+  private Path prevFolder;
   private JTextField folderNameField;
   private JList<String> view0;
   private JList<String> view1;
@@ -38,6 +40,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   private String currentPath;
   private String[] fullFileNames; //need this?
   private String[] quickAccessFolders;
+  private String loadedQuickAccessCollection;
   //private fridge.window_content.WindowCollection winCollection;
   
   /*public MainWindow1(fridge.window_content.WindowCollection winColl,
@@ -67,12 +70,14 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     selectedFolders = null;
     quickAccessFolders = null;
     selectedQuickAccess = null;
+    loadedQuickAccessCollection = null;
     
     folderNameField = fn_par;
     view0 = view0_par;
     view1 = view1_par;
     //if (Files.isDirectory(folderNameField.getText())){
     currFolder = Paths.get(folderNameField.getText());
+    prevFolder = Paths.get("/");
     //}
     //else{
     //  currFolder = null;
@@ -97,7 +102,21 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   }
   
   private void setQuickAccessAliases(String[] newAliases){
-    view1.setListData(newAliases);
+    String[] empty = new String[1];
+    empty[0] = "";
+    
+    if (null == newAliases){
+      
+      view1.clearSelection();
+      view1.setListData(empty);
+    }
+    else{
+      view1.setListData(newAliases);
+    }
+  }
+  
+  private void setLoadedQuickAccessCollection(String collectionName){
+    loadedQuickAccessCollection = collectionName;
   }
   
   private void addFolder(){
@@ -160,11 +179,13 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     //System.out.println("[DEBUG] MainWin1 updateCotnent not set");
     //updateMenu();
     updateFolderContent();
-    //updateQuickAccess();
+    updateQuickAccess();
   }
   
   public void openFile(){
     Path tempPath = null;
+    String tempFileName = null;
+    String tempWholePath = null;
     
     if (null == selectedFolders){
       System.err.println("[ERROR] got null to selectedFolders at some point]");
@@ -177,13 +198,38 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       System.err.println("Trying to open file when none selected");
     }
     else{
+      if (fullFileNames[selectedFolders[0]].equals("..")){
+        System.err.println("going to previous directory");
+      }
+      
       tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
       
-      //open the folder
-      if (Files.isDirectory(tempPath)){
-        currFolder = tempPath;
+      /* open previous folder */
+      if (0 == selectedFolders[0]){
+        currFolder = prevFolder;
+        System.err.println("getting file name from: " + currFolder.toString());
+        if (!(currFolder.toString().equals("/"))){
+          tempFileName = currFolder.getFileName().toString();
+          tempWholePath = currFolder.toString();
+          System.err.println("lenminuzzz " + (tempWholePath.length() - tempFileName.length()));
+          /*System.err.println("currFolder==" + currFolder.toString());
+          System.err.println("curr");*/
+          //System.err.println(currFolder.toString().substring(0, 5));
+          System.err.println("prev folder trial: " + currFolder.toString().substring(0, tempWholePath.length() - tempFileName.length()));
+          prevFolder = Paths.get(currFolder.toString().substring(0, tempWholePath.length() - tempFileName.length()));
+          System.err.println("prev folder set to: " + prevFolder);
+        }
         folderNameField.setText(currFolder.toString());
         updateFolderContent();
+      }
+      //open the folder
+      else if (Files.isDirectory(tempPath)){
+        if (null != tempPath){
+          prevFolder = currFolder;
+          currFolder = tempPath;
+          folderNameField.setText(currFolder.toString());
+          updateFolderContent();
+        }
       }
       //open the file
       else{
@@ -280,6 +326,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     if (Files.isDirectory(currFolder)){
       try (DirectoryStream<Path> stream = Files.newDirectoryStream(currFolder)){
         fullFileNames = null; //reset earlier file names
+        /* set previous folder */
+        /*fullFileNames = new String[1];
+        fullFileNames[0] = currFolder.getParent().toString();*/
+        
         for (Path file: stream){
           //temp = file.getFileName();
           //if ('.' != file.getFileName().getCharAt(0)){
@@ -296,9 +346,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           
           if (null == fullFileNames){
             fullFileNames = new String[1];
+            System.err.println("setting fileName[0] to " + file.getParent().toString());
             fullFileNames[0] = file.toString();
           }
-          else{
+          if (null != fullFileNames){
             temp = fullFileNames;
             fullFileNames = new String[fullFileNames.length + 1];
             for (i = 0; i < fullFileNames.length - 1; i++){
@@ -308,7 +359,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           }
           
           if ('.' != currFileName.charAt(0) || 
-              '.' == currFileName.charAt(1)){
+              '.' == currFileName.charAt(1) || true){
             if (null == newContent){
               if (true == Files.isDirectory(file)){
                 nextRowString = "<dir> ";
@@ -316,8 +367,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
               else{
                 nextRowString = "           ";
               }
-              newContent = new String[folderFileCount + 1];
-              newContent[folderFileCount] = nextRowString + currFileName;
+              newContent = new String[folderFileCount + 2];
+              newContent[folderFileCount] = "..";
+              folderFileCount++;
+              newContent[folderFileCount] = nextRowString + currFileName;;
               folderFileCount++;
             }
             else{
@@ -349,11 +402,45 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     }
     
     System.out.println("newContent:");
-    for (i = 0; i < newContent.length; i++){
-      System.out.println("    " + newContent[i]);
+    if (null == newContent){
+      String[] prev = new String[1];
+      prev[0] = "..";
+      System.err.println("newContent == null");
+      //fullFileNames = new String[1];
+      //fullFileNames[0] = currFolder.getParent();
+      //clearView(view0);
+      view0.setListData(prev);
+      //view0.removeAll();
     }
+    else{
+      System.err.println("newContent len == " + newContent.length);
+      for (i = 0; i < newContent.length; i++){
+        System.out.println("    " + newContent[i]);
+      }
+      
+      
+      view0.setListData(newContent);
+    }
+  }
+  
+  private void clearView(JList view){
+    DefaultListModel viewListModel = (DefaultListModel) view.getModel();
+    viewListModel.removeAllElements();
+  }
+  
+  private void updateQuickAccess(){
+    String[] folders = null;
+    String[] aliases = null;
+    String loadedFolderCollection = null;
     
-    view0.setListData(newContent);
+    
+    setQuickAccessFolders(winCollection.getQuickAccessFolders());
+    setQuickAccessAliases(winCollection.getQA_folderAliases());
+    loadedFolderCollection = winCollection.getLoadedFolderCollection();
+    
+    /*if (null == folders){
+      
+    }*/
   }
   
   private void addToQuickAccess(){
@@ -377,7 +464,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
       }
       
       addQuickAccessFolder(currFolder.toString());
-      storeArray[i] = currFolder.getFileName().toString();
+      storeArray[i] = getAlias();
       winCollection.setQA_folderAliases(storeArray);
       view1.setListData(storeArray);
       
@@ -394,11 +481,28 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     else{
       storeArray = new String[1];
       addQuickAccessFolder(currFolder.toString());
-      storeArray[0] = currFolder.getFileName().toString();
+      storeArray[0] = getAlias();
       winCollection.setQA_folderAliases(storeArray);
       System.err.println("[DEBUG] storeArray[0] = " + storeArray[0]);
       view1.setListData(storeArray);
     }
+  }
+  
+  private String getAlias(){
+    return defaultAlias();
+  }
+  
+  private String defaultAlias(){
+    Path alias = null;
+    
+    System.err.println("[DEBUG] currFolder == " + currFolder);
+    alias = currFolder.getFileName();
+    /* fixes problem with root ("/") folder */
+    if (null == alias){
+      return currFolder.toString();
+    }
+    
+    return alias.toString();
   }
   
   private void addQuickAccessFolder(String newFolder){
@@ -466,6 +570,8 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     
     setQuickAccessFolders(collectionItem.getPaths());
     setQuickAccessAliases(collectionItem.getAliases());
+    setLoadedQuickAccessCollection(collectionItem.getName());
+    winCollection.setLoadedFolderCollection(collectionItem.getName());
   }
   
   private void getFiles (){

@@ -14,8 +14,8 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 
 public class CollectionDataUser{
-  private Path path;
-  private Path lengthsFilePath;
+  private Path folderPath;
+  private Path folderLengthsFilePath;
   private Charset charset;
   private final int NAME_POSITION = 0;
   private final int ALIASES_POSITION = 4;
@@ -26,8 +26,8 @@ public class CollectionDataUser{
   private final int COLLECTION_ITEM_FIELD_AMOUNT = 6;
   
   public CollectionDataUser(){
-    path = Paths.get("fridge", "data", "collectionData.dat");
-    lengthsFilePath = Paths.get("fridge", "data", "collectionLengths.dat");
+    folderPath = Paths.get("fridge", "data", "collectionData.dat");
+    folderLengthsFilePath = Paths.get("fridge", "data", "collectionLengths.dat");
     charset = Charset.forName("UTF-8");
   }
   
@@ -50,45 +50,71 @@ public class CollectionDataUser{
     }
   }
   
+  private void clearCollectionFile(Path filePath) throws IOException{
+    BufferedWriter writer = Files.newBufferedWriter(filePath, charset,
+                                                    StandardOpenOption.CREATE,
+                                                    StandardOpenOption.TRUNCATE_EXISTING,
+                                                    StandardOpenOption.WRITE);
+    
+    writer.write("", 0, 0);
+  }
+  
+  private void clearCollectionFile(String filePathStr) throws IOException{
+    Path filePath = Paths.get(filePathStr);
+    
+    BufferedWriter writer = Files.newBufferedWriter(filePath, charset,
+                                                    StandardOpenOption.CREATE,
+                                                    StandardOpenOption.TRUNCATE_EXISTING,
+                                                    StandardOpenOption.WRITE);
+    
+    writer.write("", 0, 0);
+  }
+  
+  private void storeFolderCollectionToFile(FolderCollectionItem collection) throws IOException{
+    storeCollectionToFile(collection.getAliases(),
+                          collection.getPaths(),
+                          collection.getName(),
+                          collection.getCreator());
+  }
+  
   private void storeCollectionToFile(String[] folderAliases, String[] folders,
                                      String name, String creator) throws IOException{
     
-    try (BufferedWriter writer = Files.newBufferedWriter(path, charset,
+    try (BufferedWriter writer = Files.newBufferedWriter(folderPath, charset,
                              StandardOpenOption.CREATE,
-                             StandardOpenOption.TRUNCATE_EXISTING,
-                             StandardOpenOption.WRITE)){
-        String lenVar = null;
-        int i;
-        
-        /* First 2 rows contain length of folderAliases and folders */
-        /* write data to file so that each row contains all values of one variable */
-        System.err.println("writing names");
-        name = name + "\n";
-        writer.write(name, 0, name.length());
-        creator = creator + "\n";
-        writer.write(creator, 0, creator.length());
-        
-        System.err.println("writing lengths...");
-        lenVar = Integer.toString(folderAliases.length) + '\n';
-        writer.write(lenVar, 0, lenVar.length());
-        lenVar = Integer.toString(folders.length) + '\n';
-        writer.write(lenVar, 0, lenVar.length());
-        
-        System.err.println("writing folders...");
-        
-        for (i = 0; i < folderAliases.length; i++){
-          writer.write(folderAliases[i] + ";", 0, folderAliases[i].length() + 1);
-          System.err.println("wrote: " + folderAliases[i]);
-        }
-        
-        writer.write("\n", 0, 1);
-        
-        for (i = 0; i < folders.length; i++){
-          writer.write(folders[i] + ";", 0, folders[i].length() + 1);
-        }
-        
-        writer.write("\n", 0, 1);
+                             StandardOpenOption.APPEND)){
+      String lenVar = null;
+      int i;
+      
+      /* First 2 rows contain length of folderAliases and folders */
+      /* write data to file so that each row contains all values of one variable */
+      System.err.println("writing names");
+      name = name + "\n";
+      writer.write(name, 0, name.length());
+      creator = creator + "\n";
+      writer.write(creator, 0, creator.length());
+      
+      System.err.println("writing lengths...");
+      lenVar = Integer.toString(folderAliases.length) + '\n';
+      writer.write(lenVar, 0, lenVar.length());
+      lenVar = Integer.toString(folders.length) + '\n';
+      writer.write(lenVar, 0, lenVar.length());
+      
+      System.err.println("writing folders...");
+      
+      for (i = 0; i < folderAliases.length; i++){
+        writer.write(folderAliases[i] + ";", 0, folderAliases[i].length() + 1);
+        System.err.println("wrote: " + folderAliases[i]);
       }
+      
+      writer.write("\n", 0, 1);
+      
+      for (i = 0; i < folders.length; i++){
+        writer.write(folders[i] + ";", 0, folders[i].length() + 1);
+      }
+      
+      writer.write("\n", 0, 1);
+    }
   }
   
   private boolean preconditionsOK(String[] folderAliases, String[] folders, String name){
@@ -114,29 +140,39 @@ public class CollectionDataUser{
   }
   
   private void incrementLengthFileContent() throws IOException{
-    createLengthFile(); // does not alter an existing length file
-    incrementStoredCollectionAmount();
+    createFile(folderLengthsFilePath); // does not alter an existing length file
+    incrementStoredCollectionAmount(folderLengthsFilePath);
   }
   
-  private void createLengthFile() throws IOException{
-    try (BufferedWriter writer = Files.newBufferedWriter(lengthsFilePath, charset,
+  private void createFile(Path filePath) throws IOException{
+    try (BufferedWriter writer = Files.newBufferedWriter(filePath, charset,
                                                          StandardOpenOption.CREATE)){
     }
   }
   
-  private void incrementStoredCollectionAmount() throws IOException{
+  private void incrementStoredCollectionAmount(Path lengthsPath) throws IOException{
     int collectionAmount = -1;
     
-    collectionAmount = readStoredCollectionAmount();
-    writeNewStoredCollectionAmount(collectionAmount + 1);
+    collectionAmount = readStoredCollectionAmount(lengthsPath);
+    writeNewStoredCollectionAmount(collectionAmount + 1, lengthsPath);
   }
   
-  private int readStoredCollectionAmount() throws IOException{
+  private void decrementStoredCollectionAmount(Path lengthsPath) throws IOException{
+    int collectionAmount = -1;
+    
+    createFile(lengthsPath);
+    collectionAmount = readStoredCollectionAmount(lengthsPath);
+    if (collectionAmount > 0){
+      writeNewStoredCollectionAmount(collectionAmount - 1, lengthsPath);
+    }
+  }
+  
+  private int readStoredCollectionAmount(Path lengthsPath) throws IOException{
     int collectionAmount = 0;
     String line = null;
     int i;
     
-    try (BufferedReader reader = Files.newBufferedReader(lengthsFilePath, charset)){
+    try (BufferedReader reader = Files.newBufferedReader(lengthsPath, charset)){
       line = reader.readLine();
       System.err.println("storing collection amount. read from lengthsFile: " + line);
       if (null != line){
@@ -154,14 +190,14 @@ public class CollectionDataUser{
   
   private void testLengthFileCorrectness(BufferedReader reader) throws IOException{
     if (null != reader.readLine()){
-      throw new IOException(lengthsFilePath.toString() + " should contain only 1 row");
+      throw new IOException(folderLengthsFilePath.toString() + " should contain only 1 row");
     }
   }
   
-  private void writeNewStoredCollectionAmount(int newCollectionAmount) throws IOException{
+  private void writeNewStoredCollectionAmount(int newCollectionAmount, Path filePath) throws IOException{
     String amountStr = null;
     
-    try (BufferedWriter writer = Files.newBufferedWriter(lengthsFilePath, charset,
+    try (BufferedWriter writer = Files.newBufferedWriter(filePath, charset,
                                                          StandardOpenOption.CREATE,
                                                          StandardOpenOption.TRUNCATE_EXISTING,
                                                          StandardOpenOption.WRITE)){
@@ -177,8 +213,8 @@ public class CollectionDataUser{
     String[] names = null;
     
     try{
-      createLengthFile();
-      nameAmount = readStoredCollectionAmount();
+      createFile(folderLengthsFilePath);
+      nameAmount = readStoredCollectionAmount(folderLengthsFilePath);
       
       if (nameAmount < 1){
         System.err.println("CollectionDataUser.getCollectionNames(): no collections yet");
@@ -195,7 +231,7 @@ public class CollectionDataUser{
   }
   
   private String[] readStoredCollectionNames(int nameAmount) throws IOException{
-    BufferedReader reader = Files.newBufferedReader(path, charset);
+    BufferedReader reader = Files.newBufferedReader(folderPath, charset);
     int i = 0;
     int storeIndex = 0;
     String line;
@@ -263,20 +299,12 @@ public class CollectionDataUser{
       else{
         //error
       }
-      
-      
-      //folderCollection = createFolderCollectionItem(collectionName);
     } catch(IOException ioe){
       System.err.println("loadFolderCollection IOException: " + ioe.getMessage());
     }
     
     /*
-    try (BufferedReader reader = Files.newBufferedReader(path, charset)){
-      
-      
-      
-      
-      
+    try (BufferedReader reader = Files.newBufferedReader(folderPath, charset)){
       String line = null;
       int i = 0;
       
@@ -399,7 +427,7 @@ public class CollectionDataUser{
   private String getCollectionData(String collectionName, int offset) throws IOException{
     int i;
     String collectionData = null;
-    BufferedReader reader = Files.newBufferedReader(path, charset);
+    BufferedReader reader = Files.newBufferedReader(folderPath, charset);
     
     if ((offset + 1) > COLLECTION_ITEM_FIELD_AMOUNT || offset < 0){
       throw new IOException("getAliasesLineLength: invalid data field offset");
@@ -445,6 +473,50 @@ public class CollectionDataUser{
   }
   
   public void deleteFolderCollection(String collectionName){
+    String[] collectionNames = null;
+    FolderCollectionItem[] collectionsToSave = null;
     
+    /* save current file content to an array excluding collection to delete,
+     * clear file and save content 
+     */
+    
+    try{
+      System.err.println("deleting " + collectionName);
+      collectionsToSave = getCollectionsExcept(collectionName);
+      clearCollectionFile(folderPath);
+      for (int i = 0; i < collectionsToSave.length; i++){
+        System.err.println("saving collection: " + collectionsToSave[i].getName());
+        storeFolderCollectionToFile(collectionsToSave[i]);
+      }
+      decrementStoredCollectionAmount(folderLengthsFilePath);
+    } catch(IOException ioe){
+      //error
+      System.err.println("error while deleting " + collectionName + ", " + ioe.getMessage());
+    }
+  }
+  
+  private FolderCollectionItem[] getCollectionsExcept(String collectionToExclude){
+    FolderCollectionItem[] collections = null;
+    String[] allNames = null;
+    int saveIndex = 0;
+    
+    allNames = getCollectionNames();
+    collections = new FolderCollectionItem[allNames.length - 1];
+    
+    System.err.println("getCollectionsExcept allNames:");
+    for (int i = 0; i < allNames.length; i++){
+      System.err.println("\t" + allNames[i]);
+    }
+    
+    for (int i = 0; i < allNames.length; i++){
+      System.err.println("testing exclude for " + allNames[i]);
+      if (!(allNames[i].equals(collectionToExclude))){
+        System.err.println("getting " + allNames[i]);
+        collections[saveIndex] = loadFolderCollection(allNames[i]);
+        saveIndex++;
+      }
+    }
+    
+    return collections;
   }
 }

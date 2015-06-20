@@ -39,7 +39,7 @@ public class CollectionLoad extends CallableByListener{
   }
   
   public void updateViews(){
-    //updateComboBoxNames();
+    updateCollectionList();
   }
   
   public void updateContent(){
@@ -78,11 +78,12 @@ public class CollectionLoad extends CallableByListener{
     String[] collectionNames;
     
     collectionNames = dataUser.getCollectionNames();
-    
     collectionList.removeAllItems();
     
-    for (i = 0; i < collectionNames.length; i++){
-      collectionList.addItem(collectionNames[i]);
+    if (null != collectionNames){
+      for (i = 0; i < collectionNames.length; i++){
+        collectionList.addItem(collectionNames[i]);
+      }
     }
   }
 }

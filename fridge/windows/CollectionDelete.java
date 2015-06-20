@@ -33,7 +33,9 @@ public class CollectionDelete extends CallableByListener{
   }
   
   public void openFile(){}
-  public void updateViews(){}
+  public void updateViews(){
+    updateCollectionList();
+  }
   public void updateContent(){}
   protected void addItemsToGroup(String groupName){}
   protected void moveItemsToGroup(String groupName){}
@@ -43,10 +45,10 @@ public class CollectionDelete extends CallableByListener{
       if ("Close" == ML_ptr.getName()){
         close();
       }
-    }
-    else if("Delete" == ML_ptr.getName()){
-      if ("folder" == deleteWinType){
-        deleteFolderCollection();
+      else if("Delete" == ML_ptr.getName()){
+        if ("folder" == deleteWinType){
+          deleteFolderCollection();
+        }
       }
     }
   }
@@ -57,9 +59,10 @@ public class CollectionDelete extends CallableByListener{
     String collectionName = (String)collectionList.getSelectedItem();
     System.err.println("deleting collection (" + collectionName + ")");
     dataUser.deleteFolderCollection(collectionName);
+    updateCollectionList();
     
     System.err.println("next inform window collection about the delete");
-    //windowCollection.deleteFolderQA(collectionItem);
+    windowCollection.deleteFolderQA(collectionItem.getName());
   }
   
   private void updateCollectionList(){
@@ -67,6 +70,7 @@ public class CollectionDelete extends CallableByListener{
     String[] collectionNames;
     
     collectionNames = dataUser.getCollectionNames();
+    System.out.println("collectionNames len ==" + collectionNames.length);
     collectionList.removeAllItems();
     
     for (i = 0; i < collectionNames.length; i++){
