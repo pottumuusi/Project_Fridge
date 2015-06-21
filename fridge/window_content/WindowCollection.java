@@ -472,6 +472,12 @@ public class WindowCollection extends WindowAdapter{
     namedWindows[windowCount] = new fridge.window_content.NamedWindow(par_name, windowCount);
   }
   
+  public void addFile(String fileName, String fileType){
+    if (null != fileName && null != fileType){
+      ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).createFile(fileName, fileType);
+    }
+  }
+  
   // create new group with given name
   public void addGroup(String newGroupName){
     boolean groupWithSameName = false;

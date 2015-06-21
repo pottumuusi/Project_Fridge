@@ -192,6 +192,10 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     winCollection.addNew("newFolderWin");
   }
   
+  public void createFile(String fileName, String fileType){
+    System.err.println("MainWin1 create file " + fileName + " type (" + fileType + ")");
+  }
+  
   public void exclude(){
     int i = 0;
     int tempIndex = 0;

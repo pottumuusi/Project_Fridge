@@ -26,8 +26,7 @@ public class NewFolderWindow extends fridge.windows.CallableByListener{
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     if ("ClassActionListener" == ML_ptr.getType()){
       if ("Create" == ML_ptr.getName()){
-        //winCollection.addFile(nameField.getText());
-        
+        winCollection.addFile(nameField.getText(), "default");
       }
       else if ("Cancel" == ML_ptr.getName()){
         close();
