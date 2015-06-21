@@ -17,7 +17,7 @@ public class MenuActionEventBroker{
       invokeViewHelp(MAE_handler);
     }
     else if (eventSource.equals("Open file")){
-      ((fridge.windows.CallableByListener)caller).openFile();
+      ((fridge.windows.FileWindow)caller).openFile();
     }
     else if (eventSource.equals("Close")){
       caller.close();
@@ -27,8 +27,14 @@ public class MenuActionEventBroker{
       //(fridge.windows.CallableByListener)caller.moveItemsToGroup();
       
     }
+    else if(eventSource.equals("Delete")){
+      ((fridge.windows.FileWindow)caller).delete();
+    }
+    else if(eventSource.equals("Copy")){
+      ((fridge.windows.FileWindow)caller).copy();
+    }
     else if(eventSource.equals("Cut")){
-      
+      ((fridge.windows.FileWindow)caller).cut();
     }
     else if(eventSource.equals("Group")){
       ((fridge.windows.CallableByListener)caller).addGroup();

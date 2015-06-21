@@ -28,7 +28,7 @@ import fridge.data.FolderCollectionItem;
   //private fridge.filesystem.fileOperator // = fridge.filesystem.fileOperator
   //private fridge.filesystem.folderOperator // = new fridge.filesystem.folderOperator
   //private fridge.filesystem.groupOperator // = new fridge.filesystem.groupOperator
-public class MainWindow1 extends fridge.windows.CallableByListener{
+public class MainWindow1 extends fridge.windows.FileWindow{
   private Path currFolder;
   private Path prevFolder;
   private JTextField folderNameField;
@@ -182,6 +182,10 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
     updateQuickAccess();
   }
   
+  public void delete(){}
+  public void copy(){}
+  public void cut(){}
+  
   public void openFile(){
     Path tempPath = null;
     String tempFileName = null;
@@ -216,6 +220,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
           System.err.println("curr");*/
           //System.err.println(currFolder.toString().substring(0, 5));
           System.err.println("prev folder trial: " + currFolder.toString().substring(0, tempWholePath.length() - tempFileName.length()));
+          /* assign folder under current folder to prevFolder */
           prevFolder = Paths.get(currFolder.toString().substring(0, tempWholePath.length() - tempFileName.length()));
           System.err.println("prev folder set to: " + prevFolder);
         }
@@ -525,7 +530,7 @@ public class MainWindow1 extends fridge.windows.CallableByListener{
   
   private void loadSelectedQuickAccessFolder(){
     int QAF_index;
-    if (1 == selectedQuickAccess.length){
+    if (null != selectedQuickAccess && 1 == selectedQuickAccess.length){
       QAF_index = view1.getMinSelectionIndex();
       currFolder = Paths.get(quickAccessFolders[QAF_index]);
       folderNameField.setText(quickAccessFolders[QAF_index]);

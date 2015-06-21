@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 
-public class MainWindow2 extends fridge.windows.CallableByListener{
+public class MainWindow2 extends fridge.windows.FileWindow{
   private JComboBox groupListBox;
   private JList<String> view0;
   private JList<String> view1;
@@ -72,6 +72,10 @@ public class MainWindow2 extends fridge.windows.CallableByListener{
   public void openFile(){
     
   }
+  
+  public void delete(){}
+  public void copy(){}
+  public void cut(){}
   
   public void updateViews(){
     int i;
