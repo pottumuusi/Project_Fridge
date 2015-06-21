@@ -2,9 +2,12 @@ package fridge.windows;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.nio.file.DirectoryIteratorException;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.DirectoryStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -194,6 +197,24 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   
   public void createFile(String fileName, String fileType){
     System.err.println("MainWin1 create file " + fileName + " type (" + fileType + ")");
+    Charset charset = Charset.forName("UTF-8");
+    Path newFilePath = null;
+    
+    if ("/" == currFolder.toString()){
+      newFilePath = Paths.get(currFolder.toString() + fileName);
+    }
+    else{
+      newFilePath = Paths.get(currFolder.toString() + "/" + fileName);
+    }
+    System.err.println("creating file: " + newFilePath.toString());
+    
+    try (BufferedWriter writer = Files.newBufferedWriter(newFilePath, charset,
+                                                         StandardOpenOption.CREATE)) {
+      updateContent();
+    } catch (IOException ioe) {
+        errorWindow("Could not create file " + newFilePath.toString());
+        System.err.println("IOException: " + ioe.getMessage());
+    }
   }
   
   public void exclude(){
