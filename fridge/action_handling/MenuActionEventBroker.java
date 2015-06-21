@@ -45,6 +45,9 @@ public class MenuActionEventBroker{
     else if(eventSource.equals("Group")){
       ((fridge.windows.CallableByListener)caller).addGroup();
     }
+    else if(eventSource.equals("Folder")){
+      ((fridge.windows.FileWindow)caller).newFolder();
+    }
   }
   
   public void brokerCall(String eventSource,

@@ -76,11 +76,19 @@ public class Containers{
   
   public Container createContentPane(String cpType,
                                      fridge.action_handling.ClassActionListener[] CAL_list,
-                                     JTextField groupNameField){
+                                     JTextField itemNameField){
     JPanel contentPane = new JPanel(new BorderLayout());
+    String[] loadParams = null;
     
     if ("newGroupWin" == cpType){
-      createNewGroupWinContent(contentPane, CAL_list, groupNameField);
+      loadParams = new String[1];
+      loadParams[0] = "Group";
+      createNewItemWinContent(contentPane, CAL_list, itemNameField, loadParams);
+    }
+    else if("newFolderWin" == cpType){
+      loadParams = new String[1];
+      loadParams[0] = "Folder";
+      createNewItemWinContent(contentPane, CAL_list, itemNameField, loadParams);
     }
     
     return contentPane;
@@ -654,13 +662,20 @@ public class Containers{
     
   }
   
-  private void createNewGroupWinContent(JPanel contentPane,
+  private void createNewItemWinContent(JPanel contentPane,
                                         fridge.action_handling.ClassActionListener[] CAL_list,
-                                        JTextField groupNameField){
+                                        JTextField groupNameField,
+                                        String[] loadParams){
     JButton create, cancel;
     JLabel newGroupName = new JLabel();
+    String winType = loadParams[0];
     
-    newGroupName.setText("Name for new group:");
+    if ("Group" == winType){
+      newGroupName.setText("Name for new group:");
+    }
+    else if ("Folder" == winType){
+      newGroupName.setText("Name for new file:");
+    }
     
     create = new JButton("Create");
     create.setVerticalTextPosition(AbstractButton.CENTER);

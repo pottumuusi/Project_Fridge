@@ -14,6 +14,7 @@ public abstract class FileWindow extends CallableByListener{
     
   }
   
+  public abstract void newFolder();
   public abstract void openFile();
   public abstract void exclude();
   public abstract void delete();

@@ -79,6 +79,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   
   public void cut(){}
   public void paste(){}
+  public void newFolder(){}
   
   public void updateViews(){
     int i;

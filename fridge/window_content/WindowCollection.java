@@ -310,6 +310,24 @@ public class WindowCollection extends WindowAdapter{
                                                                  menu,
                                                                  windowCount);
     }
+    else if ("newFolderWin" == winType){
+      newNamedWin("newFolderWin");
+      JTextField nameField = new JTextField();
+      
+      fridge.action_handling.ClassActionListener[] CAL_list;
+      CAL_list = new fridge.action_handling.ClassActionListener[3];
+      CAL_list[0] = new fridge.action_handling.ClassActionListener("NewNameField");
+      CAL_list[1] = new fridge.action_handling.ClassActionListener("Create");
+      CAL_list[2] = new fridge.action_handling.ClassActionListener("Cancel");
+      
+      fridge.window_content.Menu menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
+      myWindows[windowCount] = new fridge.windows.NewFolderWindow(this,
+                                                                  winMaker,
+                                                                  CAL_list,
+                                                                  nameField,
+                                                                  menu,
+                                                                  windowCount);
+    }
     else if("operationsWin" == winType){
       newNamedWin("operationsWin");
       

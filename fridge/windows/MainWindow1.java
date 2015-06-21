@@ -188,7 +188,9 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     updateQuickAccess();
   }
   
-  public void newFile(){}
+  public void newFolder(){
+    winCollection.addNew("newFolderWin");
+  }
   
   public void exclude(){
     int i = 0;

@@ -106,6 +106,25 @@ public class WindowMaker{
     return frame;
   }
   
+  public JFrame newNewFolderWin(fridge.window_content.WindowCollection controller,
+                                fridge.action_handling.ClassActionListener[] CAL_list,
+                                JTextField groupNameField,
+                                fridge.window_content.Menu menu){
+    JFrame frame = new ListenedFrame(controller, "New file");
+    
+    fridge.window_content.Containers cont = new fridge.window_content.Containers();
+    
+    frame.setJMenuBar(menu.createMenuBar("minimal"));
+    frame.setContentPane(cont.createContentPane("newFolderWin", CAL_list, groupNameField));
+    
+    frame.setSize(450, 260);
+    frame.setVisible(true);
+    
+    decideLocation(frame);
+    
+    return frame;
+  }
+  
   public JFrame newNewGroupWin(fridge.window_content.WindowCollection controller,
                                fridge.action_handling.ClassActionListener[] CAL_list,
                                JTextField groupNameField,
