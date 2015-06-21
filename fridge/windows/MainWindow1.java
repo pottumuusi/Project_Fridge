@@ -186,23 +186,27 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   
   public void delete(){}
   public void copy(){
-    
+    moveSetup("copy");
   }
   
   public void cut(){
-    Path[] cutFiles = null;
+    moveSetup("cut");
+  }
+  
+  private void moveSetup(String moveType){
+    Path[] moveFiles;
     int i;
     
     if (null != selectedFolders){
       System.err.println("cutting " + selectedFolders.length + " files");
-      cutFiles = new Path[selectedFolders.length];
+      moveFiles = new Path[selectedFolders.length];
       
-      for (i = 0; i < cutFiles.length; i++){
-        cutFiles[i] = Paths.get(fullFileNames[selectedFolders[i]]);
+      for (i = 0; i < moveFiles.length; i++){
+        moveFiles[i] = Paths.get(fullFileNames[selectedFolders[i]]);
       }
       
-      winCollection.setMoveSources(cutFiles);
-      winCollection.setMoveType("cut");
+      winCollection.setMoveSources(moveFiles);
+      winCollection.setMoveType(moveType);
     }
   }
   
@@ -252,7 +256,13 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   }
   
   private boolean handleCopy(Path sourceFile){
-    return false;
+    try{
+      Files.copy(sourceFile, currFolder.resolve(sourceFile.getFileName()));
+    } catch(IOException ioe){
+      System.err.println("could not copy file. " + ioe.getMessage());
+      return false;
+    }
+    return true;
   }
   
   public void openFile(){
