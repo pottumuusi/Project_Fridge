@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.DefaultListModel;
@@ -141,13 +140,6 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     }
   }*/
   
-  private void errorWindow(String errorMsg){
-    JOptionPane.showMessageDialog(frame,
-        errorMsg,
-        "Error",
-        JOptionPane.ERROR_MESSAGE);
-  }
-  
   protected void moveItemsToGroup(String groupName){
     int i;
     Path[] itemsToPass;
@@ -201,11 +193,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     boolean noo = false;
     
     if (null != selectedFolders){
-      answer = JOptionPane.showConfirmDialog(
-          frame,
-          "Are you sure you want to delete " + selectedFolders.length +" selected file(s)",
-          "Delete",
-          JOptionPane.YES_NO_OPTION);
+      answer = yesNoWindow("Are you sure you want to delete " + selectedFolders.length +" selected file(s)");
       
       System.err.println("answer == " + answer);
       
@@ -301,7 +289,6 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     } catch(IOException ioe){
         System.err.println("could not move file. " + ioe.getMessage());
         errorWindow("Could not move file " + sourceFile.toString());
-        //error message
         return false;
     }
     return true;
@@ -553,7 +540,6 @@ public class MainWindow1 extends fridge.windows.FileWindow{
         System.out.println("    " + newContent[i]);
       }
       
-      
       view0.setListData(newContent);
     }
   }
@@ -669,18 +655,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
       //updateFolderContent();
     }
     else{
-      //errorMessage("Cannot load multiple Quick Access Folders");
-    }
-  }
-  
-  private void openSelectedFolder(){
-    if (1 == selectedFolders.length){
-      //currFolder = view0.getListData(selectedFolders[0]);
-      //folderNameField.setText(selectedFolders[0]);
-      //updateFolderContent();
-    }
-    else{
-      //errorMessage("Cannot load multiple Quick Access Folders");
+      errorWindow("Cannot load multiple Quick Access Folders");
     }
   }
   

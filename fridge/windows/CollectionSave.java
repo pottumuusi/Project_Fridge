@@ -39,7 +39,7 @@ public class CollectionSave extends CallableByListener{
   }
   
   public void updateViews(){
-    collection_names = dataUser.getCollectionNames(); 
+    collection_names = dataUser.getCollectionNames(frame); 
     if (null != collection_names){
       collections_view.setListData(collection_names);
     }
@@ -97,7 +97,8 @@ public class CollectionSave extends CallableByListener{
                                     creator,
                                     winCollection.getQA_folderAliases(),
                                     winCollection.getQuickAccessFolders(),
-                                    this);
+                                    this,
+                                    frame);
       updateViews();
     }
   }

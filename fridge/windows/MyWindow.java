@@ -1,6 +1,8 @@
 package fridge.windows;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.event.WindowEvent;
 
 public class MyWindow{
@@ -25,6 +27,24 @@ public class MyWindow{
   
   public void show(){
     frame.setVisible(true);
+  }
+  
+  protected void errorWindow(String errorMsg){
+    JOptionPane.showMessageDialog(frame,
+        errorMsg,
+        "Error",
+        JOptionPane.ERROR_MESSAGE);
+  }
+  
+  protected int yesNoWindow(String questionMsg){
+    int answer = -1;
+    
+    answer = JOptionPane.showConfirmDialog(frame,
+                                           questionMsg,
+                                           "Delete",
+                                           JOptionPane.YES_NO_OPTION);
+    
+    return answer;
   }
   
   //abstract method getType();

@@ -58,7 +58,7 @@ public class CollectionDelete extends CallableByListener{
     
     String collectionName = (String)collectionList.getSelectedItem();
     System.err.println("deleting collection (" + collectionName + ")");
-    dataUser.deleteFolderCollection(collectionName);
+    dataUser.deleteFolderCollection(collectionName, frame);
     updateCollectionList();
     
     System.err.println("next inform window collection about the delete");
@@ -69,7 +69,7 @@ public class CollectionDelete extends CallableByListener{
     int i;
     String[] collectionNames;
     
-    collectionNames = dataUser.getCollectionNames();
+    collectionNames = dataUser.getCollectionNames(frame);
     if (null != collectionNames){
       System.out.println("collectionNames len ==" + collectionNames.length);
     }

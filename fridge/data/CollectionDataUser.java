@@ -13,10 +13,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class CollectionDataUser{
   private Path folderPath;
   private Path folderLengthsFilePath;
   private Charset charset;
+  private JFrame frame;
   private final int NAME_POSITION = 0;
   private final int ALIASES_POSITION = 4;
   private final int FOLDERS_POSITION = 5;
@@ -29,9 +33,25 @@ public class CollectionDataUser{
     folderPath = Paths.get("fridge", "data", "collectionData.dat");
     folderLengthsFilePath = Paths.get("fridge", "data", "collectionLengths.dat");
     charset = Charset.forName("UTF-8");
+    frame = null; // frame is used to make error windows
   }
   
   public void saveFolderCollection(String name,
+                                   String creator,
+                                   String[] folderAliases,
+                                   String[] folders,
+                                   CollectionSave caller,
+                                   JFrame par_frame){
+    frame = par_frame;
+    
+    saveFolderCollection(name,
+                         creator,
+                         folderAliases,
+                         folders,
+                         caller);
+  }
+  
+  private void saveFolderCollection(String name,
                              String creator,
                              String[] folderAliases,
                              String[] folders,
@@ -40,13 +60,22 @@ public class CollectionDataUser{
     System.out.println("[DEBUG] saving collection");
     
     if (preconditionsOK(folderAliases, folders, name)){
-      /* tallenna tiedostojen nykyiset sisallot */
+      /* tallenna tiedostojen nykyiset sisallot prolly not gona happen */
       try{
         storeCollectionToFile(folderAliases, folders, name, creator);
         incrementLengthFileContent();
       } catch(IOException ioe){
         /* palauta ennen try lausetta tallennetut sisallot */
       }
+    }
+  }
+  
+  private void errorWindow(String errorMsg){
+    if (null != frame){
+      JOptionPane.showMessageDialog(frame,
+          errorMsg,
+          "Error",
+          JOptionPane.ERROR_MESSAGE);
     }
   }
   
@@ -121,18 +150,18 @@ public class CollectionDataUser{
     if (folderAliases.length != folders.length){
       System.err.print("[ERROR]  aborted writing to file: ");
       System.err.print("folderAliases and folders have different length\n");
-      /* errorMessage("internal error: could not store folder collection */
+      errorWindow("internal error: could not store folder collection");
       return false;
     }
     else if (folderAliases.length < 1 || folders.length < 1){
       System.err.println("[ERROR] aborted writing to file: ");
       System.err.print("length of folderAliases and folders is below 1");
-      /* errorMessage("internal error: could not store folder collection */
+      errorWindow("internal error: could not store folder collection");
       return false;
     }
     else if (name.length() < 1){
       System.out.println("[ERROR] aborted writing to file: no name given");
-      //errorMessage("could not save folder collection. no name given")
+      errorWindow("Could not save folder collection. no name given.");
       return false;
     }
     
@@ -207,7 +236,12 @@ public class CollectionDataUser{
     }
   }
   
-  public String[] getCollectionNames(){
+  public String[] getCollectionNames(JFrame par_frame){
+    frame = par_frame;
+    return getCollectionNames();
+  }
+  
+  private String[] getCollectionNames(){
     int nameAmount;
     String line = null;
     String[] names = null;
@@ -257,7 +291,12 @@ public class CollectionDataUser{
     return names;
   }
   
-  public FolderCollectionItem loadFolderCollection(String collectionName){
+  public FolderCollectionItem loadFolderCollection(String collectionName, JFrame par_frame){
+    frame = par_frame;
+    return loadFolderCollection(collectionName);
+  }
+  
+  private FolderCollectionItem loadFolderCollection(String collectionName){
     int[] lineItemAmount = null;
     
     String name = null;
@@ -300,6 +339,7 @@ public class CollectionDataUser{
         //error
       }
     } catch(IOException ioe){
+      errorWindow("internal error: could not load folder collection");
       System.err.println("loadFolderCollection IOException: " + ioe.getMessage());
     }
     
@@ -472,7 +512,12 @@ public class CollectionDataUser{
     return data;
   }
   
-  public void deleteFolderCollection(String collectionName){
+  public void deleteFolderCollection(String collectionName, JFrame par_frame){
+    frame = par_frame;
+    deleteFolderCollection(collectionName);
+  }
+  
+  private void deleteFolderCollection(String collectionName){
     String[] collectionNames = null;
     FolderCollectionItem[] collectionsToSave = null;
     
@@ -490,7 +535,7 @@ public class CollectionDataUser{
       }
       decrementStoredCollectionAmount(folderLengthsFilePath);
     } catch(IOException ioe){
-      //error
+      errorWindow("Could not delete " + collectionName);
       System.err.println("error while deleting " + collectionName + ", " + ioe.getMessage());
     }
   }

@@ -69,7 +69,7 @@ public class CollectionLoad extends CallableByListener{
     
     String collectionName = (String)collectionList.getSelectedItem();
     System.err.println("loading collection (" + collectionName + ")");
-    collectionItem = dataUser.loadFolderCollection(collectionName);
+    collectionItem = dataUser.loadFolderCollection(collectionName, frame);
     windowCollection.loadFolderQA(collectionItem);
   }
   
@@ -77,7 +77,7 @@ public class CollectionLoad extends CallableByListener{
     int i;
     String[] collectionNames;
     
-    collectionNames = dataUser.getCollectionNames();
+    collectionNames = dataUser.getCollectionNames(frame);
     collectionList.removeAllItems();
     
     if (null != collectionNames){

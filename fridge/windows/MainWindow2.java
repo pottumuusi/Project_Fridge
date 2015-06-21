@@ -239,7 +239,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
       }
     }
     else{
-      //errorMessage("Cannot load multiple Quick Access Groups");
+      errorWindow("Cannot load multiple Quick Access Groups");
     }
   }
   
