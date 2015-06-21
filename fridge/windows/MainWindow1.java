@@ -8,6 +8,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.AtomicMoveNotSupportedException;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -183,8 +185,75 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   }
   
   public void delete(){}
-  public void copy(){}
-  public void cut(){}
+  public void copy(){
+    
+  }
+  
+  public void cut(){
+    Path[] cutFiles = null;
+    int i;
+    
+    if (null != selectedFolders){
+      System.err.println("cutting " + selectedFolders.length + " files");
+      cutFiles = new Path[selectedFolders.length];
+      
+      for (i = 0; i < cutFiles.length; i++){
+        cutFiles[i] = Paths.get(fullFileNames[selectedFolders[i]]);
+      }
+      
+      winCollection.setMoveSources(cutFiles);
+      winCollection.setMoveType("cut");
+    }
+  }
+  
+  public void paste(){
+    Path[] sourceFiles = winCollection.getMoveSources();
+    String moveType = winCollection.getMoveType();
+    boolean copyOK = true;
+    int i;
+    
+    if (null != sourceFiles && null != moveType){
+      if ("cut" == moveType){
+        for (i = 0; i < sourceFiles.length; i++){
+          copyOK = handleMove(sourceFiles[i]);
+        }
+      }
+      else if ("copy" == moveType){
+        for (i = 0; i < sourceFiles.length; i++){
+          copyOK = handleCopy(sourceFiles[i]);
+        }
+      }
+      
+      if (true == copyOK){
+        winCollection.setMoveSources(null);
+        updateContent();
+      }
+    }
+  }
+  
+  private boolean handleMove(Path sourceFile){
+    try{
+      System.err.println("\tmoving " + sourceFile.toString());
+      Files.move(sourceFile, currFolder.resolve(sourceFile.getFileName()), StandardCopyOption.ATOMIC_MOVE);
+    } catch(AtomicMoveNotSupportedException anse){
+        System.err.println("atomic move not supported");
+        try{
+          Files.move(sourceFile, currFolder);
+        } catch(IOException ioe){
+          System.err.println("could not move file. " + ioe.getMessage());
+          return false;
+        }
+    } catch(IOException ioe){
+        System.err.println("could not move file. " + ioe.getMessage());
+        //error message
+        return false;
+    }
+    return true;
+  }
+  
+  private boolean handleCopy(Path sourceFile){
+    return false;
+  }
   
   public void openFile(){
     Path tempPath = null;

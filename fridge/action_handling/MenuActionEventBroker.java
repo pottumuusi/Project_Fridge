@@ -30,6 +30,9 @@ public class MenuActionEventBroker{
     else if(eventSource.equals("Delete")){
       ((fridge.windows.FileWindow)caller).delete();
     }
+    else if(eventSource.equals("Paste")){
+      ((fridge.windows.FileWindow)caller).paste();
+    }
     else if(eventSource.equals("Copy")){
       ((fridge.windows.FileWindow)caller).copy();
     }

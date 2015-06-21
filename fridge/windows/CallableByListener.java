@@ -134,10 +134,6 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   //public abstract void groupButtonMenuPress(String buttonName);
   public abstract void updateContent(); 
   public abstract void updateViews();
-  /*public abstract void openFile();
-  public abstract void delete();
-  public abstract void copy();
-  public abstract void cut();*/
   
   
   /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){

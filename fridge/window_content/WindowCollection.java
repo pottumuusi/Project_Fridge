@@ -18,7 +18,9 @@ public class WindowCollection extends WindowAdapter{
   private int caller;
   private int groupCount;
   private int windowCount;
+  private String moveType;
   private Path currFolder;
+  private Path[] moveSources;
   private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
@@ -40,6 +42,8 @@ public class WindowCollection extends WindowAdapter{
     groupCount = 0;
     //lastLocation = null;
     
+    moveType = null;
+    moveSources = null;
     groupWindows = null;
     windowList = new JFrame[4];
     groups = new fridge.group.Group[10];
@@ -114,6 +118,14 @@ public class WindowCollection extends WindowAdapter{
     return loadedFolderCollection;
   }
   
+  public Path[] getMoveSources(){
+    return moveSources;
+  }
+  
+  public String getMoveType(){
+    return moveType;
+  }
+  
   public void setLoadedFolderCollection(String loadedCollection){
     loadedFolderCollection = loadedCollection;
   }
@@ -128,6 +140,14 @@ public class WindowCollection extends WindowAdapter{
   
   public void setCurrFolder(Path par_currFolder){
     currFolder = par_currFolder;
+  }
+  
+  public void setMoveSources(Path[] newSources){
+    moveSources = newSources;
+  }
+  
+  public void setMoveType(String newType){
+    moveType = newType;
   }
   
   public void traceableAdd(String winType, int callerMyWindowIndex){
