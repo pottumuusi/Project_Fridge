@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.AtomicMoveNotSupportedException;
 
 import java.awt.event.ActionListener;
@@ -17,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.DefaultListModel;
@@ -138,6 +141,13 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     }
   }*/
   
+  private void errorWindow(String errorMsg){
+    JOptionPane.showMessageDialog(frame,
+        errorMsg,
+        "Error",
+        JOptionPane.ERROR_MESSAGE);
+  }
+  
   protected void moveItemsToGroup(String groupName){
     int i;
     Path[] itemsToPass;
@@ -184,7 +194,47 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     updateQuickAccess();
   }
   
-  public void delete(){}
+  public void newFile(){}
+  
+  public void delete(){
+    int answer = -1;
+    boolean noo = false;
+    
+    if (null != selectedFolders){
+      answer = JOptionPane.showConfirmDialog(
+          frame,
+          "Are you sure you want to delete " + selectedFolders.length +" selected file(s)",
+          "Delete",
+          JOptionPane.YES_NO_OPTION);
+      
+      System.err.println("answer == " + answer);
+      
+      if (0 == answer){
+        for (int i = 0; i < selectedFolders.length; i++){
+          deleteFile(Paths.get(fullFileNames[selectedFolders[i]]));
+        }
+        updateContent();
+      }
+      else{
+        updateContent();
+        selectedFolders = null;
+      }
+    }
+  }
+  
+  private void deleteFile(Path deleteFile){
+    try{
+      Files.delete(deleteFile);
+    } catch (NoSuchFileException x) {
+        errorWindow(deleteFile.toString() + ": no such" + " file or directory");
+    } catch (DirectoryNotEmptyException x) {
+        errorWindow(deleteFile.toString() + " is not empty");
+    } catch (IOException ioe) {
+        // File permission problems are caught here.
+        System.err.println(ioe);
+    }
+  }
+  
   public void copy(){
     moveSetup("copy");
   }
@@ -245,10 +295,12 @@ public class MainWindow1 extends fridge.windows.FileWindow{
           Files.move(sourceFile, currFolder);
         } catch(IOException ioe){
           System.err.println("could not move file. " + ioe.getMessage());
+          errorWindow("Could not move file " + sourceFile.toString());
           return false;
         }
     } catch(IOException ioe){
         System.err.println("could not move file. " + ioe.getMessage());
+        errorWindow("Could not move file " + sourceFile.toString());
         //error message
         return false;
     }
@@ -260,6 +312,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
       Files.copy(sourceFile, currFolder.resolve(sourceFile.getFileName()));
     } catch(IOException ioe){
       System.err.println("could not copy file. " + ioe.getMessage());
+      errorWindow("Could not move file " + sourceFile.toString());
       return false;
     }
     return true;
@@ -275,17 +328,19 @@ public class MainWindow1 extends fridge.windows.FileWindow{
       //handle error by not opening
     }
     else if (selectedFolders.length > 1){
-      System.err.println("[DEBUG] trying to open file when multiple files are selected");
+      errorWindow("Only on file can be opened at a time");
     }
     else if (selectedFolders.length < 1){
       System.err.println("Trying to open file when none selected");
     }
     else{
-      if (fullFileNames[selectedFolders[0]].equals("..")){
+      /*if (fullFileNames[selectedFolders[0]].equals("..")){
         System.err.println("going to previous directory");
-      }
+      }*/
       
-      tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
+      if (null != fullFileNames){
+        tempPath = Paths.get(fullFileNames[selectedFolders[0]]);
+      }
       
       /* open previous folder */
       if (0 == selectedFolders[0]){
@@ -294,7 +349,6 @@ public class MainWindow1 extends fridge.windows.FileWindow{
         if (!(currFolder.toString().equals("/"))){
           tempFileName = currFolder.getFileName().toString();
           tempWholePath = currFolder.toString();
-          System.err.println("lenminuzzz " + (tempWholePath.length() - tempFileName.length()));
           /*System.err.println("currFolder==" + currFolder.toString());
           System.err.println("curr");*/
           //System.err.println(currFolder.toString().substring(0, 5));
@@ -322,9 +376,6 @@ public class MainWindow1 extends fridge.windows.FileWindow{
         }
         catch (IOException ex){
           System.out.println("IOException: " + ex.getMessage());
-          /*if (null != fex){
-            System.out.println("FileNotFoundException while opening a file: " + ex.getMessage());
-          }*/
         }
       }
     }
