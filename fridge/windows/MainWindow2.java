@@ -73,6 +73,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     
   }
   
+  public void exclude(){}
   public void delete(){}
   public void copy(){}
   

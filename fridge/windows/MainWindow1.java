@@ -106,17 +106,19 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   }
   
   private void setQuickAccessAliases(String[] newAliases){
-    String[] empty = new String[1];
-    empty[0] = "";
-    
     if (null == newAliases){
-      
-      view1.clearSelection();
-      view1.setListData(empty);
+      clearQuickAccessAliases();
     }
     else{
       view1.setListData(newAliases);
     }
+  }
+  
+  private void clearQuickAccessAliases(){
+    String[] empty = new String[1];
+    empty[0] = "";
+    view1.clearSelection();
+    view1.setListData(empty);
   }
   
   private void setLoadedQuickAccessCollection(String collectionName){
@@ -187,6 +189,44 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   }
   
   public void newFile(){}
+  
+  public void exclude(){
+    int i = 0;
+    int tempIndex = 0;
+    int QAF_index = -1;
+    String[] tempFolders = null;
+    String[] newAliases = null;
+    Path tempPath = null;
+    
+    if (null != selectedQuickAccess && 1 == selectedQuickAccess.length){
+      tempFolders = new String[quickAccessFolders.length - 1];
+      QAF_index = view1.getMinSelectionIndex();
+      System.err.println("quickaccessFolders:");
+      for (i = 0; i < quickAccessFolders.length; i++){
+        System.err.println(quickAccessFolders[i]);
+        if (i != QAF_index){
+          System.err.println("i == " + i + ", QAf_index == " + QAF_index);
+          tempFolders[tempIndex] = quickAccessFolders[i];
+          tempIndex++;
+        }
+      }
+      quickAccessFolders = tempFolders;
+      if (null != quickAccessFolders){
+        newAliases = new String[quickAccessFolders.length]; 
+        
+        for (i = 0; i < quickAccessFolders.length; i++){
+          tempPath = Paths.get(quickAccessFolders[i]);
+          newAliases[i] = tempPath.getFileName().toString();
+          System.err.println("newAlias " + i + " == " + newAliases[i]);
+        }
+        
+        
+        setQuickAccessAliases(newAliases);
+        //clearQuickAccessAliases();
+        updateContent();
+      }
+    }
+  }
   
   public void delete(){
     int answer = -1;

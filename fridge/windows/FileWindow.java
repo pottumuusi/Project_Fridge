@@ -15,6 +15,7 @@ public abstract class FileWindow extends CallableByListener{
   }
   
   public abstract void openFile();
+  public abstract void exclude();
   public abstract void delete();
   public abstract void paste();
   public abstract void copy();

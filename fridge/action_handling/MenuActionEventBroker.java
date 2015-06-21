@@ -27,6 +27,9 @@ public class MenuActionEventBroker{
       //(fridge.windows.CallableByListener)caller.moveItemsToGroup();
       
     }
+    else if(eventSource.equals("Exclude")){
+      ((fridge.windows.FileWindow)caller).exclude();
+    }
     else if(eventSource.equals("Delete")){
       ((fridge.windows.FileWindow)caller).delete();
     }
