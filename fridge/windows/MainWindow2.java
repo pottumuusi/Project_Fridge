@@ -1,6 +1,7 @@
 package fridge.windows;
 
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.event.ActionListener;
@@ -74,7 +75,9 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   }
   
   public void openFile(){
-    
+    if (1 == selectedGroupItems.length){
+      winCollection.groupOpenFile(currGroup, selectedGroupItems[0]);
+    }
   }
   
   public void exclude(){}

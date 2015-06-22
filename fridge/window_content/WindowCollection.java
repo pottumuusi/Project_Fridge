@@ -533,6 +533,15 @@ public class WindowCollection extends WindowAdapter{
     return containNames;
   }
   
+  public void groupOpenFile(String groupName, int itemIndex){
+    for (int i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].openFile(itemIndex);
+        break;
+      }
+    }
+  }
+  
   public void updateItemPaths(String groupName, Path[] pathsToUpdate){
     for (int i = 0; i < groupCount; i++){
       if (groupName == groups[i].getName()){

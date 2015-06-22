@@ -1,5 +1,8 @@
 package fridge.group;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Group{
@@ -147,7 +150,16 @@ public class Group{
     }*/
   }
   
-  
+  public void openFile(int itemIndex){
+    if (!(Files.isDirectory(itemPaths[itemIndex]))){
+      try{
+        java.awt.Desktop.getDesktop().open(new File(itemPaths[itemIndex].toString()));
+      }
+      catch (IOException ex){
+        System.out.println("IOException: " + ex.getMessage());
+      }
+    }
+  }
   
   public void addItem(Path newItem){
     
