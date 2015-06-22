@@ -21,6 +21,7 @@ public class WindowCollection extends WindowAdapter{
   private String moveType;
   private Path currFolder;
   private Path[] moveSources;
+  private String movePerformer;
   private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
@@ -42,6 +43,7 @@ public class WindowCollection extends WindowAdapter{
     groupCount = 0;
     //lastLocation = null;
     
+    movePerformer = null;
     moveType = null;
     moveSources = null;
     groupWindows = null;
@@ -97,7 +99,7 @@ public class WindowCollection extends WindowAdapter{
         return groups[i];
       }
     }
-    System.out.println("[DEBUG] getGroup could not locate group: " + groupName);
+    System.err.println("[DEBUG] getGroup could not locate group: " + groupName);
     
     return null;
   }
@@ -126,6 +128,14 @@ public class WindowCollection extends WindowAdapter{
     return moveType;
   }
   
+  public String getMovePerformer(){
+    return movePerformer;
+  }
+  
+  public void setMovePerformer(String performerName){
+    movePerformer = performerName;
+  }
+  
   public void setLoadedFolderCollection(String loadedCollection){
     loadedFolderCollection = loadedCollection;
   }
@@ -148,6 +158,11 @@ public class WindowCollection extends WindowAdapter{
   
   public void setMoveType(String newType){
     moveType = newType;
+  }
+  
+  public void setupMove(Path[] sources, String type){
+    setMoveSources(sources);
+    setMoveType(type);
   }
   
   public void traceableAdd(String winType, int callerMyWindowIndex){
@@ -478,6 +493,24 @@ public class WindowCollection extends WindowAdapter{
     }
   }
   
+  public void updateItemPaths(String groupName, Path[] pathsToUpdate){
+    for (int i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].updatePaths(pathsToUpdate);
+        break;
+      }
+    }
+  }
+  
+  public void setMoveUpdateIndexes(String groupName, int[] changedIndexes){
+    for (int i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].setUpdatePathIndexes(changedIndexes);
+        break;
+      }
+    }
+  }
+  
   // create new group with given name
   public void addGroup(String newGroupName){
     boolean groupWithSameName = false;
@@ -494,7 +527,7 @@ public class WindowCollection extends WindowAdapter{
     }
     
     if (true == groupWithSameName){
-      //errorMessage("Could not create group. Group with given name already exists.");
+      //errorWindow("Could not create group. Group with given name already exists.");
     }
     else{
       groups[groupCount] = new fridge.group.Group(newGroupName);
@@ -506,12 +539,13 @@ public class WindowCollection extends WindowAdapter{
     }
   }
   
-  public void setGroupItems(String groupName, Path[] newGroupItems){
+  public void setGroupItems(String groupName, Path[] newGroupItems, Path[] newItemPaths){
     int i;
     
     for (i = 0; i < groupCount; i++){
       if (groupName == groups[i].getName()){
         groups[i].setItems(newGroupItems);
+        groups[i].setItemPaths(newItemPaths);
         break;
       }
     }
@@ -519,12 +553,12 @@ public class WindowCollection extends WindowAdapter{
     groupWindowsItemsChangeNotify();
   }
   
-  public void addGroupItems(String groupName, Path[] newGroupItems){
+  public void addGroupItems(String groupName, Path[] newGroupItems, Path[] newPaths){
     int i;
     
     for (i = 0; i < groupCount; i++){
       if (groupName == groups[i].getName()){
-        groups[i].addItems(newGroupItems);
+        groups[i].addItems(newGroupItems, newPaths);
         break;
       }
     }

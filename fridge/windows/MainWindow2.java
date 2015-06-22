@@ -55,18 +55,22 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   
   protected void moveItemsToGroup(String groupName){
     Path[] itemsToPass;
+    Path[] pathsToPass;
     
     itemsToPass = getPathsOfSelectedItems(groupName);
+    pathsToPass = getFullPathsOfSelectedItems(groupName);
     
-    winCollection.setGroupItems(groupName, itemsToPass);
+    winCollection.setGroupItems(groupName, itemsToPass, pathsToPass);
   }
   
   protected void addItemsToGroup(String groupName){
     Path[] itemsToPass;
+    Path[] pathsToPass;
     
     itemsToPass = getPathsOfSelectedItems(groupName);
+    pathsToPass = getFullPathsOfSelectedItems(groupName);
     
-    winCollection.addGroupItems(groupName, itemsToPass);
+    winCollection.addGroupItems(groupName, itemsToPass, pathsToPass);
   }
   
   public void openFile(){
@@ -77,7 +81,22 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   public void delete(){}
   public void copy(){}
   
-  public void cut(){}
+  public void cut(){
+    Path[] itemsToPass = null;
+    
+    itemsToPass = getFullPathsOfSelectedItems(currGroup);
+    System.err.println("setting items to clipboard:");
+    for (int i = 0; i < itemsToPass.length; i++){
+      System.err.println(itemsToPass[i].toString());
+    }
+    
+    
+    
+    winCollection.setupMove(itemsToPass, "cut");
+    winCollection.setMovePerformer(currGroup);
+    winCollection.setMoveUpdateIndexes(currGroup, selectedGroupItems);
+    System.err.println("update indexes:");
+  }
   public void paste(){}
   public void newFolder(){}
   
@@ -252,6 +271,21 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     
     pathsToPass = new Path[selectedGroupItems.length];
     tempPaths = winCollection.getGroup(currGroup).getItems();
+    
+    for (i = 0; i < selectedGroupItems.length; i++){
+      pathsToPass[i] = tempPaths[selectedGroupItems[i]];
+    }
+    
+    return pathsToPass;
+  }
+  
+  private Path[] getFullPathsOfSelectedItems(String groupName){
+    int i;
+    Path[] pathsToPass;
+    Path[] tempPaths;
+    
+    pathsToPass = new Path[selectedGroupItems.length];
+    tempPaths = winCollection.getGroup(currGroup).getItemPaths();
     
     for (i = 0; i < selectedGroupItems.length; i++){
       pathsToPass[i] = tempPaths[selectedGroupItems[i]];

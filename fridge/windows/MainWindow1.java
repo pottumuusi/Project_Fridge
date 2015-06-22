@@ -146,38 +146,58 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   }*/
   
   protected void moveItemsToGroup(String groupName){
-    int i;
     Path[] itemsToPass;
-    Path[] tempPaths;
+    Path[] pathsToPass;
     
-    tempPaths = getPathsOfCurrentFolder();
-    itemsToPass = new Path[selectedFolders.length];
+    itemsToPass = getSelectedFolderNames();
+    pathsToPass = getSelectedFullPaths();
+    System.err.println("fullPaths 0 == " + pathsToPass[0]);
     
-    for (i = 0; i < selectedFolders.length; i++){
-      itemsToPass[i] = tempPaths[selectedFolders[i]];
-    }
-    
-    winCollection.setGroupItems(groupName, itemsToPass);
+    winCollection.setGroupItems(groupName, itemsToPass, pathsToPass);
   }
   
   protected void addItemsToGroup(String groupName){
-    int i;
     Path[] itemsToPass;
-    Path[] tempPaths;
+    Path[] pathsToPass;
     
-    tempPaths = getPathsOfCurrentFolder();
-    itemsToPass = new Path[selectedFolders.length];
+    itemsToPass = getSelectedFolderNames();
+    pathsToPass = getSelectedFullPaths();
     
-    for (i = 0; i < selectedFolders.length; i++){
-      itemsToPass[i] = tempPaths[selectedFolders[i]];
-    }
-    
-    winCollection.addGroupItems(groupName, itemsToPass);
+    winCollection.addGroupItems(groupName, itemsToPass, pathsToPass);
     /*for (i = 0; i < selectedFolders.length; i++){
       //addItemsToGroups expects Path[] variable!!!
       addItemsToGroups();
       //((fridge.windows.MainWindow2)winCollection.getMyWindow(winCollection.getMyWindowsIndex("MainWin2"))).addItemsToGroup(itemsToPass);
     }*/
+  }
+  
+  private Path[] getSelectedFullPaths(){
+    Path[] selectedPaths;
+    
+    selectedPaths = new Path[selectedFolders.length];
+    
+    for (int i = 0; i < selectedFolders.length; i++){
+      System.err.println("getting from index " + (selectedFolders[i]));
+      
+      selectedPaths[i] = Paths.get(fullFileNames[selectedFolders[i]]);
+    }
+    
+    return selectedPaths;
+  }
+  
+  private Path[] getSelectedFolderNames(){
+    Path[] tempPaths;
+    Path[] selectedNames;
+    
+    tempPaths = getPathsOfCurrentFolder();
+    selectedNames = new Path[selectedFolders.length];
+    
+    for (int i = 0; i < selectedFolders.length; i++){
+      selectedNames[i] = tempPaths[selectedFolders[i] - 1];
+      System.err.println("folderName " + i + " " + selectedNames[i]);
+    }
+    
+    return selectedNames;
   }
   
   public void updateViews(){
@@ -189,6 +209,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     //updateMenu();
     updateFolderContent();
     updateQuickAccess();
+    updateMenu();
   }
   
   public void newFolder(){
@@ -312,6 +333,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
       
       winCollection.setMoveSources(moveFiles);
       winCollection.setMoveType(moveType);
+      winCollection.setMovePerformer(null);
     }
   }
   
@@ -335,9 +357,26 @@ public class MainWindow1 extends fridge.windows.FileWindow{
       
       if (true == copyOK){
         winCollection.setMoveSources(null);
+        if (null != winCollection.getMovePerformer()){
+          sourceFiles = getNewLocations(sourceFiles);
+          winCollection.updateItemPaths(winCollection.getMovePerformer(), sourceFiles);
+        }
+        winCollection.setMovePerformer(null);
         updateContent();
       }
+      else {
+        errorWindow("Error while pasting");
+      }
     }
+  }
+  
+  private Path[] getNewLocations(Path[] oldLocations){
+    Path[] newLocations = new Path[oldLocations.length];
+    
+    for (int i = 0; i < newLocations.length; i++){
+      newLocations[i] = currFolder.resolve(oldLocations[i].getFileName());
+    }
+    return newLocations;
   }
   
   private boolean handleMove(Path sourceFile){
@@ -347,15 +386,15 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     } catch(AtomicMoveNotSupportedException anse){
         System.err.println("atomic move not supported");
         try{
-          Files.move(sourceFile, currFolder);
+          Files.move(sourceFile, currFolder.resolve(sourceFile.getFileName()));
         } catch(IOException ioe){
           System.err.println("could not move file. " + ioe.getMessage());
-          errorWindow("Could not move file " + sourceFile.toString());
+          //errorWindow("Could not move file " + sourceFile.toString());
           return false;
         }
     } catch(IOException ioe){
         System.err.println("could not move file. " + ioe.getMessage());
-        errorWindow("Could not move file " + sourceFile.toString());
+        //errorWindow("Could not move file " + sourceFile.toString());
         return false;
     }
     return true;
