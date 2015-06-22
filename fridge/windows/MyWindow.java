@@ -29,7 +29,7 @@ public class MyWindow{
     frame.setVisible(true);
   }
   
-  protected void errorWindow(String errorMsg){
+  public void errorWindow(String errorMsg){
     JOptionPane.showMessageDialog(frame,
         errorMsg,
         "Error",

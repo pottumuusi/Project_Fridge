@@ -204,6 +204,10 @@ public class WindowCollection extends WindowAdapter{
     }
   }
   
+  private void errorWindow(String errorMsg){
+    ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).errorWindow(errorMsg);
+  }
+  
   public void addNew(String winType){
     System.out.println("start of addNew: myWindows.length = " + myWindows.length);
     System.out.println("windowCount = " + windowCount);
@@ -579,15 +583,15 @@ public class WindowCollection extends WindowAdapter{
     }
     
     for (i = 0; i < groupCount; i++){
-      if (groups[i].getName() == newGroupName){
+      if (groups[i].getName().equals(newGroupName)){
         groupWithSameName = true;
       }
     }
     
     if (true == groupWithSameName){
-      //errorWindow("Could not create group. Group with given name already exists.");
+      errorWindow("Could not create group. Group with given name already exists.");
     }
-    else{
+    else{ 
       groups[groupCount] = new fridge.group.Group(newGroupName);
       System.out.println("addedd group " + groups[groupCount].getName());
       groupCount++;
