@@ -153,6 +153,10 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     }
   }
   
+  /*public int getItemIndex(String itemName){
+    
+  }*/
+  
   public void updateContent(){
     int i;
     int groupCount;

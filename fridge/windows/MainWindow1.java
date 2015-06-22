@@ -313,6 +313,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   
   public void copy(){
     moveSetup("copy");
+    winCollection.setMovePerformers(null);
   }
   
   public void cut(){
@@ -320,6 +321,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
   }
   
   private void moveSetup(String moveType){
+    String[] groupsToUpdate;
     Path[] moveFiles;
     int i;
     
@@ -331,15 +333,27 @@ public class MainWindow1 extends fridge.windows.FileWindow{
         moveFiles[i] = Paths.get(fullFileNames[selectedFolders[i]]);
       }
       
+      
+      
       winCollection.setMoveSources(moveFiles);
       winCollection.setMoveType(moveType);
-      winCollection.setMovePerformer(null);
+      
+      if ("cut" == moveType){
+        groupsToUpdate = winCollection.groupsContainPath(moveFiles);
+        
+        for (i = 0; i < groupsToUpdate.length; i++){
+          winCollection.setMoveUpdateIndexes(groupsToUpdate[i], moveFiles);
+        }
+        
+        winCollection.setMovePerformers(groupsToUpdate);
+      }
     }
   }
   
   public void paste(){
     Path[] sourceFiles = winCollection.getMoveSources();
     String moveType = winCollection.getMoveType();
+    String[] movePerformers;
     boolean copyOK = true;
     int i;
     
@@ -357,10 +371,18 @@ public class MainWindow1 extends fridge.windows.FileWindow{
       
       if (true == copyOK){
         winCollection.setMoveSources(null);
-        if (null != winCollection.getMovePerformer()){
+        if (null != winCollection.getMovePerformers()){
+          sourceFiles = getNewLocations(sourceFiles);
+          
+          movePerformers = winCollection.getMovePerformers();
+          for (i = 0; i < movePerformers.length; i++){
+            winCollection.updateItemPaths(movePerformers[i], sourceFiles);
+          }
+        }else{
           sourceFiles = getNewLocations(sourceFiles);
           winCollection.updateItemPaths(winCollection.getMovePerformer(), sourceFiles);
         }
+        winCollection.setMovePerformers(null);
         winCollection.setMovePerformer(null);
         updateContent();
       }

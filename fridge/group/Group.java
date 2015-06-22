@@ -36,6 +36,46 @@ public class Group{
     return itemPaths;
   }
   
+  public boolean hasPath(Path[] pathList){
+    int k = 0;
+    
+    if (null != itemPaths){
+      for (int i = 0; i < pathList.length; i++){
+        for (k = 0; k < itemPaths.length; k++){
+          if (null != pathList[i] && itemPaths[k].equals(pathList[i])){
+            return true;
+          }
+        }
+      }
+    }
+    
+    return false;
+  }
+  
+  public void setUpdatePathIndexes(Path[] newPaths){
+    int newIndexCount = 0;
+    int[] tempIndexes = new int[itemPaths.length]; 
+    
+    System.err.println("updating indexes of " + name);
+    
+    for (int i = 0; i < itemPaths.length; i++){
+      for (int k = 0; k < newPaths.length; k++){
+        System.err.println("testing" + newPaths[k].toString() + " and " + itemPaths[i].toString());
+        if (newPaths[k].toString().equals(itemPaths[i].toString())){
+          tempIndexes[newIndexCount] = i;
+          System.err.println("set update index " + i);
+          newIndexCount++;
+          break;
+        }
+      }
+    }
+    
+    updatePathIndexes = new int[newIndexCount];
+    for (int i = 0; i < updatePathIndexes.length; i++){
+      updatePathIndexes[i] = tempIndexes[i];
+    }
+  }
+  
   public void setUpdatePathIndexes(int[] newIndexes){
     System.err.println("setting updatePathIndexes:");
     for (int i = 0; i < newIndexes.length; i++){

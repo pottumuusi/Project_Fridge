@@ -22,6 +22,7 @@ public class WindowCollection extends WindowAdapter{
   private Path currFolder;
   private Path[] moveSources;
   private String movePerformer;
+  private String[] movePerformers;
   private int[] groupWindows;
   private JFrame[] windowList;
   private JFrame[][] listContainer;
@@ -44,6 +45,7 @@ public class WindowCollection extends WindowAdapter{
     //lastLocation = null;
     
     movePerformer = null;
+    movePerformers = null;
     moveType = null;
     moveSources = null;
     groupWindows = null;
@@ -130,6 +132,14 @@ public class WindowCollection extends WindowAdapter{
   
   public String getMovePerformer(){
     return movePerformer;
+  }
+  
+  public String[] getMovePerformers(){
+    return movePerformers;
+  }
+  
+  public void setMovePerformers(String[] newPerformers){
+    movePerformers = newPerformers;
   }
   
   public void setMovePerformer(String performerName){
@@ -493,10 +503,49 @@ public class WindowCollection extends WindowAdapter{
     }
   }
   
+  /*returns indexes of groups which contain at least one item in pathList*/
+  public String[] groupsContainPath(Path[] pathList){
+    String[] containNames;
+    int[] doContain = null;
+    int[] tempContain = new int[groupCount];
+    int containAmount = 0;
+    
+    for (int i = 0; i < groupCount; i++){
+      System.err.println("testing if " + groups[i].getName() + " has path");
+      if (groups[i].hasPath(pathList)){
+        tempContain[containAmount] = i;
+        containAmount++;
+      }
+    }
+    
+    doContain = new int[containAmount];
+    
+    for (int i = 0; i < doContain.length; i++){
+      doContain[i] = tempContain[i];
+    }
+    
+    containNames = new String[doContain.length];
+    for (int i = 0; i < containNames.length; i++){
+      containNames[i] = groups[doContain[i]].getName();
+      System.err.println("contain updated Paths:" + groups[doContain[i]].getName());
+    }
+    
+    return containNames;
+  }
+  
   public void updateItemPaths(String groupName, Path[] pathsToUpdate){
     for (int i = 0; i < groupCount; i++){
       if (groupName == groups[i].getName()){
         groups[i].updatePaths(pathsToUpdate);
+        break;
+      }
+    }
+  }
+  
+  public void setMoveUpdateIndexes(String groupName, Path[] changedPaths){
+    for (int i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].setUpdatePathIndexes(changedPaths);
         break;
       }
     }
