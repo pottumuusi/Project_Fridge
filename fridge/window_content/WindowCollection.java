@@ -208,6 +208,19 @@ public class WindowCollection extends WindowAdapter{
     ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).errorWindow(errorMsg);
   }
   
+  public void errorWindow(String windowName, String errorMsg){
+    if (windowName.equals("MainWin1")){
+      errorWindow(errorMsg);
+    }
+    else if (windowName.equals("MainWin2")){
+      errorWindow2(errorMsg);
+    }
+  }
+  
+  private void errorWindow2(String msg){
+    ((fridge.windows.MainWindow2)myWindows[getMyWindowsIndex("MainWin2")]).errorWindow(msg);
+  }
+  
   public void addNew(String winType){
     System.out.println("start of addNew: myWindows.length = " + myWindows.length);
     System.out.println("windowCount = " + windowCount);
@@ -505,6 +518,25 @@ public class WindowCollection extends WindowAdapter{
     if (null != fileName && null != fileType){
       ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).createFile(fileName, fileType);
     }
+  }
+  
+  public void deleteGroupFiles(String groupName, int[] deleteIndexes){
+    for (int i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        groups[i].deleteItems(deleteIndexes, this);
+        ((fridge.windows.MainWindow1)myWindows[getMyWindowsIndex("MainWin1")]).updateContent();
+        break;
+      }
+    }
+  }
+  
+  public int getGroupItemAmount(String groupName){
+    for (int i = 0; i < groupCount; i++){
+      if (groupName == groups[i].getName()){
+        return groups[i].getItemsLength();
+      }
+    }
+    return -1;
   }
   
   /*returns indexes of groups which contain at least one item in pathList*/

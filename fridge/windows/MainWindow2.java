@@ -80,8 +80,70 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     }
   }
   
-  public void exclude(){}
-  public void delete(){}
+  public void exclude(){
+    
+  }
+  
+  public void delete(){
+    int answer;
+    
+    if (null != selectedGroupItems){
+      answer = yesNoWindow("Are you sure you want to delete " + selectedGroupItems.length +" selected file(s)");
+      
+      System.err.println("answer == " + answer);
+      
+      if (0 == answer){
+        
+        winCollection.deleteGroupFiles(currGroup, selectedGroupItems);
+        updateContent();
+      }
+      else{
+        updateContent();
+        selectedGroupItems = null;
+      }
+    }
+  }
+  
+  private int selectExcluding(int[] toExclude){
+    int itemCount = winCollection.getGroupItemAmount(currGroup);
+    System.err.println("itemCount == " + itemCount);
+    int[] include = null;
+    int includeIndex = 0;
+    boolean doInclude = true;
+    
+    if (-1 != itemCount){
+      System.err.println("include = new int[" + (itemCount - toExclude.length) + "]");
+      include = new int[itemCount - toExclude.length];
+      
+      for (int i = 0; i < itemCount; i++){
+        for (int k = 0; k < toExclude.length; k++){
+          System.err.println("is " + i + " == " + toExclude[k]);
+          if (i == toExclude[k]){
+            System.err.println("yes, do no include");
+            doInclude = false;
+            break;
+          }
+        }
+        
+        if (doInclude){
+          include[includeIndex] = i;
+          includeIndex++;
+        }
+        
+        doInclude = true;
+      }
+      
+      System.err.println("will select indices:");
+      for (int i = 0; i < include.length; i++){
+        System.err.println("\t" + include[i]);
+      }
+      view0.setSelectedIndices(include);
+      return 0;
+    }
+    
+    return 1;
+  }
+  
   public void copy(){}
   
   public void cut(){

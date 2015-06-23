@@ -2,7 +2,9 @@ package fridge.group;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
 public class Group{
@@ -110,6 +112,75 @@ public class Group{
   
   public void setItemPaths(Path[] newItemPaths){
     itemPaths = newItemPaths;
+  }
+  
+  public void deleteItems(int[] deleteIndexes, fridge.window_content.WindowCollection winCollection){
+    int i;
+    int k;
+    int assignIndex = 0;
+    int deleteIndex = 0;
+    boolean keep = true;
+    Path[] itemsToKeep = new Path[items.length - deleteIndexes.length];
+    Path[] pathsToKeep = new Path[itemPaths.length - deleteIndexes.length];
+    
+    Path[] pathsToDelete = new Path[deleteIndexes.length];
+    
+    for (i = 0; i < items.length; i++){
+      for (k = 0; k < deleteIndexes.length; k++){
+        if (i == deleteIndexes[k]){
+          keep = false;
+        }
+      }
+      
+      if (true == keep){
+        itemsToKeep[assignIndex] = items[i];
+        assignIndex++;
+      }
+      keep = true;
+    }
+    
+    assignIndex = 0;
+    
+    for (i = 0; i < itemPaths.length; i++){
+      for (k = 0; k < deleteIndexes.length; k++){
+        if (i == deleteIndexes[k]){
+          keep = false;
+        }
+      }
+      
+      if (true == keep){
+        pathsToKeep[assignIndex] = itemPaths[i];
+        assignIndex++;
+      }
+      else{
+        pathsToDelete[deleteIndex] = itemPaths[i];
+        deleteIndex++;
+      }
+      keep = true;
+    }
+    
+    deleteFiles(pathsToDelete, winCollection);
+    
+    items = itemsToKeep;
+    itemPaths = pathsToKeep;
+  }
+  
+  private void deleteFiles(Path[] deletePaths, fridge.window_content.WindowCollection winCollection){
+    System.err.println("deleting:");
+    for (int i = 0; i < deletePaths.length; i++){
+      System.err.println("\t" + deletePaths[i].toString());
+      try{
+        Files.delete(deletePaths[i]);
+      } catch (NoSuchFileException x) {
+          winCollection.errorWindow("MainWin2", deletePaths[i].toString() + ": no such" + " file or directory");
+      } catch (DirectoryNotEmptyException x) {
+          winCollection.errorWindow("MainWin2", deletePaths[i].toString() + " is not empty");
+      } catch (IOException ioe) {
+          // File permission problems are caught here.
+          System.err.println(ioe.getMessage());
+      }
+    }
+    
   }
   
   public void addItems(Path[] newItems, Path[] newPaths){
