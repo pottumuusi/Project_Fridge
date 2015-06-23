@@ -98,7 +98,7 @@ public class WindowMaker{
     frame.setJMenuBar(menu.createMenuBar("help"));
     frame.setContentPane(cont.createContentPane("help", CLSListener, helpText));
     
-    frame.setSize(450, 260);
+    frame.setSize(600, 260);
     frame.setVisible(true);
     
     decideLocation(frame);

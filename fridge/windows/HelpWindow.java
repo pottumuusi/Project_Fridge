@@ -114,27 +114,48 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     
     switch (selectedListIndex){
     case 0:
-      in = getClass().getResourceAsStream("testText1.txt");
+      readTextFile("recommendedRead.txt");
+      /*in = getClass().getResourceAsStream("testText1.txt");
       try{
         helpText.read(new InputStreamReader(in), null);
       }
       catch (IOException e){
         e.printStackTrace();
-      }
+      }*/
       break;
     case 1:
-      in = getClass().getResourceAsStream("testText2.txt");
-      try{
-        helpText.read(new InputStreamReader(in), null);
-      }
-      catch (IOException e){
-        e.printStackTrace();
-      }
+      readTextFile("quickAccess.txt");
+      break;
+    case 2:
+      readTextFile("quickSave.txt");
+      break;
+    case 3:
+      readTextFile("quickLoad.txt");
+      break;
+    case 4:
+      readTextFile("copyPasta.txt");
+      break;
+    case 5:
+      readTextFile("group.txt");
+      break;
+    case 6:
+      readTextFile("delete.txt");
       break;
     }
     System.out.println("[DEBUG] print correct text to textArea here");
   }
   
+  private void readTextFile(String fileName){
+    InputStream in = null;
+    
+    in = getClass().getResourceAsStream(fileName);
+    try{
+      helpText.read(new InputStreamReader(in), null);
+    }
+    catch (IOException e){
+      e.printStackTrace();
+    }
+  }
   
   private void CLSL_updateIndexes(int[] selectedIndexes){
     if (1 == selectedIndexes.length){

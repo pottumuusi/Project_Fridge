@@ -565,7 +565,8 @@ public class Containers{
     ListSelectionModel listSelectionModel;
     JList list;
     
-    String[] listData = {"first", "second", "third"};
+    String[] listData = {"Recommended topics to read", "Quick access", "Quick save", "Quick Load",
+        "Cutting, Copying, Pasting", "Group", "Delete and Exclude"};
     list = new JList(listData);
     
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -631,7 +632,8 @@ public class Containers{
     list = new JList(listModel);*/
     
     //another way ot init
-    String[] listData = {"first", "second", "third"};
+    String[] listData = {"Recommended topics to read", "Quick access", "Quick save", "Quick Load",
+                         "Cutting, Copying, Pasting", "Group", "Delete and Exclude"};
     list = new JList(listData); 
     
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -698,7 +700,7 @@ public class Containers{
     
     SequentialGroup h1 = layout.createSequentialGroup();
     ParallelGroup h2 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-    ParallelGroup h3 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+    SequentialGroup h3 = layout.createSequentialGroup();
     ParallelGroup h4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
     
     h1.addContainerGap();
@@ -708,9 +710,12 @@ public class Containers{
     h2.addComponent(groupNameField, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE);
     
     //h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
-    h3.addComponent(create, GroupLayout.Alignment.LEADING);
-    h3.addComponent(cancel, GroupLayout.Alignment.TRAILING);
     
+    /*h3.addComponent(create, GroupLayout.Alignment.LEADING);
+    h3.addComponent(cancel, GroupLayout.Alignment.TRAILING);*/
+    h3.addComponent(create);
+    h3.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
+    h3.addComponent(cancel);
     
     //h1.addGroup(h2);
     //h1.addGroup(h3);
@@ -730,6 +735,10 @@ public class Containers{
     
     
     ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    ParallelGroup vp1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+    
+    vp1.addComponent(create);
+    vp1.addComponent(cancel);
     
     SequentialGroup v1 = layout.createSequentialGroup();
     
@@ -738,9 +747,7 @@ public class Containers{
     v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
     v1.addComponent(groupNameField);
     v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED);
-    v1.addComponent(create);
-    v1.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED);
-    v1.addComponent(cancel);
+    v1.addGroup(vp1);
     v1.addContainerGap();
     
     vGroup.addGroup(v1);
