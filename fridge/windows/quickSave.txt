@@ -1,1 +1,1 @@
-text
+Pressing the quick save button will store your current folder or group to a quick access view. Both files and groups can be saved. When using the Folder window you can only save files and folders. When using Group window you can only save groups.

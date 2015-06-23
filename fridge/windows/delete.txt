@@ -1,1 +1,1 @@
-text
+When using groups you will have the possibility of deleting files in groups. Deleting a file from a group is done by selecting files to keep and moving them to the same group. Items in quick access views can be removed by selecting them and using the exclude option found under edit menu.

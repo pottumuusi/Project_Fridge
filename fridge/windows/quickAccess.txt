@@ -1,1 +1,1 @@
-text
+Quick access is a way of switching between different folders or collections of files also known as groups. Folders saved to quick access can be saved to disk as a quick access collection. Group collections can't be saved. Saved collections can be loaded and deleted. Loading overwrites the current content of quick access and you will be able to interact with the content as usual. Saving and loading can be performed from quick access operations.

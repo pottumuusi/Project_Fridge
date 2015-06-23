@@ -1,1 +1,1 @@
-text
+Saved items can be loaded later and this allows you to interact with the saved content in group or folder window. Both files and groups can be loaded. When using files you can only load files and the same thing applies with groups.

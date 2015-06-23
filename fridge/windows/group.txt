@@ -1,1 +1,1 @@
-text
+Group is a collection of files. Files can be moved or added to groups. Moving files to a group will delete earlier content of the group. Adding to group keeps the already existing content.

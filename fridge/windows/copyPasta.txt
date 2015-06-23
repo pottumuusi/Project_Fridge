@@ -1,1 +1,1 @@
-text
+These operations can be found from the edit menu in the upper part of the window. Selected files can be cut from Folder or Group window. These files can be pasted to some directory using the Folder window. You will be able to cut a file that belongs to a group from the Group window and paste it somewhere in Folder window. Folder window supports file copying. Files and directories can be opened using the open file option found in actions menu. Files are opened with program that running operating system considers as default.
