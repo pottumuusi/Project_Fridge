@@ -45,8 +45,11 @@ public class MenuActionEventBroker{
     else if(eventSource.equals("Group")){
       ((fridge.windows.CallableByListener)caller).addGroup();
     }
-    else if(eventSource.equals("Folder")){
+    else if(eventSource.equals("File")){
       ((fridge.windows.FileWindow)caller).newFolder();
+    }
+    else if(eventSource.equals("Refresh")){
+      ((fridge.windows.CallableByListener)caller).updateContent();
     }
   }
   

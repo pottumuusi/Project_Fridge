@@ -11,7 +11,7 @@ import javax.swing.KeyStroke;
 import javax.swing.JFrame;
 
 public class Menu implements ActionListener, ItemListener{
-  private static final int MENU_BAR_TYPE_AMOUNT = 4;
+  private static final int MENU_BAR_TYPE_AMOUNT = 5;
   //private fridge.Fridge fridgeInstance;
   private fridge.action_handling.ActionHandlingContainer AH_Container;
   //private fridge.windows.MyWindow containingWindow;
@@ -142,6 +142,9 @@ public class Menu implements ActionListener, ItemListener{
     case "trimmed":
       menuBar = trimmedMenuBar();
       break;
+    case "mw2":
+      menuBar = mainWin2MenuBar();
+      break;
     case "minimal":
       menuBar = minimalMenuBar();
       break;
@@ -164,6 +167,7 @@ public class Menu implements ActionListener, ItemListener{
     allowedTypes[1] = "search";
     allowedTypes[2] = "minimal";
     allowedTypes[3] = "help";
+    allowedTypes[4] = "mw2";
     int i;
     
     for (i = 0; i < MENU_BAR_TYPE_AMOUNT; i++){
@@ -183,18 +187,27 @@ public class Menu implements ActionListener, ItemListener{
     menuBar.add(createFileMenu());
     menuBar.add(createEditMenu());
     menuBar.add(createActionsMenu());
-    menuBar.add(createOptionsMenu());
     menuBar.add(createHelpMenu());
     
     return menuBar;
   }
   
+  private JMenuBar mainWin2MenuBar(){
+    JMenuBar menuBar = new JMenuBar();
+    
+    menuBar.add(createReducedFileMenu());
+    menuBar.add(createReducedEditMenu());
+    menuBar.add(createActionsMenu());
+    menuBar.add(createHelpMenu());
+    
+    return menuBar;
+  }
   
   private JMenuBar trimmedMenuBar(){
     JMenuBar menuBar;
     
     menuBar = new JMenuBar();
-    menuBar.add(createFileMenu());
+    menuBar.add(createReducedFileMenu());
     menuBar.add(createEditMenu());
     menuBar.add(createActionsMenu());
     
@@ -346,7 +359,7 @@ public class Menu implements ActionListener, ItemListener{
     submenu = createSubmenu("New", KeyEvent.VK_N);
     
     /* Add content of submenu */
-    menuItem = createMenuItem("Folder", KeyEvent.VK_L, ActionEvent.CTRL_MASK);
+    menuItem = createMenuItem("File", KeyEvent.VK_L, ActionEvent.CTRL_MASK);
     submenu.add(menuItem);
     
     menuItem = createMenuItem("Group", KeyEvent.VK_G, ActionEvent.CTRL_MASK);
@@ -367,25 +380,38 @@ public class Menu implements ActionListener, ItemListener{
     return menu;
   }
   
+  private JMenu createReducedFileMenu(){
+    JMenu menu, submenu;
+    JMenuItem menuItem;
+    
+    menu = createMenu("File", KeyEvent.VK_F, "File menu");
+    submenu = createSubmenu("New", KeyEvent.VK_N);
+    
+    /* Add content of submenu */
+    
+    menuItem = createMenuItem("Group", KeyEvent.VK_G, ActionEvent.CTRL_MASK);
+    submenu.add(menuItem);
+    menu.add(submenu); // Add submenu New to File menu
+    
+    /* Add rest menu content */
+    menuItem = createMenuItem("Refresh", KeyEvent.VK_T, KeyEvent.VK_F5, 0, "Reloads window");
+    menu.add(menuItem);
+    
+    menuItem = createMenuItem("Close", KeyEvent.VK_C, "Close current window");
+    menu.add(menuItem);
+    
+    menuItem = createMenuItem("Quit", KeyEvent.VK_E, KeyEvent.VK_Q,
+                              ActionEvent.CTRL_MASK, "Exit the program");
+    menu.add(menuItem);
+    
+    return menu;
+  }
   
   private JMenu createEditMenu(){
     JMenu menu, submenu;
     JMenuItem menuItem;
     
     menu = createMenu("Edit", KeyEvent.VK_E, "Edit menu");
-    
-    menuItem = createMenuItem("Open file", KeyEvent.VK_O, "Open chosen file/folder");
-    menu.add(menuItem);
-    
-    submenu = createSubmenu("Rename", KeyEvent.VK_R);
-    menuItem = createMenuItem("Selected item", KeyEvent.VK_S,
-                              KeyEvent.VK_F2, 0, "Rename selected item");
-    submenu.add(menuItem);
-    
-    menuItem = createMenuItem("Current group", KeyEvent.VK_E, KeyEvent.VK_R,
-                              ActionEvent.CTRL_MASK, "Rename group that is being used");
-    submenu.add(menuItem);
-    menu.add(submenu);
     
     menuItem = createMenuItem("Cut", KeyEvent.VK_U, KeyEvent.VK_X,
                               ActionEvent.CTRL_MASK, "Cut selected item");
@@ -407,10 +433,6 @@ public class Menu implements ActionListener, ItemListener{
                               ActionEvent.CTRL_MASK, "Exclude selected item (from some list)");
     menu.add(menuItem);
     
-    menuItem = createMenuItem("Select all", KeyEvent.VK_S, KeyEvent.VK_A,
-                              ActionEvent.CTRL_MASK, "Select all items in a field");
-    menu.add(menuItem);
-    
     //submenu = createSubmenu("Select all", KeyEvent.VK_S);
     //menuItem = createMenuItem("Folders", KeyEvent.VK_);
     
@@ -421,6 +443,26 @@ public class Menu implements ActionListener, ItemListener{
     return menu;
   }
   
+  private JMenu createReducedEditMenu(){
+    JMenu menu;
+    JMenuItem menuItem;
+    
+    menu = createMenu("Edit", KeyEvent.VK_E, "Edit menu");
+    
+    menuItem = createMenuItem("Cut", KeyEvent.VK_U, KeyEvent.VK_X,
+                              ActionEvent.CTRL_MASK, "Cut selected item");
+    menu.add(menuItem);
+    
+    menuItem = createMenuItem("Delete", KeyEvent.VK_D, KeyEvent.VK_DELETE, 0,
+                              "Delete selected item");
+    menu.add(menuItem);
+    
+    menuItem = createMenuItem("Exclude", KeyEvent.VK_X, KeyEvent.VK_E,
+                              ActionEvent.CTRL_MASK, "Exclude selected item (from some list)");
+    menu.add(menuItem);
+    
+    return menu;
+  }
   
   private JMenu createActionsMenu(){
     JMenu menu, submenu;
@@ -428,27 +470,15 @@ public class Menu implements ActionListener, ItemListener{
     
     menu = createMenu("Actions", KeyEvent.VK_A, "Actions menu");
     
+    menuItem = createMenuItem("Open file", KeyEvent.VK_O, "Open chosen file/folder");
+    menu.add(menuItem);
+    
     submenu = createSubmenu("Add to group", KeyEvent.VK_A);
     //groupsToSubmenu(submenu);
     menu.add(submenu);
     
     submenu = createSubmenu("Move to group", KeyEvent.VK_M);
     //groupsToSubmenu(submenu);
-    menu.add(submenu);
-    
-    menuItem = createMenuItem("Handle with move/add manager", KeyEvent.VK_H, KeyEvent.VK_H,
-                              ActionEvent.CTRL_MASK, "Add ");
-    menu.add(menuItem);
-    
-    submenu = createSubmenu("Search", KeyEvent.VK_S);
-    
-    menuItem = createMenuItem("From folder", KeyEvent.VK_F, 
-                              KeyEvent.VK_F3, 0, "Search from folder");
-    submenu.add(menuItem);
-    
-    menuItem = createMenuItem("From groups", KeyEvent.VK_G,
-                              KeyEvent.VK_F4, 0, "Search from groups");
-    submenu.add(menuItem);
     menu.add(submenu);
     
     return menu;

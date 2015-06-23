@@ -76,7 +76,7 @@ public class WindowMaker{
     
     fridge.window_content.Containers cont = new fridge.window_content.Containers();
     
-    frame.setJMenuBar(menu.createMenuBar("full"));
+    frame.setJMenuBar(menu.createMenuBar("mw2"));
     frame.setContentPane(cont.createContentPane("mainWin2", CLSL_list, CAL_list, groupList, view0, view1));
     
     decideLocation(frame);

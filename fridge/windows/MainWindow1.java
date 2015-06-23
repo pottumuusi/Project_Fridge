@@ -519,17 +519,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
     }
     else if ("ClassActionListener" == ML_ptr.getType()){
       if ("folderShowGroup" == ML_ptr.getName()){
-        if (true == hideSuccessful()){
-          if (false == winCollection.namedWindowExists("MainWin2")){
-            System.out.println("[DEBUG] creating MainWin2");
-            winCollection.addNew("MainWin2");
-          }
-          else if (true == winCollection.namedWindowIsHidden("MainWin2")){
-            System.out.println("[DEBUG] showing window: MainWin2");
-            winCollection.showWindow("MainWin2");
-          }
-        }
-        //if MainWin2 does not exist create it. if it is hidden show it
+        showGroupWin();
       }
       else if ("quickSave" == ML_ptr.getName()){
         System.out.println("quickSave press");
@@ -541,7 +531,7 @@ public class MainWindow1 extends fridge.windows.FileWindow{
         loadSelectedQuickAccessFolder();
       }
       else if ("qa_showGroup" == ML_ptr.getName()){
-        System.out.println("qa_showGroup press");
+        showGroupWin();
       }
       else if ("qa_operations" == ML_ptr.getName()){
         winCollection.addNew("operationsWin", myWindowIndex);
@@ -559,6 +549,20 @@ public class MainWindow1 extends fridge.windows.FileWindow{
         }
       }
     }
+  }
+  
+  private void showGroupWin(){
+    if (true == hideSuccessful()){
+      if (false == winCollection.namedWindowExists("MainWin2")){
+        System.out.println("[DEBUG] creating MainWin2");
+        winCollection.addNew("MainWin2");
+      }
+      else if (true == winCollection.namedWindowIsHidden("MainWin2")){
+        System.out.println("[DEBUG] showing window: MainWin2");
+        winCollection.showWindow("MainWin2");
+      }
+    }
+    //if MainWin2 does not exist create it. if it is hidden show it
   }
   
   private void updateFolderContent(){

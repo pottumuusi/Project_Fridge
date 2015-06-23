@@ -179,6 +179,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     viewUpdateAllowed = true;
     currGroup = groupListBox.getSelectedItem().toString();
     updateMenu();
+    updateViews();
   }
   
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
@@ -197,11 +198,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     }
     else if ("ClassActionListener" == ML_ptr.getType()){
       if ("groupShowFolder" == ML_ptr.getName()){
-        if (true == hideSuccessful()){
-          if (true == winCollection.namedWindowIsHidden("MainWin1")){
-            winCollection.showWindow("MainWin1");
-          }
-        }
+        showFolderWin();
       }
       else if ("quickSave" == ML_ptr.getName()){
         addToQuickAccess();
@@ -210,6 +207,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
         loadSelectedQuickAccessGroup();
       }
       else if ("qa_showFolder" == ML_ptr.getName()){
+        showFolderWin();
       }
       else if ("qa_operations" == ML_ptr.getName()){
         //winCollection.addGroup("fromMainWin2");
@@ -226,6 +224,14 @@ public class MainWindow2 extends fridge.windows.FileWindow{
         if (true == viewUpdateAllowed){
           updateViews();
         }
+      }
+    }
+  }
+  
+  private void showFolderWin(){
+    if (true == hideSuccessful()){
+      if (true == winCollection.namedWindowIsHidden("MainWin1")){
+        winCollection.showWindow("MainWin1");
       }
     }
   }
