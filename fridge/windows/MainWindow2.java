@@ -81,6 +81,44 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   }
   
   public void exclude(){
+    int i = 0;
+    int tempIndex = 0;
+    int QAF_index = -1;
+    String[] tempGroups = null;
+    String[] newAliases = null;
+    Path tempPath = null;
+    
+    if (null != selectedQuickAccess && 1 == selectedQuickAccess.length){
+      tempGroups = new String[quickAccessGroups.length - 1];
+      QAF_index = view1.getMinSelectionIndex();
+      System.err.println("quickaccessFolders:");
+      for (i = 0; i < quickAccessGroups.length; i++){
+        System.err.println(quickAccessGroups[i]);
+        if (i != QAF_index){
+          System.err.println("i == " + i + ", QAf_index == " + QAF_index);
+          tempGroups[tempIndex] = quickAccessGroups[i];
+          tempIndex++;
+        }
+      }
+      quickAccessGroups = tempGroups;
+      if (null != quickAccessGroups){
+        /*
+        newAliases = new String[quickAccessGroups.length]; 
+        
+        for (i = 0; i < quickAccessGroups.length; i++){
+          tempPath = Paths.get(quickAccessGroups[i]);
+          newAliases[i] = tempPath.getFileName().toString();
+          System.err.println("newAlias " + i + " == " + newAliases[i]);
+        }
+        
+        */
+        //clearQuickAccessAliases();
+        updateContent();
+      }
+    }
+  }
+  
+  private void setQuickAccess(String[] newAliases){
     
   }
   
