@@ -1,7 +1,5 @@
 package fridge;
 
-
-
 public class Fridge{
   private String[] programStatus;
   private fridge.action_handling.ActionHandlingContainer AH_container;
@@ -13,7 +11,6 @@ public class Fridge{
     AH_container = new fridge.action_handling.ActionHandlingContainer(this);
     windowCollection = new fridge.window_content.WindowCollection(this);
     contListeners = new fridge.action_handling.ContainerListeners(this);
-    //windowCollection = new fridge.window_content.WindowCollection(AH_container);
   }
   
   public fridge.action_handling.ActionHandlingContainer getAH_container(){
@@ -37,20 +34,12 @@ public class Fridge{
     return programStatus;
   }
   
-  private void setProgramStatus(String newStatus, int statusIndex){
-    System.out.println("[DEBUG] setProgramStatus");
-  }
-  
-  public void updateProgramStatus(){
-    System.out.println("[DEBUG] updateProgramStatus()");
-  }
-  
   public void printProgramStatus(){
     int i;
     
-    System.out.println("Program status is:");
+    System.err.println("Program status is:");
     for (i = 0; i < programStatus.length; i++){
-      System.out.println(programStatus[i]);
+      System.err.println(programStatus[i]);
     }
   }
   
@@ -59,7 +48,7 @@ public class Fridge{
     
     for (i = 0; i < programStatus.length; i++){
       if (programStatus[i].equals("no_unsaved_data")){
-        System.out.println("No unsaved data. Exiting");
+        System.err.println("No unsaved data. Exiting");
         System.exit(0);
       }
     }
@@ -77,22 +66,13 @@ public class Fridge{
     
     //Create and set up the window
     fridge.Fridge fridgeInstance = new fridge.Fridge();
-    
-    
-    
-    
-    //fridgeInstance = new fridge.Fridge();
   }
   
   public static void main(String[] args){
-    //fridge.window_content.Menu menu = new fridge.window_content.Menu();
-    
     javax.swing.SwingUtilities.invokeLater(new Runnable(){
       public void run(){
-        
         createAndShowGUI();
       }
     });
-    
   }
 }

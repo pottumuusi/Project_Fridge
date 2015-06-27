@@ -10,8 +10,6 @@ public abstract class FileWindow extends CallableByListener{
                     fridge.window_content.Menu par_menu,
                     fridge.window_content.WindowCollection winColl){
     super(frame, CLSL_list, CAL_list, par_myWindowIndex, par_menu, winColl);
-    
-    
   }
   
   public abstract void newFolder();

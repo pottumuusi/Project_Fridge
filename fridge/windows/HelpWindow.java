@@ -18,22 +18,6 @@ import javax.swing.JTextArea;
 public class HelpWindow extends fridge.windows.CallableByListener{
   private int selectedListIndex;
   private JTextArea helpText;
-  //private fridge.action_handling.MyListSelectionListener LSListener;
-  //private fridge.action_handling.ClassListSelectionListener CLSListener;
-  
-  /*public HelpWindow(JFrame frame){
-    super(frame);
-    System.out.println("Help window created!");
-  }*/
-  
-  /*public HelpWindow(JFrame frame, fridge.action_handling.ClassListSelectionListener CLSL_ptr){
-    super(frame, CLSL_ptr);
-  }*/
-  
-  /*public HelpWindow(JFrame frame, fridge.action_handling.MyListSelectionListener LSL_ptr){
-    super(frame);
-    LSListener = LSL_ptr;
-  }*/
   
   public HelpWindow(fridge.window_content.WindowCollection winColl,
                     fridge.window_content.WindowMaker winMaker,
@@ -43,65 +27,38 @@ public class HelpWindow extends fridge.windows.CallableByListener{
                     int par_myWindowIndex){
     super(winMaker.newHelpWin(winColl, CLSL_ptr, textArea_ptr, menu), CLSL_ptr, par_myWindowIndex, menu, winColl);
     
-    //menu.setContainingWindow(this);
-    
     helpText = textArea_ptr;
     selectedListIndex = 0;
     updateHelpText();
   }
   
-  /*public void groupButtonMenuPress(String buttonName){
-    
-  }*/
-  
   protected void moveItemsToGroup(String groupName){
-    System.out.println("[DEBUG] HelpWin moveItemsToGroup not set");
   }
   
   protected void addItemsToGroup(String groupName){
-    System.out.println("[DEBUG] HelpWin addItemsToGroup not set");
   }
   
   public void updateViews(){
-    System.out.println("[DEBUG] HelpWin updateViews not set");
   }
   
   public void updateContent(){
-    System.out.println("[DEBUG] HelpWin update content not set");
     updateMenu();
   }
   
   public void openFile(){
   }
   
-  //protected void handleEvent(String listenerType, fridge.action_handling.MyListener ML_ptr){
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     int[] selectedIndexes;
-    //System.out.println("[DEBUG] CLSListener.getSelectedIndexesLen() ==");
     
-    //switch (listenerType){
     switch (ML_ptr.getType()){
     case "ClassListSelectionListener":
-      System.out.println("[DEBUG] HelpWindow detected a ClassListSelectionListener event. handling... :O");
-      //selectedIndexes = new int[CLSListener.getSelectedIndexesLen()];
-      //selectedIndexes = CLSListener.getSelectedIndexes();
-      //selectedIndexes = new int[ML_ptr.getSelectedIndexesLen()];
       selectedIndexes = new int[((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexesLen()];
       selectedIndexes = ((fridge.action_handling.ClassListSelectionListener)ML_ptr).getSelectedIndexes();
       CLSL_updateIndexes(selectedIndexes);
       break;
     }
-    
-    //System.out.println("[DEBUG] HelpWindow.handleEvent:\n\ttype of calling listener is: " + listenerType);
-    
   }
-  
-  
-  /*protected void addListeners(){
-    //listeners  CLSListener = CLSL_ptr;
-    addListener(CLSListener);
-    //CLSListener = null;
-  }*/
   
   private void updateSelectedListIndex(int newListIndex){
     selectedListIndex = newListIndex;
@@ -115,13 +72,6 @@ public class HelpWindow extends fridge.windows.CallableByListener{
     switch (selectedListIndex){
     case 0:
       readTextFile("recommendedRead.txt");
-      /*in = getClass().getResourceAsStream("testText1.txt");
-      try{
-        helpText.read(new InputStreamReader(in), null);
-      }
-      catch (IOException e){
-        e.printStackTrace();
-      }*/
       break;
     case 1:
       readTextFile("quickAccess.txt");
@@ -142,7 +92,6 @@ public class HelpWindow extends fridge.windows.CallableByListener{
       readTextFile("delete.txt");
       break;
     }
-    System.out.println("[DEBUG] print correct text to textArea here");
   }
   
   private void readTextFile(String fileName){
@@ -159,13 +108,8 @@ public class HelpWindow extends fridge.windows.CallableByListener{
   
   private void CLSL_updateIndexes(int[] selectedIndexes){
     if (1 == selectedIndexes.length){
-      selectedListIndex = selectedIndexes[0]; // does not work yet
+      selectedListIndex = selectedIndexes[0]; // does not work yet? :D
       updateHelpText();
     }
   }
-  
-  //private printSelected
-  
-  /*private listListenerCall(int ){
-  }*/
 }

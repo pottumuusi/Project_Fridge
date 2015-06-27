@@ -1,7 +1,6 @@
 package fridge.action_handling;
 
 public abstract class MyListener{
-  //private fridge.windows.CallableByListener listened;
   private String listenerType;
   private String listenerName;
   
@@ -23,8 +22,4 @@ public abstract class MyListener{
   }
   
   protected abstract void setListened(fridge.windows.CallableByListener CBL_ptr);
-  
-  /*protected void setListened(fridge.windows.CallableByListener CBL_ptr){
-    listened = CBL_ptr;
-  }*/
 }

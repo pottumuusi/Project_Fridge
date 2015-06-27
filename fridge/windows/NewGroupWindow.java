@@ -35,9 +35,7 @@ public class NewGroupWindow extends fridge.windows.CallableByListener{
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     
     if ("ClassActionListener" == ML_ptr.getType()){
-      System.out.println("[DEBUG] newGroupWindow action event");
       if ("Create" == ML_ptr.getName()){
-        System.out.println("should create now. nameField text: " + nameField.getText());
         winCollection.addGroup(nameField.getText());
       }
       else if ("Cancel" == ML_ptr.getName()){
@@ -45,5 +43,4 @@ public class NewGroupWindow extends fridge.windows.CallableByListener{
       }
     }
   }
-  //public void 
 }

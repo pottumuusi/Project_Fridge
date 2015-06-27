@@ -65,10 +65,8 @@ public class Group{
     
     for (int i = 0; i < itemPaths.length; i++){
       for (int k = 0; k < newPaths.length; k++){
-        System.err.println("testing" + newPaths[k].toString() + " and " + itemPaths[i].toString());
         if (newPaths[k].toString().equals(itemPaths[i].toString())){
           tempIndexes[newIndexCount] = i;
-          System.err.println("set update index " + i);
           newIndexCount++;
           break;
         }
@@ -83,15 +81,11 @@ public class Group{
   
   public void setUpdatePathIndexes(int[] newIndexes){
     System.err.println("setting updatePathIndexes:");
-    for (int i = 0; i < newIndexes.length; i++){
-      System.err.println("\t" + newIndexes[i]);
-    }
     updatePathIndexes = newIndexes;
   }
   
   public void updatePaths(Path[] newPaths){
     for (int i = 0; i < updatePathIndexes.length; i++){
-      System.err.println("updating " + itemPaths[updatePathIndexes[i]] + " with " + newPaths[i]);
       itemPaths[updatePathIndexes[i]] = newPaths[i];
     }
     
@@ -106,8 +100,6 @@ public class Group{
       items[i] = newItems[i];
     }
     itemCount = items.length;
-    
-    System.out.println("[DEBUG] setItems complete");
   }
   
   public void setItemPaths(Path[] newItemPaths){
@@ -163,12 +155,17 @@ public class Group{
     
     items = itemsToKeep;
     itemPaths = pathsToKeep;
+    if (0 == items.length){
+      System.err.println("setting null");
+      items = null;
+    }
+    if (0 == itemPaths.length){
+      itemPaths = null;
+    }
   }
   
   private void deleteFiles(Path[] deletePaths, fridge.window_content.WindowCollection winCollection){
-    System.err.println("deleting:");
     for (int i = 0; i < deletePaths.length; i++){
-      System.err.println("\t" + deletePaths[i].toString());
       try{
         Files.delete(deletePaths[i]);
       } catch (NoSuchFileException x) {
@@ -190,8 +187,6 @@ public class Group{
     Path[] tempPaths = itemPaths;
     
     if (null != items && newPaths.length == newItems.length){
-      System.out.println("[DEBUG] items.length: " + items.length);
-      System.out.println("[DEBUG] newItems.length: " + newItems.length);
       items = new Path[items.length + newItems.length];
       itemPaths = new Path[itemPaths.length + newPaths.length];
       
@@ -214,11 +209,6 @@ public class Group{
         itemPaths[k] = newPaths[k]; 
       }
     }
-    
-    /*System.out.println("[DEBUG] added items:");
-    for (i = 0; i < items.length; i++){
-      System.out.println("    " + items[i].toString());
-    }*/
   }
   
   public void openFile(int itemIndex){
@@ -231,15 +221,4 @@ public class Group{
       }
     }
   }
-  
-  public void addItem(Path newItem){
-    
-    
-    
-  }
-  
-  public void removeItem(){
-    
-  }
-  
 }

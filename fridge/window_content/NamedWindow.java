@@ -8,7 +8,6 @@ public class NamedWindow{
   public NamedWindow(String name_par, int index){
     name = name_par;
     myWindowIndex = index;
-    
   }
   
   public String getName(){

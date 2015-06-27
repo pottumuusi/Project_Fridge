@@ -9,16 +9,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class WindowMaker{
-  //private fridge.action_handling.ActionHandlingContainer AH_Container;
   private fridge.Fridge fridgeInstance;
   private Point lastLocation;
-  //private Point newLocation;
   private int maxX;
   private int maxY;
-  
-  /*public WindowMaker(fridge.action_handling.ActionHandlingContainer AHC_ptr){
-    AH_Container = AHC_ptr;
-  }*/
   
   public WindowMaker(fridge.Fridge FI_ptr){
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -26,7 +20,6 @@ public class WindowMaker{
     maxY = screenSize.height - 50;
     fridgeInstance = FI_ptr;
     lastLocation = null;
-    
   }
   
   private void decideLocation(JFrame frame){
@@ -233,10 +226,6 @@ public class WindowMaker{
     return frame;
   }
   
-  /*public void closed(WindowEvent e){
-    System.out.println("window closed");
-  }*/
-  
   class ListenedFrame extends JFrame{
     protected Dimension defaultSize = new Dimension(200, 200);
     protected fridge.window_content.WindowCollection windowCollection = null;
@@ -246,18 +235,6 @@ public class WindowMaker{
       windowCollection = controller;
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // class as every other window.
       addWindowListener(windowCollection);
-      
-      /*fridge.window_content.Menu menu = new fridge.window_content.Menu(AH_Container);
-      fridge.window_content.Containers cont = new fridge.window_content.Containers();
-      
-      frame.setJMenuBar(menu.createMenuBar("full"));
-      frame.setContentPane(cont.createContentPane(0));
-      
-      //Display the window.
-      frame.setSize(450, 260);
-      frame.setVisible(true);*/
-      
-      
     }
   }
 }

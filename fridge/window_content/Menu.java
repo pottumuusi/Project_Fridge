@@ -6,55 +6,22 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
-//import javax.swing.JPanel;
 import javax.swing.JFrame;
 
 public class Menu implements ActionListener, ItemListener{
   private static final int MENU_BAR_TYPE_AMOUNT = 5;
-  //private fridge.Fridge fridgeInstance;
   private fridge.action_handling.ActionHandlingContainer AH_Container;
-  //private fridge.windows.MyWindow containingWindow;
   private fridge.windows.CallableByListener containingWindow; //earlier this was MyWindow
-  
-  /*private fridge.action_handling.MenuActionEventBroker MAE_broker;
-  private fridge.action_handling.MenuActionEventHandler MAE_handler;*/
-  
-  /*public Menu(){
-    System.out.println("[DEBUG] Menu can't be created without providing MAE_broker and MAE_handler");
-    System.exit(1);
-  }*/
   
   public Menu(){
     System.out.println("[DEBUG] Menu can't be created without providing fridgeInstance");
     System.exit(1);
   }
   
-  /*public Menu(fridge.action_handling.MenuActionEventBroker pointer_to_broker,
-              fridge.action_handling.MenuActionEventHandler pointer_to_handler){
-    MAE_broker = pointer_to_broker;
-    MAE_handler = pointer_to_handler;
-  }*/
-  
-  /*public Menu(fridge.Fridge pointer_to_fridgeInstance){
-    fridgeInstance = pointer_to_fridgeInstance;
-  }*/
-  
   public Menu(fridge.action_handling.ActionHandlingContainer AH_Container_ptr){
     AH_Container = AH_Container_ptr;
   }
   
-  //private int menuBarTypeCount = 3;
-  /*public Menu(){
-    
-  }
-  
-  public Menu(int menuType){
-    
-  }*/
-  
-  
-  //public void setContainingWindow(fridge.windows.MyWindow set_par){
   public void setContainingWindow(fridge.windows.CallableByListener set_par){
     containingWindow = set_par;
   }
@@ -77,9 +44,6 @@ public class Menu implements ActionListener, ItemListener{
     
     tempMenuBar = containingWindow.getMenuBar();
     tempMenu = tempMenuBar.getMenu(2);
-    System.out.println("MenuItems:");
-    
-    //testItem = createMenuItem("testItem", KeyEvent.VK_T, "testing");
     
     for (i = 0; i < tempMenu.getItemCount(); i++){
       tempItem = tempMenu.getItem(i);
@@ -88,18 +52,15 @@ public class Menu implements ActionListener, ItemListener{
         ((JMenu)tempItem).removeAll();
         for (k = 0; k < groupCount; k++){
           ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
-          System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());
           ((JMenu)tempItem).getItem(k).setName("Add to group");
         }
-        //((JMenu)tempItem).add(testItem);
         
-        System.out.println("Added groups to menu");
+        System.err.println("Added groups to menu");
       }
       else if("Move to group" == tempItem.getActionCommand()){
         ((JMenu)tempItem).removeAll();
         for (k = 0; k < groupCount; k++){
           ((JMenu)tempItem).add(createMenuItem(tempGroups[k].getName()));
-          System.out.println("    name: " + ((JMenu)tempItem).getItem(k).getName());
           ((JMenu)tempItem).getItem(k).setName("Move to group");
         }
       }
@@ -110,34 +71,18 @@ public class Menu implements ActionListener, ItemListener{
     winColl.getGroups();
   }
   
-  /*public JMenuBar newMenuBar(int menuType){
-    switch (menuType){
-    case 0:
-      return createMenuBar(menuType)
-    case 1:
-      break;
-    }
-  }*/
-  
   public JMenuBar createMenuBar(String menuBarType){
     JMenuBar menuBar = null;
     int i;
     
-    /*if (menuBarType > menuBarTypeCount - 1 || menuBarType < 0){
-      System.out.println("[DEBUG] invalid menuBarType. menuBar not created");
-      return null;
-    }*/
-    
     if (false == isAllowedBarType(menuBarType)){
-      System.out.println("[DEBUG] invalid menuBarType: " + menuBarType);
+      System.err.println("[DEBUG] invalid menuBarType: " + menuBarType);
       return null;
     }
     
     switch (menuBarType){
     case "full":
-      System.out.println("[DEBUG] in case: \"full\"");
       menuBar = fullMenuBar();
-      System.out.println("[DEBUG] created menu with type: " + menuBarType);
       break;
     case "trimmed":
       menuBar = trimmedMenuBar();
@@ -151,10 +96,6 @@ public class Menu implements ActionListener, ItemListener{
     case "help":
       menuBar = helpMenuBar();
     }
-      
-    
-    //menuBar = fullMenuBar();
-    //System.out.println("[DEBUG] created menu with type: " + menuBarType);
     
     return menuBar;
   }
@@ -433,13 +374,6 @@ public class Menu implements ActionListener, ItemListener{
                               ActionEvent.CTRL_MASK, "Exclude selected item (from some list)");
     menu.add(menuItem);
     
-    //submenu = createSubmenu("Select all", KeyEvent.VK_S);
-    //menuItem = createMenuItem("Folders", KeyEvent.VK_);
-    
-    /*copy, cut, paste, select all (folders, groups, quick access)?, delete, exclude,
-     * rename (current group, selected item), open file
-     */
-    
     return menu;
   }
   
@@ -474,16 +408,12 @@ public class Menu implements ActionListener, ItemListener{
     menu.add(menuItem);
     
     submenu = createSubmenu("Add to group", KeyEvent.VK_A);
-    //groupsToSubmenu(submenu);
     menu.add(submenu);
     
     submenu = createSubmenu("Move to group", KeyEvent.VK_M);
-    //groupsToSubmenu(submenu);
     menu.add(submenu);
     
     return menu;
-    /*Add to group, Move to group, Handle with move/add manager, 
-     * Search (from folder, from groups*/
   }
   
   
@@ -517,16 +447,6 @@ public class Menu implements ActionListener, ItemListener{
   public void actionPerformed(ActionEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
     
-    /*System.out.println("*Action event*\n"
-                   + "Event source: " + source.getText()
-                   + " (an instance of " + getClassName(source) + ")");*/
-    /*String actStr = "*Action event*\n" 
-                    + "Event source: " + source.getText()
-                    + " (an instance of " + getClassName(source) + ")";*/
-    
-    /*MAE_broker.solveAction(source.getText(), getClassName(source), 
-                           fridgeInstance.getMAE_handler(), fridgeInstance);*/
-    //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source), fridgeInstance);
     if (null == source.getName()){
       AH_Container.MAE_brokerCall(source.getText(),
                                   getClassName(source),
@@ -538,24 +458,18 @@ public class Menu implements ActionListener, ItemListener{
                                   containingWindow,
                                   source.getName());
     }
-    
-    //fridge.Fridge.MAE_brokerCall(source.getText(), getClassName(source));
-    //fridgeInstance.MAE_brokerCall(source.getText(), getClassName(source));
   }
   
   public void itemStateChanged(ItemEvent e){
     JMenuItem source = (JMenuItem)(e.getSource());
     
-
-    System.out.println("*Item event*"
+    System.err.println("*Item event*"
                      + "Event source: " + source.getText()
                      + " (an instance of " + getClassName(source) +")"
                      + "New state: "
                      + ((e.getStateChange() == ItemEvent.SELECTED) ?
                         "selected":"unselected"));
   }
-  
-  
   
   /* Class name will be returned */
   protected String getClassName(Object o){

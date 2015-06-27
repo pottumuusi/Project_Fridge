@@ -10,12 +10,6 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
   protected fridge.action_handling.MyListener[] listeners = null;
   protected fridge.window_content.Menu menu = null;
   
-  /*CallableByListener(JFrame frame){
-    super(frame);
-    //addListeners();
-    givePtrToListeners();
-  }*/
-  
   public CallableByListener(JFrame frame, 
                             fridge.action_handling.ClassListSelectionListener CLSL_ptr,
                             int par_myWindowIndex,
@@ -29,9 +23,6 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     givePtrToListeners();
   }
   
-  /*CallableByListener(JFrame frame, fridge.action_handling.ClassListSelectionListener[] CLSL_list,
-                     fridge.Fridge fridgeInstance){*/
-    //super(frame, fridgeInstance);
   public CallableByListener(JFrame frame, 
                             fridge.action_handling.ClassListSelectionListener[] CLSL_list,
                             int par_myWindowIndex,
@@ -118,27 +109,11 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     frame.pack();
   }
   
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // Note that at least all abstract methods concerned with groups could be moved here if
-  // pointer to windowCollection was stored in this class instead of all the subclasses.
-  // propably not. would need files and such.
-  // or maybe if they were passed as arguments?? <-- i think this is wrong
-  // so confused
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  
-  //protected abstract void moveItemsToGroup(String groupName, Path[] newItems);
   protected abstract void handleEvent(fridge.action_handling.MyListener ML_ptr);
-  //public abstract void addGroup();
   protected abstract void addItemsToGroup(String groupName);
   protected abstract void moveItemsToGroup(String groupName);
-  //public abstract void groupButtonMenuPress(String buttonName);
   public abstract void updateContent(); 
   public abstract void updateViews();
-  
-  
-  /*public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
-    handleEvent(ML_ptr.getType(), ML_ptr);
-  }*/
   
   public void listenerEvent(fridge.action_handling.MyListener ML_ptr){
     handleEvent(ML_ptr);
@@ -152,10 +127,9 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     return frame.getJMenuBar();
   }
   
-  //protected abstract void addListeners();
   protected void addListener(fridge.action_handling.MyListener ML_ptr){
     int i;
-    //fridge.action_handling.MyListener[] temp;
+
     if (null == listeners){
       listeners = new fridge.action_handling.MyListener[1];
       listeners[0] = ML_ptr;
@@ -176,36 +150,15 @@ public abstract class CallableByListener extends fridge.windows.MyWindow{
     winCollection.addNew("newGroupWin");
   }
   
-  
-  
-  //protected abstract void handleEvent(String listenerType);
-  //protected abstract void handleEvent(String listenerType, fridge.action_handling.MyListener);
-  
-  /*protected void addGroup(String groupName){
-    
-  }
-  
-  protected void moveItemsToGroup(String groupName, Path[] newItems){
-    
-  }
-  
-  protected void addItemsToGroup(String groupName, Path[] newItems){
-    
-  }*/
-  
   public void groupButtonMenuPress(String buttonName, String containingMenu){
-    System.out.println("[DEBUG] groupButtonMenuPress containingMenu == " + containingMenu);
     if ("Add to group" == containingMenu){
-      System.out.println("");
       addItemsToGroup(buttonName);
     }
     else if ("Move to group" == containingMenu){
-      System.out.println("");
       moveItemsToGroup(buttonName);
     }
   }
   
-  //protected abstract void givePtrToListeners();
   protected void givePtrToListeners(){
     int i;
     

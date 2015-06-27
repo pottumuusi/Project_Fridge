@@ -42,7 +42,6 @@ public class WindowCollection extends WindowAdapter{
     winMaker = new WindowMaker(FI_ptr);
     windowCount = 0;
     groupCount = 0;
-    //lastLocation = null;
     
     movePerformer = null;
     movePerformers = null;
@@ -54,12 +53,10 @@ public class WindowCollection extends WindowAdapter{
     myWindows = new fridge.windows.MyWindow[4];
     namedWindows = new fridge.window_content.NamedWindow[4];
     
-    //groups[0] = new fridge.group.Group("testGroup");
-    
     addNew("MainWin2");
     if (-1 != getMyWindowsIndex("MainWin2")){
       if (false == ((fridge.windows.MainWindow2)myWindows[getMyWindowsIndex("MainWin2")]).hideSuccessful()){
-        System.out.println("[DEBUG] could not hide MainWin2");
+        System.err.println("[DEBUG] could not hide MainWin2");
       }
     }
     addNew("MainWin1");
@@ -222,18 +219,11 @@ public class WindowCollection extends WindowAdapter{
   }
   
   public void addNew(String winType){
-    System.out.println("start of addNew: myWindows.length = " + myWindows.length);
-    System.out.println("windowCount = " + windowCount);
     if (windowCount + 1 == myWindows.length){
-      System.out.println("now in if");
-      //windowList = makeLonger(windowList);
       myWindows = makeLonger(myWindows);
       namedWindows = makeLonger(namedWindows);
-      System.out.println("after makeLonger method myWindows.length = " + myWindows.length);
     }
     
-    //switch (winType){
-    //case "MainWin1":
     if ("MainWin1" == winType){
       newNamedWin("MainWin1");
       JList<String> view0, view1;
@@ -253,8 +243,8 @@ public class WindowCollection extends WindowAdapter{
       CAL_list[5] = new fridge.action_handling.ClassActionListener("qa_operations");
       
       JTextField folderName = new JTextField("/");
-      //JtextField could be initialized to the name of root directory acquired by
-      //using Files class. not just "/"
+      // JtextField could be initialized to the name of root directory acquired by
+      // using Files class. not just "/"
   
       String[] view0Data = {"folder1    group1", "folder2"}; // still testing. will be initialized empty
       view0 = new JList<String>(view0Data);
@@ -272,14 +262,11 @@ public class WindowCollection extends WindowAdapter{
                                                               view1,
                                                               mw1_menu,
                                                               windowCount);
-      //break;
     }
     else if("MainWin2" == winType){
-    //case "MainWin2":
       newNamedWin("MainWin2");
       newGroupWindow(windowCount);
       JList<String> view0, view1;
-      //JList<String> mw2_view0, mw2_view1;
       
       fridge.action_handling.ClassListSelectionListener[] CLSL_list;
       CLSL_list = new fridge.action_handling.ClassListSelectionListener[2];
@@ -311,27 +298,14 @@ public class WindowCollection extends WindowAdapter{
                                                               view1,
                                                               menu,
                                                               windowCount);
-      //fridge.action_handling.ClassListSelectionListener[] mw2_CLSL_list;
-      //mw2_CLSL_list = new fridge.action_handling.ClassListSelectionListener[2];
-      //mw2_CLSL_list[0] = new fridge.action_handling.ClassListSelectionListener("group");
-      //mw2_CLSL_list[1] = new fridge.action_handling.ClassListSelectionListener("quickAccess");
-      
-      
-      //break;
     }
     else if("HelpWin" == winType){
-    //case "HelpWin":
-      //newNamedWin(numberedWinName("HelpWin"));
       newNamedWin("HelpWin");
       JTextArea helpTexts = new JTextArea(5, 30);
       fridge.window_content.Menu hw_menu = new fridge.window_content.Menu(fridgeInstance.getAH_container());
       fridge.action_handling.ClassListSelectionListener CLSListener = new fridge.action_handling.ClassListSelectionListener("helpText");
-      //windowList[windowCount] = winMaker.newHelpWin(this);
-      //fridge.action_handling.MyListSelectionListener LSListener = new fridge.action_handling.MyListSelectionListener();
-      //myWindows[0] = new fridge.windows.HelpWindow(winMaker.newHelpWin(this, CLSListener), CLSListener); //replace 0 with windowCount when ready
       myWindows[windowCount] = new fridge.windows.HelpWindow(this, winMaker, CLSListener,
                                                              helpTexts, hw_menu, windowCount); //replace 0 with windowCount when ready
-      //break;
     }
     else if("newGroupWin" == winType){
       newNamedWin("newGroupWin");
@@ -389,13 +363,13 @@ public class WindowCollection extends WindowAdapter{
       }
       
       if (true == callByGroupWindow){
-        System.out.println("[DEBUG] creating group quick access operations window");
+        System.err.println("[DEBUG] creating group quick access operations window");
         newGroupWindow(windowCount);
         myWindows[windowCount] = new fridge.windows.QAOperations(this, winMaker, CAL_list, windowCount,
                                                                  "group");
       }
       else{
-        System.out.println("[DEBUG] creating folder quick access operations window");
+        System.err.println("[DEBUG] creating folder quick access operations window");
         myWindows[windowCount] = new fridge.windows.QAOperations(this, winMaker, CAL_list, windowCount,
                                                                  "folder");
       }
@@ -423,14 +397,14 @@ public class WindowCollection extends WindowAdapter{
       }
       
       if (true == callByGroupWindow){
-        System.out.println("[DEBUG] creating group collectionSave");
+        System.err.println("[DEBUG] creating group collectionSave");
         newGroupWindow(windowCount);
         myWindows[windowCount] = new fridge.windows.CollectionSave(this, winMaker, CLSListener, CAL_list,
                                                                    nameField, view0, windowCount,
                                                                    "group");
       }
       else{
-        System.out.println("[DEBUG] creating folder collectionSave");
+        System.err.println("[DEBUG] creating folder collectionSave");
         myWindows[windowCount] = new fridge.windows.CollectionSave(this, winMaker, CLSListener, CAL_list,
                                                                    nameField, view0, windowCount,
                                                                    "folder");
@@ -455,14 +429,14 @@ public class WindowCollection extends WindowAdapter{
       }
       
       if (true == callByGroupWindow){
-        System.out.println("[DEBUG] creating group collectionLoad");
+        System.err.println("[DEBUG] creating group collectionLoad");
         newGroupWindow(windowCount);
         myWindows[windowCount] = new fridge.windows.CollectionLoad(this, winMaker, CAL_list,
                                                                    collectionList, windowCount,
                                                                    "group");
       }
       else{
-        System.out.println("[DEBUG] creating folder collectionLoad");
+        System.err.println("[DEBUG] creating folder collectionLoad");
         myWindows[windowCount] = new fridge.windows.CollectionLoad(this, winMaker, CAL_list,
                                                                    collectionList, windowCount,
                                                                    "folder");
@@ -500,14 +474,10 @@ public class WindowCollection extends WindowAdapter{
       }
     }
     else{
-    //default:
-      System.out.println("[DEBUG] no such winType. windowCount not incremented");
+      System.err.println("[DEBUG] no such winType. windowCount not incremented");
       windowCount--;
-    //}
     }
     windowCount++;
-    System.out.println("[DEBUG] window count after creation == " + windowCount);
-    printNamedWindows(); //this is debug. delete pls
   }
   
   private void newNamedWin(String par_name){
@@ -547,7 +517,6 @@ public class WindowCollection extends WindowAdapter{
     int containAmount = 0;
     
     for (int i = 0; i < groupCount; i++){
-      System.err.println("testing if " + groups[i].getName() + " has path");
       if (groups[i].hasPath(pathList)){
         tempContain[containAmount] = i;
         containAmount++;
@@ -563,7 +532,6 @@ public class WindowCollection extends WindowAdapter{
     containNames = new String[doContain.length];
     for (int i = 0; i < containNames.length; i++){
       containNames[i] = groups[doContain[i]].getName();
-      System.err.println("contain updated Paths:" + groups[doContain[i]].getName());
     }
     
     return containNames;
@@ -625,10 +593,9 @@ public class WindowCollection extends WindowAdapter{
     }
     else{ 
       groups[groupCount] = new fridge.group.Group(newGroupName);
-      System.out.println("addedd group " + groups[groupCount].getName());
+      System.err.println("addedd group " + groups[groupCount].getName());
       groupCount++;
       
-      //groupWindowsNewGroupNotify();
       newGroupNotify();
     }
   }
@@ -668,7 +635,6 @@ public class WindowCollection extends WindowAdapter{
         ((fridge.windows.CallableByListener)myWindows[groupWindows[i]]).updateViews();
       }
     }
-    //all group windows.updateGroupView
   }
   
   private void newGroupNotify(){
@@ -697,32 +663,11 @@ public class WindowCollection extends WindowAdapter{
     }
   }
   
-  private String numberedWinName(String wantedName){
-    int i, k;
-    int largestNum;
-    String nameWithoutNum;
-    String windowName;
-    
-    for (k = 0; k < namedWindows.length; k++){
-      windowName = namedWindows[k].getName();
-      for(i = 0; i < wantedName.length(); i++){
-        
-      }
-      
-    }
-    return null;
-  }
-  
-  private JFrame[] makeShorter(JFrame[] oldList){
-    return null;
-  }
-  
-  
   private JFrame[] makeLonger(JFrame[] oldList){
     int i;
     JFrame[] newList = new JFrame[oldList.length + 4];
     //garbage collection should deal with the oldList now?
-    System.out.println("[DEBUG] making windowList longer. this might cause problems!!");
+    System.err.println("[DEBUG] making windowList longer. this might cause problems!!");
     
     for (i = 0; i < oldList.length; i++){
       newList[i] = oldList[i];
@@ -735,7 +680,7 @@ public class WindowCollection extends WindowAdapter{
     int i;
     fridge.windows.MyWindow[] newList = new fridge.windows.MyWindow[oldList.length + 4];
     
-    System.out.println("[DEBUG] making myWindows longer. this might cause problems!!");
+    System.err.println("[DEBUG] making myWindows longer. this might cause problems!!");
     
     for (i = 0; i < oldList.length; i++){
       newList[i] = oldList[i];
@@ -748,7 +693,7 @@ public class WindowCollection extends WindowAdapter{
     int i;
     fridge.window_content.NamedWindow[] newList = new fridge.window_content.NamedWindow[oldList.length + 4];
     
-    System.out.println("[DEBUG] making namedWindows longer. this might cause problems!!");
+    System.err.println("[DEBUG] making namedWindows longer. this might cause problems!!");
     
     for (i = 0; i < oldList.length; i++){
       newList[i] = oldList[i];
@@ -761,7 +706,7 @@ public class WindowCollection extends WindowAdapter{
     int i;
     fridge.group.Group[] newList = new fridge.group.Group[oldList.length + 10];
     
-    System.out.println("[DEBUG] making groups longer");
+    System.err.println("[DEBUG] making groups longer");
     
     for (i = 0; i < oldList.length; i++){
       newList[i] = oldList[i];
@@ -772,20 +717,20 @@ public class WindowCollection extends WindowAdapter{
   
   public void windowClosed(WindowEvent e){
     windowCount--;
-    System.out.println("[DEBUG] window closed. windowCount == " + windowCount);
     if (windowCount <= 0){
-      System.out.println("All windows gone. Exiting");
+      System.err.println("All windows gone. Exiting");
       fridgeInstance.controlledExit();
     }
     if (true == allWindowsHidden()){
-      System.out.println("All remaining windows are hidden. Exiting");
+      System.err.println("All remaining windows are hidden. Exiting");
       fridgeInstance.controlledExit();
     }
-    //winMaker.updateLocation();
+    else{
+      System.err.println("Some windows open or considered hidden.");
+    }
   }
   
   public boolean hideNotificationOk(String windowName, int myWindowIndex){
-    //fridge.window_content.SleepingWindow[] temp = null;
     int i;
     
     if (namedWindows[myWindowIndex].getName() == windowName){
@@ -793,24 +738,16 @@ public class WindowCollection extends WindowAdapter{
       return true;
     }
     
-    System.out.println("[DEBUG] hideNotificationOk got invalid window data. window should not be hidden now");
+    System.err.println("[DEBUG] hideNotificationOk got invalid window data. window should not be hidden now");
     return false;
   }
-  
-  /*public boolean isHidden(String windowName){
-    //scan all namedWindows and see if they match given name and are hidden
-    
-  }*/
-  
   
   public void showWindow(String windowName){
     int i;
     
     for (i = 0; i < windowCount; i++){
-      //if (namedWindows[i].getName().equals(windowName)){
       if (namedWindows[i].getName() == windowName &&
           true == namedWindows[i].getIsHidden()){
-        System.out.println("[DEBUG] showing window: " + windowName);
         myWindows[namedWindows[i].getMyWindowIndex()].show();
         namedWindows[i].setIsHidden(false);
         break;
@@ -857,7 +794,7 @@ public class WindowCollection extends WindowAdapter{
     
     for (i = 0; i < windowCount; i++){
       if (false == namedWindows[i].getIsHidden()){
-        System.out.println("[DEBUG] namedWindows[" + i + "] (" + namedWindows[i].getName() + ") is not hidden");
+        System.err.println("[DEBUG] namedWindows[" + i + "] (" + namedWindows[i].getName() + ") is not hidden");
         return false;
       }
     }
@@ -870,7 +807,7 @@ public class WindowCollection extends WindowAdapter{
     System.out.println("Hidden windows:");
     for (i = 0; i < windowCount; i++){
       if (true == namedWindows[i].getIsHidden()){
-        System.out.println("    " + namedWindows[i].getName() + " " + namedWindows[i].getMyWindowIndex());
+        System.err.println("    " + namedWindows[i].getName() + " " + namedWindows[i].getMyWindowIndex());
       }
     }
   }

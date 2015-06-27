@@ -61,7 +61,7 @@ public class CollectionDelete extends CallableByListener{
     dataUser.deleteFolderCollection(collectionName, frame);
     updateCollectionList();
     
-    System.err.println("next inform window collection about the delete");
+    // inform window collection about the delete
     windowCollection.deleteFolderQA(collectionName);
   }
   
@@ -70,9 +70,6 @@ public class CollectionDelete extends CallableByListener{
     String[] collectionNames;
     
     collectionNames = dataUser.getCollectionNames(frame);
-    if (null != collectionNames){
-      System.out.println("collectionNames len ==" + collectionNames.length);
-    }
     collectionList.removeAllItems();
     
     if (null != collectionNames){

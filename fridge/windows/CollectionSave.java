@@ -77,17 +77,6 @@ public class CollectionSave extends CallableByListener{
     String[] aliases = winCollection.getQA_folderAliases();
     String[] folders = winCollection.getQuickAccessFolders();
     
-    System.err.println("\nCollectionSave.saveFolderCollection()");
-    System.err.println("[DEBUG] QA_folderAliases:");
-    for (i = 0; i < aliases.length; i++){
-      System.err.println("\t" + aliases[i]);
-    }
-    
-    System.err.println("[DEBUG] QA_folders:");
-    for (i = 0; i < folders.length; i++){
-      System.err.println("\t" + folders[i]);
-    }
-    
     if (null == dataUser){
       System.err.println("Could not save Folder collection");
       System.err.println("CollectionSave.saveFolderCollection(): dataUser is null");

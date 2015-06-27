@@ -57,15 +57,14 @@ public class CollectionDataUser{
                              String[] folders,
                              CollectionSave caller){
     
-    System.out.println("[DEBUG] saving collection");
+    System.err.println("saving collection...");
     
     if (preconditionsOK(folderAliases, folders, name)){
-      /* tallenna tiedostojen nykyiset sisallot prolly not gona happen */
       try{
         storeCollectionToFile(folderAliases, folders, name, creator);
         incrementLengthFileContent();
       } catch(IOException ioe){
-        /* palauta ennen try lausetta tallennetut sisallot */
+        System.err.println(ioe.getMessage());
       }
     }
   }
@@ -117,7 +116,7 @@ public class CollectionDataUser{
       
       /* First 2 rows contain length of folderAliases and folders */
       /* write data to file so that each row contains all values of one variable */
-      System.err.println("writing names");
+      System.err.println("writing names...");
       name = name + "\n";
       writer.write(name, 0, name.length());
       creator = creator + "\n";
@@ -133,7 +132,6 @@ public class CollectionDataUser{
       
       for (i = 0; i < folderAliases.length; i++){
         writer.write(folderAliases[i] + ";", 0, folderAliases[i].length() + 1);
-        System.err.println("wrote: " + folderAliases[i]);
       }
       
       writer.write("\n", 0, 1);
@@ -203,17 +201,15 @@ public class CollectionDataUser{
     
     try (BufferedReader reader = Files.newBufferedReader(lengthsPath, charset)){
       line = reader.readLine();
-      System.err.println("storing collection amount. read from lengthsFile: " + line);
       if (null != line){
         collectionAmount = Integer.parseInt(line);
       }
       
       testLengthFileCorrectness(reader);
     } catch (NumberFormatException nfe){
-      System.err.println("IOException: " + nfe);
+      System.err.println("IOException: " + nfe.getMessage());
     }
     
-    System.err.println("readStoredCollectionAmount returning: " + collectionAmount);
     return collectionAmount;
   }
   
@@ -230,7 +226,6 @@ public class CollectionDataUser{
                                                          StandardOpenOption.CREATE,
                                                          StandardOpenOption.TRUNCATE_EXISTING,
                                                          StandardOpenOption.WRITE)){
-      System.err.println("incrementing collection amount. collectionAmount == " + newCollectionAmount);
       amountStr = Integer.toString(newCollectionAmount) + '\n';
       writer.write(amountStr, 0, amountStr.length());
     }
@@ -251,7 +246,7 @@ public class CollectionDataUser{
       nameAmount = readStoredCollectionAmount(folderLengthsFilePath);
       
       if (nameAmount < 1){
-        System.err.println("CollectionDataUser.getCollectionNames(): no collections yet");
+        System.err.println("CollectionDataUser.getCollectionNames(): no collections detected");
       }
       else{
         names = readStoredCollectionNames(nameAmount);
@@ -271,10 +266,8 @@ public class CollectionDataUser{
     String line;
     String[] names = new String[nameAmount];
     
-    System.err.println("readStoredCollectionNames loop:");
     do{
       line = reader.readLine();
-      System.err.println("\t" + line);
       
       if (NAME_POSITION == i){
         if (null != line){
@@ -311,29 +304,13 @@ public class CollectionDataUser{
       if (collectionExists(collectionName)){
         System.err.println("CollectionDataUser loading collection...");
         lineItemAmount = getFolderLineLengths(collectionName);
-        System.err.println("lineItemAmount[0] == " + lineItemAmount[0]);
-        System.err.println("lineItemAmount[1] == " + lineItemAmount[1]);
         folderAliases = new String[lineItemAmount[0]];
         folderPaths = new String[lineItemAmount[1]];
-        System.err.println("length of folderAliases: " + folderAliases.length);
-        System.err.println("length of folderPaths: " + folderPaths.length);
         
         name = collectionName;
         creator = getFolderCreator(collectionName);
         folderAliases = loadAliases(collectionName, folderAliases);
         folderPaths = loadFolderPaths(collectionName, folderPaths);
-        
-        System.err.println("collectionCreator: " + creator);
-        
-        System.err.println("folderAliases:");
-        for (i = 0; i < folderAliases.length; i++){
-          System.err.println("\t" + folderAliases[i]);
-        }
-        
-        System.err.println("folderPaths");
-        for (i = 0; i < folderPaths.length; i++){
-          System.err.println("\t" + folderPaths[i]);
-        }
       }
       else{
         //error
@@ -342,42 +319,6 @@ public class CollectionDataUser{
       errorWindow("internal error: could not load folder collection");
       System.err.println("loadFolderCollection IOException: " + ioe.getMessage());
     }
-    
-    /*
-    try (BufferedReader reader = Files.newBufferedReader(folderPath, charset)){
-      String line = null;
-      int i = 0;
-      
-      line = reader.readLine();
-      if (null == line){
-        throw new IOException("luettiin null rivi odottamattomasti");
-      }
-      folderAliases = new String[Integer.parseInt(line)];
-      
-      line = reader.readLine();
-      if (null == line){
-        throw new IOException("luettiin null rivi odottamattomasti");
-      }
-      folderPaths = new String[Integer.parseInt(line)];
-      
-      for (i = 0; i < 3; i++){
-        line = reader.readLine();
-      }
-      
-      System.err.println("line to parse to folderAliases: " + line);
-    }catch (IOException e){
-      System.err.format("IOException in CollectionDataUser.getCollectionNames(): %s%n", e);
-    } catch (NumberFormatException nfe){
-      System.err.println("IOException: " + nfe);
-    }
-    */
-    /* read data from collectionData.dat.
-     * Store this data to FolderCollectionItem
-     * return the FolderCollectionItem*/
-    
-    //FolderCollectionItem folderData = new FolderCollectionItem
-    // do set methods to folderCollection or waste memory by storing
-    // data temporarily to variables before constructor call
     
     folderCollection = new FolderCollectionItem(name, creator, folderAliases, folderPaths);
     
@@ -408,9 +349,7 @@ public class CollectionDataUser{
     String readStr = null;
     
     readStr = getCollectionData(collectionName, ALIAS_LEN_POSITION);
-    System.err.println("alias lengths row: " + readStr);
     readStr = getCollectionData(collectionName, FOLDERS_LEN_POSITION);
-    System.err.println("collection folder lengths row" + readStr);
     
     lineLengths[0] = Integer.parseInt(getCollectionData(collectionName, ALIAS_LEN_POSITION));
     lineLengths[1] = Integer.parseInt(getCollectionData(collectionName, FOLDERS_LEN_POSITION));
@@ -490,7 +429,6 @@ public class CollectionDataUser{
     do {
       reader.mark(4096); // 4096 bytes can be read before reset
       line = reader.readLine();
-      System.err.println("line == " + line + ", line.length == " + line.length());
       
       if (line.equals(collectionName)){
         reader.reset();
@@ -530,7 +468,6 @@ public class CollectionDataUser{
       collectionsToSave = getCollectionsExcept(collectionName);
       clearCollectionFile(folderPath);
       for (int i = 0; i < collectionsToSave.length; i++){
-        System.err.println("saving collection: " + collectionsToSave[i].getName());
         storeFolderCollectionToFile(collectionsToSave[i]);
       }
       decrementStoredCollectionAmount(folderLengthsFilePath);
@@ -548,15 +485,8 @@ public class CollectionDataUser{
     allNames = getCollectionNames();
     collections = new FolderCollectionItem[allNames.length - 1];
     
-    System.err.println("getCollectionsExcept allNames:");
     for (int i = 0; i < allNames.length; i++){
-      System.err.println("\t" + allNames[i]);
-    }
-    
-    for (int i = 0; i < allNames.length; i++){
-      System.err.println("testing exclude for " + allNames[i]);
       if (!(allNames[i].equals(collectionToExclude))){
-        System.err.println("getting " + allNames[i]);
         collections[saveIndex] = loadFolderCollection(allNames[i]);
         saveIndex++;
       }

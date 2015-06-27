@@ -4,8 +4,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
-//public class ClassListSelectionListener extends fridge.action_handling.MyListSelectionListener{
 public class ClassListSelectionListener extends fridge.action_handling.MyListener implements ListSelectionListener{
   private fridge.windows.CallableByListener listened;
   private int[] selectedIndexes;
@@ -34,7 +32,6 @@ public class ClassListSelectionListener extends fridge.action_handling.MyListene
   
   protected void setListened(fridge.windows.CallableByListener CBL_ptr){
     listened = CBL_ptr;
-    System.out.println("[DEBUG] CLSListener listens");
   }
   
   public void valueChanged(ListSelectionEvent e){
@@ -67,9 +64,5 @@ public class ClassListSelectionListener extends fridge.action_handling.MyListene
     if (false == isAdjusting){
       listened.listenerEvent((fridge.action_handling.MyListener)this);
     }
-    /*if (false == isAdjusting){
-      listened.listenerEvent(this);
-    }*/
-    //listened.listSelectionListenerCall()
   }
 }

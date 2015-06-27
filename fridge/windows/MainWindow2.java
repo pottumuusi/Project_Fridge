@@ -17,12 +17,9 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   private int[] selectedGroupItems;
   private int[] selectedQuickAccess;
   private boolean viewUpdateAllowed;
-  //private Group currGroup;
-  //private int currGroup; //should this be of Group class instead of String?
   private String currGroup;
   private String[] quickAccessGroups;
   private fridge.group.Group[] groups;
-  //private fridge.window_content.WindowCollection winCollection;
   
   public MainWindow2(fridge.window_content.WindowCollection winColl,
               fridge.window_content.WindowMaker winMaker,
@@ -33,26 +30,21 @@ public class MainWindow2 extends fridge.windows.FileWindow{
               JList view1_par,
               fridge.window_content.Menu menu,
               int par_myWindowIndex){
+    
     super(winMaker.newMainWin2(winColl, CLSL_ptrs, CAL_ptrs, groupList, view0_par, view1_par, menu),
           CLSL_ptrs, CAL_ptrs, par_myWindowIndex, menu, winColl);
-    //menu.setContainingWindow(this);
     
     winCollection = winColl;
     quickAccessGroups = null;
     selectedGroupItems = null;
     selectedQuickAccess = null;
     
-    //currGroup = -1;
     currGroup = null;
     groupListBox = groupList;
     view0 = view0_par;
     view1 = view1_par;
     frame.pack();
   }
-  
-  /*public void groupButtonMenuPress(String buttonName){
-    //if ()
-  }*/
   
   protected void moveItemsToGroup(String groupName){
     Path[] itemsToPass;
@@ -75,8 +67,11 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   }
   
   public void openFile(){
-    if (1 == selectedGroupItems.length){
+    if (1 == selectedGroupItems.length && (false == ((view0.getSelectedValue()).equals("<empty>")))){
       winCollection.groupOpenFile(currGroup, selectedGroupItems[0]);
+    }
+    else{
+      errorWindow("Empty field can't be opened");
     }
   }
   
@@ -91,28 +86,14 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     if (null != selectedQuickAccess && 1 == selectedQuickAccess.length){
       tempGroups = new String[quickAccessGroups.length - 1];
       QAF_index = view1.getMinSelectionIndex();
-      System.err.println("quickaccessFolders:");
       for (i = 0; i < quickAccessGroups.length; i++){
-        System.err.println(quickAccessGroups[i]);
         if (i != QAF_index){
-          System.err.println("i == " + i + ", QAf_index == " + QAF_index);
           tempGroups[tempIndex] = quickAccessGroups[i];
           tempIndex++;
         }
       }
       quickAccessGroups = tempGroups;
       if (null != quickAccessGroups){
-        /*
-        newAliases = new String[quickAccessGroups.length]; 
-        
-        for (i = 0; i < quickAccessGroups.length; i++){
-          tempPath = Paths.get(quickAccessGroups[i]);
-          newAliases[i] = tempPath.getFileName().toString();
-          System.err.println("newAlias " + i + " == " + newAliases[i]);
-        }
-        
-        */
-        //clearQuickAccessAliases();
         updateContent();
       }
     }
@@ -128,10 +109,7 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     if (null != selectedGroupItems){
       answer = yesNoWindow("Are you sure you want to delete " + selectedGroupItems.length +" selected file(s)");
       
-      System.err.println("answer == " + answer);
-      
-      if (0 == answer){
-        
+      if (0 == answer){  
         winCollection.deleteGroupFiles(currGroup, selectedGroupItems);
         updateContent();
       }
@@ -144,20 +122,16 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   
   private int selectExcluding(int[] toExclude){
     int itemCount = winCollection.getGroupItemAmount(currGroup);
-    System.err.println("itemCount == " + itemCount);
     int[] include = null;
     int includeIndex = 0;
     boolean doInclude = true;
     
     if (-1 != itemCount){
-      System.err.println("include = new int[" + (itemCount - toExclude.length) + "]");
       include = new int[itemCount - toExclude.length];
       
       for (int i = 0; i < itemCount; i++){
         for (int k = 0; k < toExclude.length; k++){
-          System.err.println("is " + i + " == " + toExclude[k]);
           if (i == toExclude[k]){
-            System.err.println("yes, do no include");
             doInclude = false;
             break;
           }
@@ -171,10 +145,6 @@ public class MainWindow2 extends fridge.windows.FileWindow{
         doInclude = true;
       }
       
-      System.err.println("will select indices:");
-      for (int i = 0; i < include.length; i++){
-        System.err.println("\t" + include[i]);
-      }
       view0.setSelectedIndices(include);
       return 0;
     }
@@ -187,19 +157,12 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   public void cut(){
     Path[] itemsToPass = null;
     
-    itemsToPass = getFullPathsOfSelectedItems(currGroup);
-    System.err.println("setting items to clipboard:");
-    for (int i = 0; i < itemsToPass.length; i++){
-      System.err.println(itemsToPass[i].toString());
-    }
-    
-    
-    
+    itemsToPass = getFullPathsOfSelectedItems(currGroup);  
     winCollection.setupMove(itemsToPass, "cut");
     winCollection.setMovePerformer(currGroup);
     winCollection.setMoveUpdateIndexes(currGroup, selectedGroupItems);
-    System.err.println("update indexes:");
   }
+  
   public void paste(){}
   public void newFolder(){}
   
@@ -208,20 +171,11 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     String[] newContent = null;
     Path[] groupItems;
     
-    System.out.println("[DEBUG] updating MainWin2 views");
     currGroup = groupListBox.getSelectedItem().toString();
-    System.out.println("currGroup == " + currGroup);
-    //fridge.group.Group tempGroup;
-    //fridge.group.Group[] tempGroups;
     
-    //tempGroups = new fridge.group.Group[winCollection.getGroupsLength()];
-    //tempGroups = winCollection.getGroups();
-    
-    //tempGroup = winCollection.getGroups(currGroup);
     if (null != currGroup){
       if (null != winCollection.getGroup(currGroup).getName() &&
           null != winCollection.getGroup(currGroup).getItems()){
-        System.out.println("[DEBUG] getting items from group: " + winCollection.getGroup(currGroup).getName());
       
         groupItems = winCollection.getGroup(currGroup).getItems();
         if (groupItems.length > 0){
@@ -235,14 +189,15 @@ public class MainWindow2 extends fridge.windows.FileWindow{
         }
       }
       else{
-        newContent = new String[1];
-        newContent[0] = "";
+        System.err.println("setting empty list data");
+        newContent = new String[2];
+        newContent[0] = "<empty>";
         view0.setListData(newContent);
       }
     }
     else{
       newContent = new String[1];
-      newContent[0] = "";
+      newContent[0] = "<empty>";
       view0.setListData(newContent);
     }
     
@@ -256,10 +211,6 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     }
   }
   
-  /*public int getItemIndex(String itemName){
-    
-  }*/
-  
   public void updateContent(){
     int i;
     int groupCount;
@@ -271,10 +222,8 @@ public class MainWindow2 extends fridge.windows.FileWindow{
     groupListBox.removeAllItems();
     
     for (i = 0; i < groupCount; i++){
-      System.out.println("[DEBUG] adding group " + i + " " + tempGroups[i].getName());
       groupListBox.addItem(tempGroups[i].getName());
     }
-    System.out.println("[DEBUG] updateContent done");
     
     viewUpdateAllowed = true;
     currGroup = groupListBox.getSelectedItem().toString();
@@ -285,8 +234,6 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   protected void handleEvent(fridge.action_handling.MyListener ML_ptr){
     int i;
     String[] tempQuickAccess;
-    
-    System.out.println("[DEBUG] MainWin2 handleEvent. type is: " + ML_ptr.getType() + ". name is: " + ML_ptr.getName());
     
     if ("ClassListSelectionListener" == ML_ptr.getType()){
       if ("group" == ML_ptr.getName()){
@@ -310,17 +257,9 @@ public class MainWindow2 extends fridge.windows.FileWindow{
         showFolderWin();
       }
       else if ("qa_operations" == ML_ptr.getName()){
-        //winCollection.addGroup("fromMainWin2");
         winCollection.addNew("operationsWin", myWindowIndex);
-        System.out.println("[DEBUG] MainWin2 qa_operations press");
-        /*Path[] testPath = new Path[3];
-        testPath[0] = ;
-        winCollection.addGroupItems("fromMainWin2", testPaths);*/
       }
       else if ("groupNameBox" == ML_ptr.getName()){
-        //currGroup = boxSelection
-        //updateContent();
-        //System.out.println("[DEBUG] comboBox selected item: " + groupListBox.getSelectedItem().toString());
         if (true == viewUpdateAllowed){
           updateViews();
         }
@@ -365,7 +304,6 @@ public class MainWindow2 extends fridge.windows.FileWindow{
       
       for (i = 0; i < groupListBox.getItemCount(); i++){
         if (groupListBox.getItemAt(i).toString() == selection){
-          System.out.println("[DEBUG] loading quick access. " + selection + " matches " + groupListBox.getItemAt(i).toString());
           groupListBox.setSelectedIndex(i);
           updateViews();
           break;
@@ -410,22 +348,6 @@ public class MainWindow2 extends fridge.windows.FileWindow{
   private void updateGroupView(){
     winCollection.getGroups();
   }
-  
-  /*private void updateContent(){
-    int i;
-    String[] newContent;
-    
-    //currGroup = groupListBox. //get name here 
-    
-    newContent = new String[groups[currGroup].getItemsLength()];
-    
-    for (i = 0; i < newContent.length; i++){
-      newContent[i] = groups[currGroup].getItem(i).toString();
-    }
-    
-    groups[currGroup].getItems();
-    view0.setListData(newContent);
-  }*/
   
   public boolean hideSuccessful(){
     if (true == winCollection.hideNotificationOk("MainWin2", myWindowIndex)){
